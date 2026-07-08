@@ -2,12 +2,17 @@
 
 Statische Landingpage (`index.html`) für die Fahrradkasko-Beratung von Ludwig Siebenbürgen.
 
+Live unter: https://fahrradkasko.de
+
 ## Aufbau
 
-- `index.html` – die komplette Seite (HTML, CSS und JS in einer Datei)
-- `impressum.html` – Impressum (Anbieterkennzeichnung)
+- `index.html` – die komplette Startseite (HTML, CSS und JS in einer Datei)
+- `impressum.html`, `datenschutz.html`, `erstinformation.html` – Rechtsseiten
+- `dokumente/` – Versicherungsbedingungen und Produkt-Infoblatt (PDF)
 - `assets/motion.js` – Framer Motion als Vanilla-JS-Bundle (eingecheckt, wird von `index.html` geladen)
-- `src/motion-entry.js` – Einstiegsdatei für das Bundle
+- `assets/fonts/` + `assets/fonts.css` – lokal gehostete Schriften (Archivo, IBM Plex Mono, Instrument Sans)
+- `assets/favicon*` / `assets/og-image.jpg` – Icons und Social-Media-Vorschaubild
+- `src/motion-entry.js` – Einstiegsdatei für das Motion-Bundle
 
 ## Framer Motion
 

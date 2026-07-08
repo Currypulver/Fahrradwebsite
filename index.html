@@ -21,9 +21,14 @@
 </script>
 <title>Rennrad Vollkasko Versicherung – Fahrradkasko | Zum Neuwert, ohne Selbstbeteiligung</title>
 <meta name="description" content="Rennrad Vollkasko Versicherung ohne Selbstbeteiligung: Fahrradkasko mit Neuwert-Erstattung und Fahrradschutzbrief (Pannenhilfe, auch im Ausland) – für Rennrad, Gravel Bike mit Carbonrahmen, Zeitfahrrad (TT) und E-Bike. Persönliche Beratung: Ludwig Siebenbürgen, Rostock.">
-<!-- Sobald die Domain feststeht: <link rel="canonical" href="https://deine-domain.de/"> ergänzen -->
+<link rel="canonical" href="https://fahrradkasko.de/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="de_DE">
+<meta property="og:url" content="https://fahrradkasko.de/">
+<meta property="og:site_name" content="Fahrradkasko – Ludwig Siebenbürgen">
+<meta property="og:image" content="https://fahrradkasko.de/assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:title" content="Rennrad Vollkasko Versicherung – Fahrradkasko zum Neuwert">
 <meta property="og:description" content="Vollkasko fürs Rennrad, Gravel Bike (Carbon), TT und E-Bike: zum Neuwert, ohne Selbstbeteiligung, mit Fahrradschutzbrief weltweit. Ein Vertrag für alle Räder deines Haushalts.">
 <script type="application/ld+json">
@@ -31,6 +36,7 @@
   "@context": "https://schema.org",
   "@type": "InsuranceAgency",
   "name": "Fahrradkasko – Ludwig Siebenbürgen",
+  "url": "https://fahrradkasko.de/",
   "description": "Rennrad Vollkasko Versicherung ohne Selbstbeteiligung: Fahrradkasko mit Neuwert-Erstattung und Fahrradschutzbrief für Rennrad, Gravel Bike, Zeitfahrrad und E-Bike.",
   "telephone": "+4915224827997",
   "email": "ludwig.siebenbuergen@ergo.de",
@@ -68,9 +74,14 @@
   ]
 }
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<!-- Schriften lokal (DSGVO-freundlich, kein Google-Fonts-Aufruf) -->
+<link rel="preload" href="assets/fonts/archivo-normal-100-900-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/archivo-italic-100-900-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/instrument-sans-normal-400-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <style>
 /* ============================================================
    Fahrradkasko – Landingpage V2 „Night Ride"
@@ -792,11 +803,6 @@ h2.display{font-size:clamp(40px,6vw,84px)}
   background-repeat:no-repeat;background-position:right 4px center;padding-right:28px;
 }
 .feld select option{background:var(--card);color:var(--ink)}
-.feld input:disabled,.feld select:disabled{opacity:.4;cursor:not-allowed}
-.termin-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media(max-width:480px){.termin-grid{grid-template-columns:1fr}}
-.feld-hinweis{margin-top:9px;font-size:12.5px;color:var(--ink-2);opacity:.85}
-.feld-hinweis.warnung{color:var(--ergo-rot);opacity:1}
 .feld textarea{resize:vertical;min-height:96px}
 .feld input::placeholder,.feld textarea::placeholder{color:rgba(154,151,163,.55)}
 .feld input:focus,.feld select:focus,.feld textarea:focus{
@@ -940,6 +946,44 @@ footer a:hover{color:#fff}
 .globe-badges span:hover{border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.07)}
 .card .icon{transition:transform .35s var(--ease),background-color .3s ease}
 .card:hover .icon{transform:translateY(-3px) scale(1.05);background:rgba(238,1,56,.15)}
+
+/* ---------- Beitrags-Schätzer (Paket) ---------- */
+.rechner{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:28px 28px 24px;margin-bottom:36px;box-shadow:var(--shadow);
+  transition:border-color .3s ease;
+}
+.rechner:hover{border-color:var(--line-2)}
+.rechner .mono-label{display:block;margin-bottom:20px}
+.rechner-wert{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:14px;color:var(--ink-2);margin-bottom:12px}
+.rechner-wert output{font-family:var(--mono);font-size:15.5px;font-weight:500;color:var(--ink)}
+#rechner-slider{
+  width:100%;appearance:none;-webkit-appearance:none;height:4px;border-radius:2px;cursor:pointer;
+  background:linear-gradient(90deg,var(--ergo-rot) var(--fill,56%),var(--line-2) var(--fill,56%));
+}
+#rechner-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;width:24px;height:24px;border-radius:50%;
+  background:var(--ergo-rot);border:3.5px solid #fff;
+  box-shadow:0 6px 18px -6px var(--rot-glow);transition:transform .2s var(--ease);
+}
+#rechner-slider::-webkit-slider-thumb:hover{transform:scale(1.12)}
+#rechner-slider::-moz-range-thumb{
+  width:24px;height:24px;border-radius:50%;background:var(--ergo-rot);
+  border:3.5px solid #fff;box-shadow:0 6px 18px -6px var(--rot-glow);
+}
+.rechner-ergebnis{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-top:22px}
+.rechner-ergebnis .re-label{font-size:13.5px;color:var(--ink-2)}
+.rechner-ergebnis .re-preis{font-size:clamp(26px,3vw,36px);font-style:italic;color:var(--ergo-rot);line-height:1}
+.rechner-ergebnis .re-jahr{font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+.rechner-hinweis{margin-top:14px;font-size:12px;color:var(--ink-2);opacity:.85;line-height:1.55}
+
+/* ---------- FAQ: erst 5 Fragen, Rest aufklappbar ---------- */
+.faq-item.faq-versteckt{display:none}
+#faq-mehr{margin-top:30px}
+
+/* ---------- Kanal-Icon Online-Termin + echte Fotos ---------- */
+.kanal .k-icon.cal{background:var(--asphalt-3);border:1px solid rgba(255,255,255,.25)}
+img.ls-foto,img.berater-foto{object-fit:cover}
 
 /* ---------- Reduced Motion & Fokus ---------- */
 @media(prefers-reduced-motion:reduce){
@@ -1255,6 +1299,22 @@ footer a:hover{color:#fff}
       </div>
 
       <div class="reveal">
+        <!-- Beitrags-Schätzer: grobe Spanne aus dem Radwert, Logik analog Fußnote ¹ -->
+        <div class="rechner">
+          <span class="mono-label">Beitrags-Schätzer <b>///</b> Was kostet's für dein Rad?</span>
+          <div class="rechner-wert">
+            <label for="rechner-slider">Wert deines teuersten Rads</label>
+            <output id="rechner-rad" for="rechner-slider">6.000&nbsp;€</output>
+          </div>
+          <input type="range" id="rechner-slider" min="1000" max="10000" step="500" value="6000" aria-label="Wert deines teuersten Rads in Euro">
+          <div class="rechner-ergebnis">
+            <span class="re-label">Komplett-Paket inkl. Hausrat Best ca.</span>
+            <span class="re-preis display" id="rechner-preis">170–270&nbsp;€</span>
+            <span class="re-jahr">pro Jahr¹</span>
+          </div>
+          <p class="rechner-hinweis">Unverbindliche Orientierung (Beispiel: Wohnfläche 50–75&nbsp;m²) – der genaue Beitrag hängt von Wohnfläche, Wohnort und optionaler Selbstbeteiligung ab. Dein persönliches Angebot gibt's kostenlos.</p>
+        </div>
+
         <h3 class="display" style="font-size:clamp(24px,2.8vw,34px)">So kommst du zu deinem Schutz</h3>
         <ol class="steps">
           <li>
@@ -1561,40 +1621,44 @@ footer a:hover{color:#fff}
         <div class="faq-a"><div><p>Unterwegs abgestellte Räder müssen mit einem Schloss gesichert sein – eine bestimmte Marke oder Preisklasse ist nicht vorgeschrieben. Die Schlosspflicht entfällt nur in ausschließlich selbst genutzten, verschlossenen Räumen (z.&nbsp;B. deinem eigenen Kellerabteil), im verschlossenen Auto sowie im angehängten, verschlossenen Anhänger oder Wohnwagen. Wichtig: Im gemeinschaftlich genutzten Keller oder Fahrradraum brauchst du weiterhin ein Schloss.</p></div></div>
       </div>
 
-      <div class="faq-item reveal" style="--i:5">
+      <div class="faq-item reveal faq-versteckt" style="--i:5">
         <button class="faq-q" aria-expanded="false"><span class="nr">06</span>Was ist mit dem Akku meines E-Bikes?
           <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
         <div class="faq-a"><div><p>Der Akkuschutz sichert dich in den ersten drei Jahren gegen Leistungsverlust ab. Zusätzlich greift der Elektronikschutz bei Schäden durch Kurzschluss, Induktion, Überspannung oder Feuchtigkeit.</p></div></div>
       </div>
 
-      <div class="faq-item reveal" style="--i:6">
+      <div class="faq-item reveal faq-versteckt" style="--i:6">
         <button class="faq-q" aria-expanded="false"><span class="nr">07</span>Gibt es eine Selbstbeteiligung?
           <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
         <div class="faq-a"><div><p>Grundsätzlich nein. Du kannst optional eine Selbstbeteiligung vereinbaren, um deinen Beitrag zu senken – beim Schutzbrief (Mobilitätsschutz) wird sie aber in keinem Fall abgezogen.</p></div></div>
       </div>
 
-      <div class="faq-item reveal" style="--i:7">
+      <div class="faq-item reveal faq-versteckt" style="--i:7">
         <button class="faq-q" aria-expanded="false"><span class="nr">08</span>Ich habe schon eine Hausratversicherung – lohnt sich der Wechsel?
           <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
         <div class="faq-a"><div><p>Oft ja – viele Hausratverträge sichern hochwertige Räder gar nicht oder nur eingeschränkt ab. Beim Wechsel schließt die Differenzdeckung die Lücke zu deinem bestehenden Vertrag: bis zu ein Jahr lang, ohne Mehrbeitrag.</p></div></div>
       </div>
 
-      <div class="faq-item reveal" style="--i:8">
+      <div class="faq-item reveal faq-versteckt" style="--i:8">
         <button class="faq-q" aria-expanded="false"><span class="nr">09</span>Was ist nicht versichert?
           <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
         <div class="faq-a"><div><p>Nicht versichert sind unter anderem vorsätzlich verursachte Schäden, Schäden durch Verlieren, Stehen- oder Liegenlassen sowie Schäden, für die der Hersteller oder Lieferant haftet (Garantiefälle). Alle Details regeln die Versicherungsbedingungen.</p></div></div>
       </div>
 
-      <div class="faq-item reveal" style="--i:9">
+      <div class="faq-item reveal faq-versteckt" style="--i:9">
         <button class="faq-q" aria-expanded="false"><span class="nr">10</span>Was passiert bei grober Fahrlässigkeit?
           <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
         <div class="faq-a"><div><p>Gute Nachricht: In der Hausratversicherung Best wird die Entschädigung nicht gekürzt, wenn du einen Schaden grob fahrlässig herbeigeführt hast – auf dieses Kürzungsrecht verzichtet der Versicherer ausdrücklich. Vorsätzlich verursachte Schäden bleiben ausgeschlossen, und deine Mitwirkungspflichten (z.&nbsp;B. Sicherheitsvorschriften wie die Schlosspflicht) gelten weiterhin.</p></div></div>
       </div>
+
+      <button type="button" class="btn btn-ghost" id="faq-mehr" aria-expanded="false">
+        <span class="btn-label">Alle 10 Fragen anzeigen</span>
+      </button>
     </div>
   </div>
 </section>
@@ -1644,6 +1708,14 @@ footer a:hover{color:#fff}
             </span>
             <span class="pfeil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
           </a>
+          <a href="https://calendly.com/fahrradkasko" target="_blank" rel="noopener">
+            <span class="k-icon cal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/><path d="M9 15.5l2 2 4-4.5"/></svg></span>
+            <span>
+              <h4>Online-Termin buchen</h4>
+              <p>Wähle direkt einen freien Slot für deine kostenlose Beratung.</p>
+            </span>
+            <span class="pfeil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
           <a href="mailto:ludwig.siebenbuergen@ergo.de?subject=Anfrage%20Fahrradkasko%20(Rennrad)">
             <span class="k-icon mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
             <span>
@@ -1682,18 +1754,6 @@ footer a:hover{color:#fff}
             <option>Beratungstermin vereinbaren</option>
             <option>Allgemeine Frage</option>
           </select>
-        </div>
-        <div class="feld">
-          <label for="f-datum">Wunschtermin für Rückruf (optional)</label>
-          <div class="termin-grid">
-            <input id="f-datum" type="date" disabled aria-describedby="termin-hinweis">
-            <select id="f-slot" disabled aria-describedby="termin-hinweis">
-              <option value="">Zeitfenster wählen …</option>
-              <option>mittags (12–15 Uhr)</option>
-              <option>nachmittags (15–18 Uhr)</option>
-            </select>
-          </div>
-          <p class="feld-hinweis" id="termin-hinweis">Nur möglich, wenn du oben eine Telefonnummer angibst.</p>
         </div>
         <div class="feld">
           <label for="f-nachricht">Nachricht (optional)</label>
@@ -1943,48 +2003,44 @@ document.querySelectorAll('.faq-item').forEach(item => {
   });
 });
 
-/* Wunschtermin für Rückruf – nur mit hinterlegter Telefonnummer */
-const kontaktFeld = document.getElementById('f-kontakt');
-const datumFeld = document.getElementById('f-datum');
-const slotFeld = document.getElementById('f-slot');
-const terminHinweis = document.getElementById('termin-hinweis');
-const HINWEIS_TEL = 'Nur möglich, wenn du oben eine Telefonnummer angibst.';
-const HINWEIS_OK = 'Rückruf Mo–Fr unter deiner Nummer – Wunschtag und Zeitfenster wählen.';
-const telefonVorhanden = () => kontaktFeld.value.replace(/\D/g, '').length >= 6;
-function terminAktualisieren(){
-  const ok = telefonVorhanden();
-  datumFeld.disabled = !ok;
-  slotFeld.disabled = !ok;
-  if (!ok){ datumFeld.value = ''; slotFeld.value = ''; }
-  terminHinweis.textContent = ok ? HINWEIS_OK : HINWEIS_TEL;
-  terminHinweis.classList.remove('warnung');
-}
-kontaktFeld.addEventListener('input', terminAktualisieren);
-datumFeld.min = new Date().toISOString().split('T')[0];
-datumFeld.addEventListener('change', () => {
-  if (!datumFeld.value) return;
-  const wochentag = new Date(datumFeld.value + 'T12:00').getDay();
-  if (wochentag === 0 || wochentag === 6){
-    terminHinweis.textContent = 'Am Wochenende bin ich nicht erreichbar – bitte wähle Montag bis Freitag.';
-    terminHinweis.classList.add('warnung');
-  } else {
-    terminHinweis.textContent = HINWEIS_OK;
-    terminHinweis.classList.remove('warnung');
-  }
-});
-terminAktualisieren();
+/* Beitrags-Schätzer: grobe Jahresspanne aus dem Radwert (Logik analog Fußnote ¹) */
+(() => {
+  const slider = document.getElementById('rechner-slider');
+  const rad = document.getElementById('rechner-rad');
+  const preis = document.getElementById('rechner-preis');
+  if (!slider || !rad || !preis) return;
+  const fmt = n => n.toLocaleString('de-DE');
+  const rund5 = n => Math.round(n / 5) * 5;
+  const update = () => {
+    const wert = +slider.value;
+    rad.textContent = fmt(wert) + ' €';
+    const unten = rund5(80 + wert / 1000 * 15);
+    const oben = rund5(120 + wert / 1000 * 25);
+    preis.textContent = fmt(unten) + '–' + fmt(oben) + ' €';
+    slider.style.setProperty('--fill', ((wert - 1000) / 9000 * 100) + '%');
+    if (window.Motion && !reduceMotion) window.Motion.animate(preis, {scale:[1.05,1]}, {duration:.35, ease:[.16,1,.3,1]});
+  };
+  slider.addEventListener('input', update);
+  update();
+})();
+
+/* FAQ: zunächst 5 Fragen – Rest per Klick einblenden */
+(() => {
+  const btn = document.getElementById('faq-mehr');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.faq-item.faq-versteckt').forEach(el => el.classList.remove('faq-versteckt'));
+    btn.setAttribute('aria-expanded', 'true');
+    btn.remove();
+  });
+})();
 
 /* Formular → E-Mail (mailto) */
 document.getElementById('f-senden').addEventListener('click', () => {
   const name = document.getElementById('f-name').value.trim();
-  const kontakt = kontaktFeld.value.trim();
+  const kontakt = document.getElementById('f-kontakt').value.trim();
   const anliegen = document.getElementById('f-anliegen').value;
   const nachricht = document.getElementById('f-nachricht').value.trim();
-  let termin = '';
-  if (telefonVorhanden() && datumFeld.value && slotFeld.value){
-    const d = new Date(datumFeld.value + 'T12:00');
-    termin = `Wunschtermin für Rückruf: ${d.toLocaleDateString('de-DE', {weekday:'long', day:'2-digit', month:'2-digit', year:'numeric'})}, ${slotFeld.value}\n`;
-  }
   const betreff = encodeURIComponent(`Anfrage Fahrradkasko – ${name || 'Neue Anfrage'}`);
   const body = encodeURIComponent(
 `Hallo,
@@ -1994,7 +2050,6 @@ ich interessiere mich für die Fahrradkasko.
 Name: ${name || '-'}
 Erreichbar unter: ${kontakt || '-'}
 Anliegen: ${anliegen}
-${termin}
 ${nachricht ? 'Nachricht:\n' + nachricht + '\n\n' : ''}Viele Grüße
 ${name || ''}`
   );
