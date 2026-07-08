@@ -293,17 +293,16 @@ h2.display{font-size:clamp(40px,6vw,84px)}
 .hero{
   position:relative;min-height:100dvh;display:flex;flex-direction:column;justify-content:center;
   padding:calc(78px + clamp(40px,6vw,72px)) 0 clamp(90px,10vw,130px);
+  /* Basis transparent, damit das Bergetappen-Profil (Parallax) durchscheint */
   background:
     radial-gradient(1100px 520px at 88% -6%, rgba(238,1,56,.14) 0%, transparent 62%),
-    radial-gradient(900px 500px at -10% 110%, rgba(238,1,56,.07) 0%, transparent 55%),
-    var(--asphalt);
+    radial-gradient(900px 500px at -10% 110%, rgba(238,1,56,.07) 0%, transparent 55%);
   transition:background-color .3s ease;
 }
 [data-theme="light"] .hero{
   background:
     radial-gradient(1100px 520px at 88% -6%, rgba(238,1,56,.10) 0%, transparent 62%),
-    radial-gradient(900px 500px at -10% 110%, rgba(238,1,56,.05) 0%, transparent 55%),
-    #F4F2ED;
+    radial-gradient(900px 500px at -10% 110%, rgba(238,1,56,.05) 0%, transparent 55%);
 }
 .hero .eyebrow-row{display:flex;align-items:center;gap:14px;margin-bottom:clamp(22px,3vw,36px)}
 .hero .eyebrow-row::before{content:"";width:34px;height:1.5px;background:var(--ergo-rot)}
@@ -653,13 +652,17 @@ h2.display{font-size:clamp(40px,6vw,84px)}
 .steps li{
   counter-increment:s;display:grid;grid-template-columns:88px 1fr;gap:22px;align-items:start;
   padding:26px 0;border-top:1px solid var(--line);
+  transition:background-color .35s ease,padding-left .35s var(--ease);
 }
 .steps li:last-child{border-bottom:1px solid var(--line)}
+.steps li:hover{background:rgba(238,1,56,.04);padding-left:12px}
 .steps li::before{
   content:"0" counter(s);
   font-family:var(--display);font-stretch:64%;font-weight:900;font-style:italic;font-size:52px;line-height:1;
   color:transparent;-webkit-text-stroke:1.5px var(--ink-2);
+  transition:-webkit-text-stroke-color .35s ease;
 }
+.steps li:hover::before{-webkit-text-stroke-color:var(--ergo-rot)}
 .steps h4{
   font-family:var(--display);font-stretch:70%;font-weight:830;font-size:18px;
   text-transform:uppercase;letter-spacing:.02em;margin-bottom:6px;
@@ -806,6 +809,7 @@ h2.display{font-size:clamp(40px,6vw,84px)}
 /* ---------- Footer ---------- */
 /* Footer bleibt in beiden Themes dunkler Asphalt – Tokens hier neu gepinnt */
 footer{
+  position:relative; /* deckt das fixe Bergetappen-Profil ab */
   background:var(--asphalt);color:var(--kreide-2);padding:0 0 44px;font-size:14px;
   border-top:1px solid rgba(255,255,255,.09);
   --line:rgba(255,255,255,.09);--line-2:rgba(255,255,255,.22);
@@ -901,6 +905,42 @@ footer a:hover{color:#fff}
 [data-theme="light"] .top-fab{background:rgba(255,255,255,.85);color:var(--tusche);border-color:rgba(11,10,15,.25)}
 [data-theme="light"] .top-fab:hover{border-color:var(--ergo-rot);background:rgba(238,1,56,.14);color:var(--ergo-rot)}
 
+/* ---------- Bergetappe im Hintergrund (Parallax, nur leicht sichtbar) ---------- */
+.berg-parallax{
+  position:fixed;inset:0;pointer-events:none;overflow:hidden;
+  color:var(--ink);transition:color .3s ease;
+}
+.berg-parallax svg{position:absolute;left:0;bottom:-6px;width:260vw;height:auto;will-change:transform}
+.berg-parallax .b-fill{opacity:.04}
+.berg-parallax .b-profil{opacity:.11}
+.berg-parallax .b-grid{opacity:.05}
+.berg-parallax .b-marks{opacity:.09}
+.berg-parallax .b-rider{opacity:.55}
+.berg-parallax text{
+  font-family:var(--mono);font-size:10px;font-weight:500;
+  letter-spacing:.18em;text-transform:uppercase;fill:currentColor;
+}
+[data-theme="light"] .berg-parallax .b-profil{opacity:.10}
+[data-theme="light"] .berg-parallax .b-fill{opacity:.05}
+
+/* ---------- Feinschliff: Mikro-Interaktionen ---------- */
+.sb-stat{transition:border-color .3s ease,transform .3s var(--ease)}
+.sb-stat:hover{border-color:var(--line-2);transform:translateY(-4px)}
+.preis-card{transition:border-color .3s ease,transform .35s var(--ease),box-shadow .35s var(--ease)}
+.preis-card:hover{border-color:var(--line-2);transform:translateY(-4px)}
+.beleg{transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
+.beleg:hover{transform:rotate(-.5deg) translateY(-4px)}
+.diff-banner{transition:border-color .3s ease,background-color .3s ease}
+.diff-banner:hover{border-color:rgba(238,1,56,.45);background:rgba(238,1,56,.1)}
+.telemetrie span::before{transition:width .35s var(--ease)}
+.telemetrie span:hover::before{width:36px}
+.telemetrie b{transition:color .25s ease}
+.telemetrie span:hover b{color:var(--ergo-rot)}
+.globe-badges span{transition:border-color .25s ease,background-color .25s ease}
+.globe-badges span:hover{border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.07)}
+.card .icon{transition:transform .35s var(--ease),background-color .3s ease}
+.card:hover .icon{transform:translateY(-3px) scale(1.05);background:rgba(238,1,56,.15)}
+
 /* ---------- Reduced Motion & Fokus ---------- */
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -915,6 +955,40 @@ footer a:hover{color:#fff}
 </style>
 </head>
 <body>
+
+<!-- ===================== BERGETAPPE (Parallax-Hintergrund) =====================
+     Stilisiertes Etappenprofil einer Tour-de-France-2026-Bergetappe.
+     Läuft beim Scrollen langsam durchs Bild, sichtbar in Hero + dunklen Akten. -->
+<div class="berg-parallax" aria-hidden="true">
+  <svg id="berg-svg" viewBox="0 0 2600 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Höhenraster + Kilometrierung -->
+    <g class="b-grid" stroke="currentColor" stroke-width="1.5">
+      <line x1="0" y1="120" x2="2600" y2="120" stroke-dasharray="3 14"/>
+      <line x1="0" y1="204" x2="2600" y2="204" stroke-dasharray="3 14"/>
+      <line x1="0" y1="400" x2="2600" y2="400"/>
+      <line x1="0" y1="406" x2="2600" y2="406" stroke-width="7" stroke-dasharray="2 63"/>
+    </g>
+    <g class="b-marks">
+      <text x="10" y="112">2.642 m</text>
+      <text x="10" y="196">1.850 m</text>
+      <text x="8" y="332">KM 0 /// Grand Départ</text>
+      <text x="640" y="222" text-anchor="middle">Col du Télégraphe · 1.566 m</text>
+      <text x="1160" y="102" text-anchor="middle">Col du Galibier · 2.642 m</text>
+      <text x="2240" y="186" text-anchor="middle">Alpe d’Huez · 1.850 m /// Arrivée</text>
+      <text x="1600" y="354" text-anchor="middle" style="font-size:12px">Tour de France 2026 /// Étape Reine</text>
+      <line x1="1160" y1="128" x2="1160" y2="400" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 9"/>
+      <line x1="2240" y1="212" x2="2240" y2="400" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 9"/>
+    </g>
+    <!-- Profil-Silhouette -->
+    <path class="b-fill" fill="currentColor" d="M0 345 L120 338 L230 342 L340 330 L430 334 L520 300 L600 268 L640 240 L720 262 L780 235 L830 242 L900 205 L950 212 L1010 168 L1060 175 L1110 135 L1160 120 L1230 160 L1290 205 L1360 255 L1430 290 L1500 312 L1580 305 L1660 315 L1740 308 L1800 290 L1850 270 L1885 276 L1930 255 L1960 260 L2005 238 L2035 243 L2080 222 L2110 227 L2155 208 L2190 212 L2240 204 L2320 206 L2420 210 L2600 208 L2600 420 L0 420 Z"/>
+    <path class="b-profil" id="berg-profil" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" d="M0 345 L120 338 L230 342 L340 330 L430 334 L520 300 L600 268 L640 240 L720 262 L780 235 L830 242 L900 205 L950 212 L1010 168 L1060 175 L1110 135 L1160 120 L1230 160 L1290 205 L1360 255 L1430 290 L1500 312 L1580 305 L1660 315 L1740 308 L1800 290 L1850 270 L1885 276 L1930 255 L1960 260 L2005 238 L2035 243 L2080 222 L2110 227 L2155 208 L2190 212 L2240 204 L2320 206 L2420 210 L2600 208"/>
+    <!-- Fahrer-Punkt: fährt die Etappe mit dem Scroll-Fortschritt ab -->
+    <g class="b-rider" id="berg-rider" transform="translate(0 345)">
+      <circle r="15" fill="#EE0138" opacity=".2"/>
+      <circle r="5.5" fill="#EE0138"/>
+    </g>
+  </svg>
+</div>
 
 <!-- ===================== NAVIGATION ===================== -->
 <header class="nav" id="nav">
@@ -958,6 +1032,7 @@ footer a:hover{color:#fff}
         <p class="lead">Weltweit. Rund um die Uhr. Zum Neuwert. Die ERGO Fahrradkasko schützt jedes Rad deines Haushalts gegen Diebstahl, Sturz und Beschädigung – mit Schutzbrief für unterwegs, fest inklusive. Das Beste: nur ein Vertrag für alle deine Räder!</p>
         <div class="hero-cta">
           <a class="btn btn-primary magnetic" href="#kontakt"><span class="btn-label">Kostenlose Beratung</span></a>
+          <a class="btn btn-ghost magnetic" href="#paket"><span class="btn-label">Angebot</span></a>
           <a class="btn btn-ghost magnetic" href="#leistungen"><span class="btn-label">Leistungen ansehen</span></a>
         </div>
         <div class="telemetrie" aria-label="Die wichtigsten Leistungen im Überblick">
@@ -1633,7 +1708,7 @@ footer a:hover{color:#fff}
 </main>
 
 <!-- ===================== FOOTER · KM 42,2 ===================== -->
-<footer data-etappe="Alpe d’Huez">
+<footer data-etappe="Impressum">
   <div class="foot-mark display kursiv" aria-hidden="true">Fahrradkasko</div>
   <div class="wrap">
     <div class="foot-grid">
@@ -1682,7 +1757,7 @@ footer a:hover{color:#fff}
     </div>
     <!-- Ziel der Ausfahrt -->
     <div class="ziel-flagge">
-      <p class="mono-label">Ziel erreicht <b>///</b> Bereit für die Tour de France?</p>
+      <p class="mono-label">Ziel erreicht</p>
     </div>
     <div class="foot-copy">
       <span>© 2026 Ludwig Siebenbürgen · ERGO Versicherungsberater · Alle Rechte vorbehalten</span>
@@ -1707,6 +1782,7 @@ footer a:hover{color:#fff}
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
 </a>
 
+<script src="assets/motion.js"></script>
 <script>
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -1773,18 +1849,41 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   requestAnimationFrame(loop);
 })();
 
-/* Magnetische Buttons (nur feine Zeiger, ohne Reduced Motion) */
+/* Magnetische Buttons (nur feine Zeiger, ohne Reduced Motion) –
+   mit Framer Motion federn sie beim Verlassen weich zurück */
 if (window.matchMedia('(pointer:fine)').matches && !reduceMotion){
+  const M = window.Motion;
   document.querySelectorAll('.magnetic').forEach(btn => {
     btn.addEventListener('pointermove', e => {
       const r = btn.getBoundingClientRect();
       const dx = e.clientX - (r.left + r.width/2);
       const dy = e.clientY - (r.top + r.height/2);
-      btn.style.transform = `translate(${dx*.16}px,${dy*.3}px)`;
+      if (M) M.animate(btn, {x:dx*.16, y:dy*.3}, {duration:.3, ease:[.16,1,.3,1]});
+      else btn.style.transform = `translate(${dx*.16}px,${dy*.3}px)`;
     });
-    btn.addEventListener('pointerleave', () => { btn.style.transform = ''; });
+    btn.addEventListener('pointerleave', () => {
+      if (M) M.animate(btn, {x:0, y:0}, {type:'spring', stiffness:260, damping:17});
+      else btn.style.transform = '';
+    });
   });
 }
+
+/* Bergetappe im Hintergrund: Parallax + Fahrer-Punkt (Framer Motion scroll) */
+(() => {
+  const svg = document.getElementById('berg-svg');
+  const profil = document.getElementById('berg-profil');
+  const rider = document.getElementById('berg-rider');
+  if (!svg || !profil || !rider || !window.Motion || reduceMotion) return;
+  const laenge = profil.getTotalLength();
+  window.Motion.scroll((progress) => {
+    const p = typeof progress === 'number' ? Math.min(Math.max(progress, 0), 1) : 0;
+    // Profil zieht langsam nach links vorbei (260vw breit → am Ende bündig rechts)
+    svg.style.transform = `translate3d(${p * -160}vw, 0, 0)`;
+    // Fahrer-Punkt fährt die Etappe ab – netto von links nach rechts durchs Bild
+    const punkt = profil.getPointAtLength(p * laenge);
+    rider.setAttribute('transform', `translate(${punkt.x.toFixed(1)} ${punkt.y.toFixed(1)})`);
+  });
+})();
 
 /* Ride-Computer-HUD: Fortschrittslinie + Etappen-Spy */
 (() => {
