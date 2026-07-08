@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0B0A0F" id="meta-theme-color">
+<script>
+(function(){
+  try{
+    // Standard ist der Dunkelmodus – hell nur, wenn ausdrücklich gewählt
+    var stored = localStorage.getItem('theme');
+    var dark = stored !== 'light';
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    var m = document.getElementById('meta-theme-color');
+    if (m) m.setAttribute('content', dark ? '#0B0A0F' : '#F4F2ED');
+  } catch(e){
+    document.documentElement.setAttribute('data-theme','dark');
+  }
+})();
+</script>
+<title>Datenschutzerklärung – ERGO Fahrradkasko | Ludwig Siebenbürgen</title>
+<meta name="description" content="Datenschutzerklärung nach DSGVO für die Website der ERGO Fahrradkasko von Ludwig Siebenbürgen – Hosting, Schriftarten, Kontaktaufnahme und deine Rechte.">
+<meta name="robots" content="noindex,follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   ERGO Fahrradkasko – Unterseite „Datenschutz" (Night-Ride-Stil)
+   Token-System und Typo-Rollen entsprechen index.html / impressum.html
+   ============================================================ */
+:root{
+  --asphalt:#0B0A0F;
+  --asphalt-2:#14121A;
+  --asphalt-3:#1B1923;
+  --kreide:#F4F2ED;
+  --kreide-2:#9A97A3;
+  --ergo-rot:#EE0138;
+  --rot-tief:#B00028;
+  --rot-glow:rgba(238,1,56,.35);
+
+  --bg:var(--asphalt);
+  --ink:var(--kreide);
+  --ink-2:var(--kreide-2);
+  --line:rgba(255,255,255,.09);
+  --line-2:rgba(255,255,255,.22);
+  --card:var(--asphalt-3);
+
+  --display:"Archivo",system-ui,sans-serif;
+  --body:"Instrument Sans",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"Cascadia Mono",monospace;
+
+  --max:1240px;
+  --radius:10px;
+  --radius-s:6px;
+  --ease:cubic-bezier(.16,1,.3,1);
+  color-scheme:dark;
+}
+[data-theme="light"]{
+  --bg:#F4F2ED;
+  --ink:#141217;
+  --ink-2:#55525E;
+  --line:rgba(11,10,15,.13);
+  --line-2:rgba(11,10,15,.34);
+  --card:#FFFFFF;
+  color-scheme:light;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--body);
+  background:var(--bg);
+  color:var(--ink);
+  font-size:16.5px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:clip;
+  transition:background-color .3s ease,color .3s ease;
+}
+::selection{background:var(--ergo-rot);color:#fff}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+
+/* Filmkorn über der ganzen Seite */
+body::after{
+  content:"";position:fixed;inset:-10%;z-index:100;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+.display{
+  font-family:var(--display);
+  font-stretch:64%;
+  font-weight:880;
+  line-height:.92;
+  letter-spacing:.004em;
+  text-transform:uppercase;
+}
+.display .kursiv{font-style:italic}
+.display .rot{color:var(--ergo-rot)}
+.mono-label{
+  font-family:var(--mono);font-size:11.5px;font-weight:500;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);
+}
+.mono-label b{color:var(--ergo-rot);font-weight:500}
+.etappe-mark{
+  display:flex;align-items:center;gap:16px;margin-bottom:26px;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;
+}
+.etappe-mark .etikett{color:var(--ink-2)}
+.etappe-mark::after{content:"";height:1px;flex:1;background:var(--line)}
+.etappe-mark::before{content:"";width:8px;height:8px;background:var(--ergo-rot);flex:none}
+@media(max-width:560px){.etappe-mark{gap:12px}.etappe-mark::after{display:none}}
+
+/* ---------- Navigation (statisch, immer mit Hintergrund) ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  background:rgba(11,10,15,.78);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);
+  transition:background .3s ease,border-color .3s ease;
+}
+[data-theme="light"] .nav{background:rgba(244,242,237,.85)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:78px}
+.brand{display:flex;align-items:baseline;gap:14px;text-decoration:none}
+.brand-mark{
+  font-family:var(--display);font-stretch:64%;font-weight:900;font-style:italic;
+  font-size:30px;color:var(--ergo-rot);line-height:1;letter-spacing:.01em;
+}
+.brand-sub{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--ink-2);border-left:1px solid var(--line-2);padding-left:14px;
+}
+.nav-actions{display:flex;align-items:center;gap:14px}
+.theme-toggle{
+  width:44px;height:44px;border-radius:50%;flex:none;cursor:pointer;
+  border:1.5px solid var(--line-2);background:transparent;color:var(--ink);
+  display:grid;place-items:center;
+  transition:border-color .2s ease,background-color .2s ease,color .2s ease;
+}
+.theme-toggle:hover{border-color:var(--ink)}
+.theme-toggle svg{width:20px;height:20px}
+.theme-toggle .i-sun{display:block}
+.theme-toggle .i-moon{display:none}
+[data-theme="light"] .theme-toggle .i-sun{display:none}
+[data-theme="light"] .theme-toggle .i-moon{display:block}
+.btn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-family:var(--display);font-stretch:72%;font-weight:800;font-style:italic;
+  font-size:13.5px;letter-spacing:.05em;text-transform:uppercase;
+  padding:12px 24px;min-height:44px;border-radius:var(--radius-s);
+  text-decoration:none;border:1.5px solid var(--line-2);color:var(--ink);cursor:pointer;overflow:hidden;
+  transition:color .3s var(--ease),border-color .3s var(--ease);
+}
+.btn::before{
+  content:"";position:absolute;inset:0;background:var(--ink);
+  transform:scaleY(0);transform-origin:bottom;transition:transform .35s var(--ease);
+}
+.btn:hover,.btn:focus-visible{color:var(--bg);border-color:var(--ink)}
+.btn:hover::before,.btn:focus-visible::before{transform:scaleY(1)}
+.btn span{position:relative;z-index:1}
+.btn svg{width:16px;height:16px;flex:none;position:relative;z-index:1}
+@media(max-width:480px){
+  .brand-sub{display:none}
+  .btn{padding:10px 16px;font-size:12px}
+  .theme-toggle{width:40px;height:40px}
+}
+
+/* ---------- Inhalt ---------- */
+.seite{padding:calc(78px + clamp(50px,7vw,90px)) 0 clamp(80px,10vw,130px)}
+h1.display{font-size:clamp(40px,6.5vw,96px);margin-bottom:clamp(30px,4vw,52px)}
+.lead{font-size:clamp(16px,1.4vw,18px);color:var(--ink-2);max-width:62ch;margin-bottom:clamp(36px,5vw,60px)}
+
+.legal{max-width:860px}
+.legal section{border-top:1px solid var(--line);padding:30px 0 34px}
+.legal section:last-child{border-bottom:1px solid var(--line)}
+.legal h2{
+  font-family:var(--display);font-stretch:68%;font-weight:850;font-size:19px;
+  text-transform:uppercase;letter-spacing:.02em;margin-bottom:14px;
+  display:flex;align-items:baseline;gap:14px;
+}
+.legal h2 .nr{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.1em;color:var(--ergo-rot);font-style:normal}
+.legal h3{
+  font-family:var(--display);font-stretch:70%;font-weight:820;font-size:15px;
+  text-transform:uppercase;letter-spacing:.03em;margin:20px 0 8px;
+}
+.legal p{color:var(--ink-2);font-size:15.5px;max-width:70ch;margin-bottom:12px}
+.legal p:last-child{margin-bottom:0}
+.legal p strong{color:var(--ink);font-weight:600}
+.legal a{text-decoration:underline;text-underline-offset:2px;transition:color .2s ease}
+.legal a:hover{color:var(--ergo-rot)}
+.legal address{font-style:normal;color:var(--ink-2);font-size:15.5px}
+.legal address strong{color:var(--ink);font-weight:600}
+.legal ul{list-style:none;display:grid;gap:10px;margin:6px 0 12px}
+.legal ul li{
+  display:flex;gap:12px;align-items:flex-start;color:var(--ink-2);font-size:15.5px;max-width:70ch;
+}
+.legal ul li::before{content:"";width:7px;height:7px;background:var(--ergo-rot);flex:none;margin-top:8px}
+
+/* ---------- Footer (schlank) ---------- */
+footer{
+  background:var(--asphalt);color:var(--kreide-2);padding:34px 0;font-size:13px;
+  border-top:1px solid rgba(255,255,255,.09);
+}
+.foot-zeile{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer a{color:var(--kreide);text-decoration:none;transition:color .15s ease}
+footer a:hover{color:var(--ergo-rot)}
+footer nav{display:flex;gap:26px}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+:focus-visible{outline:3px solid var(--ergo-rot);outline-offset:3px;border-radius:4px}
+</style>
+</head>
+<body>
+
+<!-- ===================== NAVIGATION ===================== -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html" aria-label="ERGO Fahrradkasko – zur Startseite">
+      <span class="brand-mark">ERGO</span>
+      <span class="brand-sub">Fahrradkasko</span>
+    </a>
+    <div class="nav-actions">
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Farbschema wechseln" aria-pressed="false">
+        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
+        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+      <a class="btn" href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        <span>Zur Startseite</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== DATENSCHUTZ ===================== -->
+<main class="seite">
+  <div class="wrap">
+    <div class="etappe-mark"><span class="etikett">Rechtliches — Datenschutz</span></div>
+    <h1 class="display">Daten<span class="kursiv rot">schutz.</span></h1>
+    <p class="lead">Der Schutz deiner persönlichen Daten ist wichtig. Diese Erklärung informiert dich nach der Datenschutz-Grundverordnung (DSGVO) darüber, welche Daten beim Besuch dieser Website verarbeitet werden – und welche Rechte du hast. Kurz vorweg: Diese Seite setzt keine Cookies, bindet kein Tracking und keine Werbe- oder Analysedienste ein.</p>
+
+    <div class="legal">
+      <section>
+        <h2><span class="nr">01</span>Verantwortlicher</h2>
+        <p>Verantwortlicher für die Datenverarbeitung auf dieser Website im Sinne der DSGVO ist:</p>
+        <address>
+          <strong>Ludwig Siebenbürgen</strong><br>
+          Versicherungsvermittler · Juniorpartner der ERGO-Agentur Hannes Kaselow<br>
+          Stephanstr. 2, 18055 Rostock<br>
+          Telefon: <a href="tel:+4915224827997">0152 / 24827997</a><br>
+          E-Mail: <a href="mailto:ludwig.siebenbuergen@ergo.de">ludwig.siebenbuergen@ergo.de</a>
+        </address>
+        <p style="margin-top:12px">Weitere Angaben findest du im <a href="impressum.html">Impressum</a>.</p>
+      </section>
+
+      <section>
+        <h2><span class="nr">02</span>Hosting &amp; Server-Logfiles</h2>
+        <p>
+          Diese Website wird bei <strong>GitHub Pages</strong> gehostet, einem Dienst der GitHub, Inc.,
+          88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA (Teil der Microsoft Corporation).
+        </p>
+        <p>
+          Beim Aufruf der Seite verarbeitet der Hosting-Anbieter technisch notwendige Zugriffsdaten
+          (Server-Logfiles), die dein Browser automatisch übermittelt – insbesondere:
+        </p>
+        <ul>
+          <li>IP-Adresse des anfragenden Geräts</li>
+          <li>Datum und Uhrzeit des Zugriffs</li>
+          <li>aufgerufene Datei bzw. Seite</li>
+          <li>übertragene Datenmenge und Meldung über den erfolgreichen Abruf</li>
+          <li>Browsertyp und -version sowie das Betriebssystem (sofern übermittelt)</li>
+          <li>ggf. die zuvor besuchte Seite (Referrer)</li>
+        </ul>
+        <p>
+          Diese Daten sind für den sicheren und stabilen Betrieb der Website erforderlich. Rechtsgrundlage
+          ist das berechtigte Interesse an einer funktionierenden Website (Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO).
+          Da GitHub Daten auch in den USA verarbeiten kann, erfolgt eine mögliche Übermittlung auf Grundlage
+          der EU-Standardvertragsklauseln. Es findet keine Zusammenführung dieser Daten mit anderen Quellen statt.
+          Informationen zum Datenschutz bei GitHub:
+          <a href="https://docs.github.com/de/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">docs.github.com/…/github-general-privacy-statement</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2><span class="nr">03</span>SSL-/TLS-Verschlüsselung</h2>
+        <p>
+          Diese Seite wird aus Sicherheitsgründen verschlüsselt über HTTPS ausgeliefert (SSL/TLS). Eine
+          verschlüsselte Verbindung erkennst du am Schloss-Symbol in der Adresszeile deines Browsers.
+        </p>
+      </section>
+
+      <section>
+        <h2><span class="nr">04</span>Schriftarten (Google Fonts)</h2>
+        <p>
+          Zur einheitlichen Darstellung der Typografie werden auf dieser Seite Schriftarten von
+          <strong>Google Fonts</strong> eingesetzt, die beim Seitenaufruf von Servern der Google Ireland Limited
+          (Gordon House, Barrow Street, Dublin 4, Irland) bzw. der Google LLC geladen werden. Dabei wird deine
+          IP-Adresse an Google übertragen, damit die Schriftdateien an deinen Browser ausgeliefert werden können.
+        </p>
+        <p>
+          Rechtsgrundlage ist das berechtigte Interesse an einer einheitlichen und ansprechenden Darstellung
+          (Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO). Weitere Informationen:
+          <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>
+          sowie <a href="https://developers.google.com/fonts/faq/privacy" target="_blank" rel="noopener">developers.google.com/fonts/faq/privacy</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2><span class="nr">05</span>Kontaktaufnahme</h2>
+        <h3>E-Mail, Telefon &amp; Kontaktformular</h3>
+        <p>
+          Wenn du über das Kontaktformular, per E-Mail oder telefonisch Kontakt aufnimmst, werden deine Angaben
+          (z.&nbsp;B. Name, E-Mail-Adresse oder Telefonnummer sowie der Inhalt deiner Anfrage) ausschließlich zur
+          Bearbeitung deiner Anfrage verarbeitet. Das Kontaktformular auf der Startseite speichert selbst keine
+          Daten auf einem Server, sondern öffnet lediglich dein E-Mail-Programm mit einer vorbereiteten Nachricht
+          (sogenannter „mailto“-Link) – der Versand erfolgt also über dein eigenes E-Mail-Konto.
+        </p>
+        <p>
+          Rechtsgrundlage ist Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;b DSGVO (Anbahnung bzw. Erfüllung eines Vertrags) bzw.
+          Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO (berechtigtes Interesse an der Beantwortung deiner Anfrage). Deine
+          Daten werden gelöscht, sobald sie zur Erreichung des Zwecks nicht mehr erforderlich sind, sofern keine
+          gesetzlichen Aufbewahrungspflichten entgegenstehen.
+        </p>
+        <h3>WhatsApp</h3>
+        <p>
+          Auf der Seite findest du Verknüpfungen zu WhatsApp (Dienst der WhatsApp Ireland Limited, ein Meta-Unternehmen).
+          Wenn du diese nutzt, um mir zu schreiben, gelten die Datenschutzbestimmungen von WhatsApp; dabei können Daten
+          auch außerhalb der EU verarbeitet werden. Die Nutzung von WhatsApp ist freiwillig – alternativ kannst du mich
+          jederzeit per E-Mail oder Telefon erreichen. Details:
+          <a href="https://www.whatsapp.com/legal/privacy-policy-eea" target="_blank" rel="noopener">whatsapp.com/legal/privacy-policy-eea</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2><span class="nr">06</span>Lokale Speicherung der Anzeige-Einstellung</h2>
+        <p>
+          Damit deine Auswahl zwischen hellem und dunklem Design erhalten bleibt, wird diese Einstellung lokal in
+          deinem Browser gespeichert (im sogenannten <strong>localStorage</strong>, Schlüssel „theme“). Dabei handelt
+          es sich <strong>nicht um ein Cookie</strong>; es werden keine personenbezogenen Daten erhoben und nichts an
+          einen Server oder Dritte übermittelt. Die Information verbleibt ausschließlich auf deinem Gerät und kann von
+          dir jederzeit über die Einstellungen deines Browsers gelöscht werden.
+        </p>
+      </section>
+
+      <section>
+        <h2><span class="nr">07</span>Externe Dokumente &amp; Links</h2>
+        <p>
+          Diese Website verlinkt auf externe Angebote (z.&nbsp;B. die Website der ERGO-Agentur, LinkedIn oder
+          Produktdokumente). Für deren Inhalte und den dortigen Datenschutz sind ausschließlich die jeweiligen
+          Anbieter verantwortlich. Beim Anklicken eines externen Links verlässt du diese Seite.
+        </p>
+      </section>
+
+      <section>
+        <h2><span class="nr">08</span>Deine Rechte als betroffene Person</h2>
+        <p>Dir stehen nach der DSGVO gegenüber dem Verantwortlichen folgende Rechte hinsichtlich deiner personenbezogenen Daten zu:</p>
+        <ul>
+          <li>Recht auf Auskunft (Art.&nbsp;15 DSGVO)</li>
+          <li>Recht auf Berichtigung (Art.&nbsp;16 DSGVO)</li>
+          <li>Recht auf Löschung (Art.&nbsp;17 DSGVO)</li>
+          <li>Recht auf Einschränkung der Verarbeitung (Art.&nbsp;18 DSGVO)</li>
+          <li>Recht auf Datenübertragbarkeit (Art.&nbsp;20 DSGVO)</li>
+          <li>Recht auf Widerspruch gegen die Verarbeitung (Art.&nbsp;21 DSGVO)</li>
+          <li>Recht auf Widerruf einer erteilten Einwilligung (Art.&nbsp;7 Abs.&nbsp;3 DSGVO)</li>
+        </ul>
+        <p>Zur Ausübung genügt eine formlose Nachricht an die oben genannten Kontaktdaten.</p>
+      </section>
+
+      <section>
+        <h2><span class="nr">09</span>Beschwerderecht bei der Aufsichtsbehörde</h2>
+        <p>
+          Unbeschadet anderer Rechtsbehelfe steht dir ein Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde zu,
+          insbesondere in dem Mitgliedstaat deines Aufenthaltsorts. Zuständige Aufsichtsbehörde für den Verantwortlichen ist:
+        </p>
+        <address>
+          <strong>Der Landesbeauftragte für Datenschutz und Informationsfreiheit Mecklenburg-Vorpommern</strong><br>
+          Werderstraße 74a, 19055 Schwerin<br>
+          <a href="https://www.datenschutz-mv.de" target="_blank" rel="noopener">www.datenschutz-mv.de</a>
+        </address>
+      </section>
+
+      <section>
+        <h2><span class="nr">10</span>Aktualität dieser Erklärung</h2>
+        <p>
+          Diese Datenschutzerklärung hat den Stand Juli&nbsp;2026. Durch die Weiterentwicklung der Website oder
+          aufgrund geänderter gesetzlicher bzw. behördlicher Vorgaben kann es notwendig werden, sie anzupassen.
+        </p>
+      </section>
+    </div>
+  </div>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap foot-zeile">
+    <span>© 2026 Ludwig Siebenbürgen · ERGO Versicherungsberater</span>
+    <nav aria-label="Rechtliches">
+      <a href="index.html">Startseite</a>
+      <a href="impressum.html">Impressum</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+/* Farbschema (Hell-/Dunkelmodus) */
+const htmlEl = document.documentElement;
+const themeToggle = document.getElementById('theme-toggle');
+const metaThemeColor = document.getElementById('meta-theme-color');
+const THEME_COLORS = { light:'#F4F2ED', dark:'#0B0A0F' };
+function applyTheme(theme){
+  htmlEl.setAttribute('data-theme', theme);
+  if (metaThemeColor) metaThemeColor.setAttribute('content', THEME_COLORS[theme]);
+  themeToggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+}
+applyTheme(htmlEl.getAttribute('data-theme') === 'light' ? 'light' : 'dark');
+themeToggle.addEventListener('click', () => {
+  const next = htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', next);
+  applyTheme(next);
+});
+</script>
+</body>
+</html>
