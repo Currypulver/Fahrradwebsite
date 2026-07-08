@@ -1,11 +1,12 @@
 # Fahrradwebsite – ERGO Fahrradkasko Landingpage
 
-Statische Landingpage (`index2.html`) für die ERGO Fahrradkasko.
+Statische Landingpage (`index.html`) für die ERGO Fahrradkasko.
 
 ## Aufbau
 
-- `index2.html` – die komplette Seite (HTML, CSS und JS in einer Datei)
-- `assets/motion.js` – Framer Motion als Vanilla-JS-Bundle (eingecheckt, wird von `index2.html` geladen)
+- `index.html` – die komplette Seite (HTML, CSS und JS in einer Datei)
+- `impressum.html` – Impressum (Anbieterkennzeichnung)
+- `assets/motion.js` – Framer Motion als Vanilla-JS-Bundle (eingecheckt, wird von `index.html` geladen)
 - `src/motion-entry.js` – Einstiegsdatei für das Bundle
 
 ## Framer Motion
