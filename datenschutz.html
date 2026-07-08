@@ -22,9 +22,11 @@
 <title>Datenschutzerklärung – Fahrradkasko | Ludwig Siebenbürgen</title>
 <meta name="description" content="Datenschutzerklärung nach DSGVO für die Fahrradkasko-Website von Ludwig Siebenbürgen – Hosting, Schriftarten, Kontaktaufnahme und deine Rechte.">
 <meta name="robots" content="noindex,follow">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<!-- Schriften lokal (DSGVO-freundlich, kein Google-Fonts-Aufruf) -->
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <style>
 /* ============================================================
    Fahrradkasko – Unterseite „Datenschutz" (Night-Ride-Stil)
@@ -260,8 +262,8 @@ footer nav{display:flex;gap:26px}
       <section>
         <h2><span class="nr">02</span>Hosting &amp; Server-Logfiles</h2>
         <p>
-          Diese Website wird bei <strong>GitHub Pages</strong> gehostet, einem Dienst der GitHub, Inc.,
-          88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA (Teil der Microsoft Corporation).
+          Diese Website wird bei <strong>Hostinger</strong> gehostet (Hostinger International Ltd.,
+          61 Lordou Vironos Street, 6023 Larnaca, Zypern; Serverstandorte u.&nbsp;a. innerhalb der EU).
         </p>
         <p>
           Beim Aufruf der Seite verarbeitet der Hosting-Anbieter technisch notwendige Zugriffsdaten
@@ -278,10 +280,10 @@ footer nav{display:flex;gap:26px}
         <p>
           Diese Daten sind für den sicheren und stabilen Betrieb der Website erforderlich. Rechtsgrundlage
           ist das berechtigte Interesse an einer funktionierenden Website (Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO).
-          Da GitHub Daten auch in den USA verarbeiten kann, erfolgt eine mögliche Übermittlung auf Grundlage
-          der EU-Standardvertragsklauseln. Es findet keine Zusammenführung dieser Daten mit anderen Quellen statt.
-          Informationen zum Datenschutz bei GitHub:
-          <a href="https://docs.github.com/de/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">docs.github.com/…/github-general-privacy-statement</a>.
+          Soweit eine Datenverarbeitung außerhalb der EU stattfindet, erfolgt sie auf Grundlage der
+          EU-Standardvertragsklauseln. Es findet keine Zusammenführung dieser Daten mit anderen Quellen statt.
+          Informationen zum Datenschutz bei Hostinger:
+          <a href="https://www.hostinger.com/legal/privacy-policy" target="_blank" rel="noopener">hostinger.com/legal/privacy-policy</a>.
         </p>
       </section>
 
@@ -294,18 +296,11 @@ footer nav{display:flex;gap:26px}
       </section>
 
       <section>
-        <h2><span class="nr">04</span>Schriftarten (Google Fonts)</h2>
+        <h2><span class="nr">04</span>Schriftarten (lokal eingebunden)</h2>
         <p>
-          Zur einheitlichen Darstellung der Typografie werden auf dieser Seite Schriftarten von
-          <strong>Google Fonts</strong> eingesetzt, die beim Seitenaufruf von Servern der Google Ireland Limited
-          (Gordon House, Barrow Street, Dublin 4, Irland) bzw. der Google LLC geladen werden. Dabei wird deine
-          IP-Adresse an Google übertragen, damit die Schriftdateien an deinen Browser ausgeliefert werden können.
-        </p>
-        <p>
-          Rechtsgrundlage ist das berechtigte Interesse an einer einheitlichen und ansprechenden Darstellung
-          (Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;f DSGVO). Weitere Informationen:
-          <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>
-          sowie <a href="https://developers.google.com/fonts/faq/privacy" target="_blank" rel="noopener">developers.google.com/fonts/faq/privacy</a>.
+          Die auf dieser Seite verwendeten Schriftarten sind <strong>lokal auf dem eigenen Webserver</strong>
+          gespeichert und werden von dort ausgeliefert. Beim Laden der Schriften wird keine Verbindung zu
+          Servern Dritter (z.&nbsp;B. Google Fonts) aufgebaut – es werden dabei keine Daten an Dritte übertragen.
         </p>
       </section>
 
@@ -349,9 +344,17 @@ footer nav{display:flex;gap:26px}
       <section>
         <h2><span class="nr">07</span>Externe Dokumente &amp; Links</h2>
         <p>
-          Diese Website verlinkt auf externe Angebote (z.&nbsp;B. die Website der ERGO-Agentur, LinkedIn oder
-          Produktdokumente). Für deren Inhalte und den dortigen Datenschutz sind ausschließlich die jeweiligen
-          Anbieter verantwortlich. Beim Anklicken eines externen Links verlässt du diese Seite.
+          Diese Website verlinkt auf externe Angebote (z.&nbsp;B. die Website der ERGO-Agentur, LinkedIn,
+          Google-Rezensionen oder Produktdokumente). Für deren Inhalte und den dortigen Datenschutz sind
+          ausschließlich die jeweiligen Anbieter verantwortlich. Beim Anklicken eines externen Links
+          verlässt du diese Seite.
+        </p>
+        <p>
+          Für die Online-Terminbuchung wird auf den externen Dienst <strong>Calendly</strong> (Calendly LLC, USA)
+          verlinkt. Erst wenn du den Buchungslink aktiv anklickst und dort Daten eingibst, verarbeitet Calendly
+          diese nach eigenen Datenschutzbestimmungen:
+          <a href="https://calendly.com/privacy" target="_blank" rel="noopener">calendly.com/privacy</a>.
+          Die Nutzung ist freiwillig – Termine kannst du alternativ per Telefon, E-Mail oder WhatsApp vereinbaren.
         </p>
       </section>
 
