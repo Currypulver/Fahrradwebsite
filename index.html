@@ -725,16 +725,17 @@ h2.display{font-size:clamp(40px,6vw,84px)}
 /* ---------- Kontakt (dunkles Finale) ---------- */
 .kontakt-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(36px,5vw,72px);align-items:start}
 .berater-card{
-  display:flex;gap:20px;align-items:flex-start;margin-top:32px;
+  margin-top:32px;overflow:hidden;
   background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-  padding:26px 26px;
+  transition:border-color .3s ease,transform .35s var(--ease),box-shadow .35s var(--ease);
 }
-.berater-foto{
-  width:62px;height:62px;border-radius:50%;flex:none;color:#fff;
-  background:linear-gradient(135deg,var(--ergo-rot),var(--rot-tief));
-  display:grid;place-items:center;
-  font-family:var(--display);font-stretch:70%;font-weight:900;font-style:italic;font-size:21px;
+.berater-card:hover{border-color:var(--line-2);transform:translateY(-3px);box-shadow:var(--shadow)}
+.berater-portraet{
+  width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;object-position:center 30%;display:block;
+  transition:transform .6s var(--ease);
 }
+.berater-card:hover .berater-portraet{transform:scale(1.03)}
+.berater-body{padding:24px 26px}
 .berater-name{font-family:var(--display);font-stretch:68%;font-weight:860;font-size:18px;text-transform:uppercase}
 .berater-rolle{font-size:13px;color:var(--ink-2);margin-top:4px}
 .agentur-link{color:inherit;text-decoration:underline;text-underline-offset:2px;transition:color .2s ease}
@@ -1673,8 +1674,8 @@ img.ls-foto,img.berater-foto{object-fit:cover}
         <p class="lead" style="margin-top:22px">Ich berate dich persönlich – kostenlos, unverbindlich und auf Augenhöhe. Als Radsportler weiß ich, was ein Rad wert ist. Schreib mir einfach, wie es dir am liebsten ist.</p>
 
         <div class="berater-card">
-          <img class="berater-foto" src="assets/berater-ludwig.jpg" alt="Ludwig Siebenbürgen, Versicherungsvermittler und Rennradfahrer" width="62" height="62" loading="lazy">
-          <div>
+          <img class="berater-portraet" src="assets/berater-ludwig-gross.jpg" alt="Ludwig Siebenbürgen mit seinem Cannondale-Rennrad" width="1600" height="1067" loading="lazy">
+          <div class="berater-body">
             <p class="berater-name">Ludwig Siebenbürgen</p>
             <p class="berater-rolle">Juniorpartner der <a class="agentur-link" href="https://hannes-kaselow.ergo.de" target="_blank" rel="noopener">ERGO-Agentur Hannes Kaselow</a> · Spezialist für Fahrradversicherungen</p>
             <p class="berater-zitat">„Ich fahre selbst Rennrad und bin Mitglied im PSV Rostock – ich weiß daher genau, worauf es bei einer guten Fahrradkasko ankommt.“</p>
@@ -1684,8 +1685,6 @@ img.ls-foto,img.berater-foto{object-fit:cover}
             </a>
           </div>
         </div>
-        <!-- Sobald ein echtes Foto vorliegt: .berater-foto-Div ersetzen durch
-             <img src="berater-ludwig.jpg" alt="Ludwig Siebenbürgen" class="berater-foto"> -->
 
         <!-- Google-Bewertungen der ERGO-Agentur Hannes Kaselow – Klick öffnet das Google-Profil mit den Rezensionen -->
         <a class="google-bewertungen" href="https://www.google.com/maps/search/?api=1&amp;query=ERGO+Versicherung+Hannes+Kaselow+Stephanstr.+2+Rostock" target="_blank" rel="noopener" aria-label="123 Google-Bewertungen der ERGO-Agentur Hannes Kaselow ansehen">
