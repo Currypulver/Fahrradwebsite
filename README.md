@@ -1,6 +1,6 @@
-# Fahrradwebsite – ERGO Fahrradkasko Landingpage
+# Fahrradwebsite – Fahrradkasko-Landingpage
 
-Statische Landingpage (`index.html`) für die ERGO Fahrradkasko.
+Statische Landingpage (`index.html`) für die Fahrradkasko-Beratung von Ludwig Siebenbürgen.
 
 ## Aufbau
 
