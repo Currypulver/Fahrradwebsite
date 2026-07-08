@@ -19,15 +19,15 @@
   }
 })();
 </script>
-<title>Impressum – Fahrradkasko | Ludwig Siebenbürgen</title>
-<meta name="description" content="Impressum: Ludwig Siebenbürgen, Juniorpartner der ERGO-Agentur Hannes Kaselow, Stephanstr. 2, 18055 Rostock – Anbieterkennzeichnung nach § 5 DDG.">
+<title>Erstinformation – Fahrradkasko | Ludwig Siebenbürgen</title>
+<meta name="description" content="Statusbezogene Erstinformation nach § 15 VersVermV: Ludwig Siebenbürgen, Versicherungsvertreter nach § 34d GewO, Vermittlerregister-Nr. D-EEGW-B4I4O-44.">
 <meta name="robots" content="noindex,follow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   Fahrradkasko – Unterseite „Impressum" (Night-Ride-Stil)
+   Fahrradkasko – Unterseite „Erstinformation" (Night-Ride-Stil)
    Token-System und Typo-Rollen entsprechen index.html
    ============================================================ */
 :root{
@@ -103,7 +103,6 @@ body::after{
   font-family:var(--mono);font-size:11.5px;font-weight:500;
   letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);
 }
-.mono-label b{color:var(--ergo-rot);font-weight:500}
 .etappe-mark{
   display:flex;align-items:center;gap:16px;margin-bottom:26px;
   font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;
@@ -151,6 +150,7 @@ body::after{
   padding:12px 24px;min-height:44px;border-radius:var(--radius-s);
   text-decoration:none;border:1.5px solid var(--line-2);color:var(--ink);cursor:pointer;overflow:hidden;
   transition:color .3s var(--ease),border-color .3s var(--ease);
+  background:transparent;
 }
 .btn::before{
   content:"";position:absolute;inset:0;background:var(--ink);
@@ -168,7 +168,7 @@ body::after{
 
 /* ---------- Inhalt ---------- */
 .seite{padding:calc(78px + clamp(50px,7vw,90px)) 0 clamp(80px,10vw,130px)}
-h1.display{font-size:clamp(46px,8vw,110px);margin-bottom:clamp(30px,4vw,52px)}
+h1.display{font-size:clamp(36px,6vw,88px);margin-bottom:clamp(30px,4vw,52px)}
 .lead{font-size:clamp(16px,1.4vw,18px);color:var(--ink-2);max-width:62ch;margin-bottom:clamp(36px,5vw,60px)}
 
 .legal{max-width:860px}
@@ -192,27 +192,8 @@ h1.display{font-size:clamp(46px,8vw,110px);margin-bottom:clamp(30px,4vw,52px)}
   display:flex;gap:12px;align-items:flex-start;color:var(--ink-2);font-size:15.5px;max-width:70ch;
 }
 .legal ul li::before{content:"";width:7px;height:7px;background:var(--ergo-rot);flex:none;margin-top:8px}
-
-/* Anbieter-Karte im Stil der Berater-Karte */
-.anbieter-card{
-  display:flex;gap:20px;align-items:flex-start;
-  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-  padding:26px;margin:6px 0 4px;max-width:560px;
-  transition:border-color .3s ease,transform .3s var(--ease);
-}
-.anbieter-card:hover{border-color:var(--line-2);transform:translateY(-3px)}
-.ls-foto{
-  width:56px;height:56px;border-radius:50%;flex:none;display:grid;place-items:center;color:#fff;
-  background:linear-gradient(135deg,var(--ergo-rot),var(--rot-tief));
-  font-family:var(--display);font-stretch:70%;font-style:italic;font-weight:900;font-size:19px;
-}
-
-/* Platzhalter: vor Veröffentlichung ersetzen */
-.platzhalter{
-  font-family:var(--mono);font-size:13px;color:var(--ergo-rot);
-  background:rgba(238,1,56,.08);border:1px dashed rgba(238,1,56,.45);border-radius:4px;
-  padding:2px 8px;white-space:nowrap;
-}
+.register-nr{font-family:var(--mono);letter-spacing:.04em;color:var(--ink);font-weight:600}
+.drucken{margin-top:34px}
 
 /* ---------- Footer (schlank) ---------- */
 footer{
@@ -222,13 +203,23 @@ footer{
 .foot-zeile{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 footer a{color:var(--kreide);text-decoration:none;transition:color .15s ease}
 footer a:hover{color:var(--ergo-rot)}
-footer nav{display:flex;gap:26px}
+footer nav{display:flex;gap:26px;flex-wrap:wrap}
 
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
   html{scroll-behavior:auto}
 }
 :focus-visible{outline:3px solid var(--ergo-rot);outline-offset:3px;border-radius:4px}
+
+/* ---------- Druckansicht: nur der Inhalt, dunkle Deko aus ---------- */
+@media print{
+  .nav,footer,.theme-toggle,.drucken{display:none!important}
+  body::after{display:none}
+  body{background:#fff;color:#000}
+  .seite{padding:20px 0}
+  .legal p,.legal address,.legal ul li{color:#222}
+  .legal h2 .nr{color:#000}
+}
 </style>
 </head>
 <body>
@@ -253,57 +244,48 @@ footer nav{display:flex;gap:26px}
   </div>
 </header>
 
-<!-- ===================== IMPRESSUM ===================== -->
+<!-- ===================== ERSTINFORMATION ===================== -->
 <main class="seite">
   <div class="wrap">
-    <div class="etappe-mark"><span class="etikett">Rechtliches — Anbieterkennzeichnung</span></div>
-    <h1 class="display">Impres<span class="kursiv rot">sum.</span></h1>
-    <p class="lead">Angaben gemäß § 5 Digitale-Dienste-Gesetz (DDG) und § 18 Abs. 2 Medienstaatsvertrag (MStV) für diese Website.</p>
+    <div class="etappe-mark"><span class="etikett">Rechtliches — Statusbezogene Erstinformation</span></div>
+    <h1 class="display">Erst<span class="kursiv rot">information.</span></h1>
+    <p class="lead">Statusbezogene Erstinformation für Versicherungsvermittler gemäß § 15 der Verordnung über die Versicherungsvermittlung und -beratung (VersVermV). Diese Information erhältst du beim ersten Geschäftskontakt – hier kannst du sie jederzeit einsehen, drucken und speichern.</p>
 
     <div class="legal">
       <section>
-        <h2><span class="nr">01</span>Anbieter</h2>
-        <div class="anbieter-card">
-          <span class="ls-foto" aria-hidden="true">LS</span>
-          <address>
-            <strong>Ludwig Siebenbürgen</strong><br>
-            Versicherungsvermittler · Juniorpartner der <a href="https://hannes-kaselow.ergo.de" target="_blank" rel="noopener">ERGO-Agentur Hannes Kaselow</a><br>
-            Stephanstr. 2<br>
-            18055 Rostock<br>
-            Deutschland
-          </address>
-        </div>
-      </section>
-
-      <section>
-        <h2><span class="nr">02</span>Kontakt</h2>
-        <p>
+        <h2><span class="nr">01</span>Wer dich berät</h2>
+        <address>
+          <strong>Ludwig Siebenbürgen</strong><br>
+          Versicherungsvermittler · Juniorpartner der <a href="https://hannes-kaselow.ergo.de" target="_blank" rel="noopener">ERGO-Agentur Hannes Kaselow</a><br>
+          Stephanstr. 2, 18055 Rostock<br>
           Telefon: <a href="tel:+4915224827997">0152 / 24827997</a><br>
           E-Mail: <a href="mailto:ludwig.siebenbuergen@ergo.de">ludwig.siebenbuergen@ergo.de</a>
-        </p>
+        </address>
       </section>
 
       <section>
-        <h2><span class="nr">03</span>Verantwortlich für den Inhalt</h2>
-        <p>Verantwortlich im Sinne des § 18 Abs. 2 MStV:</p>
-        <p><strong>Ludwig Siebenbürgen</strong>, Stephanstr. 2, 18055 Rostock</p>
-      </section>
-
-      <section>
-        <h2><span class="nr">04</span>Tätigkeit als Versicherungsvermittler</h2>
+        <h2><span class="nr">02</span>Status als Versicherungsvermittler</h2>
         <p>
-          Tätig als Versicherungsvertreter nach § 34d Gewerbeordnung (GewO), vermittelt werden
-          Versicherungsprodukte der <strong>ERGO Versicherung AG</strong>, ERGO-Platz 1, 40477 Düsseldorf,
-          bzw. der Gesellschaften der ERGO Group AG.
+          Tätig als <strong>Versicherungsvertreter nach § 34d Gewerbeordnung (GewO)</strong>. Vermittelt werden
+          ausschließlich Versicherungsprodukte der <strong>ERGO Versicherung AG</strong>, ERGO-Platz 1,
+          40477 Düsseldorf, bzw. der Gesellschaften der ERGO Group AG.
         </p>
+        <p>
+          Die Beratung erfolgt auf Grundlage dieser Produktpalette. Eine Beratung nach § 34d Abs. 2 GewO
+          (Versicherungsberater gegen Honorar) findet nicht statt.
+        </p>
+      </section>
+
+      <section>
+        <h2><span class="nr">03</span>Vermittlerregister</h2>
         <p>
           Eingetragen im Vermittlerregister unter der Registrierungsnummer:<br>
-          <strong style="font-family:var(--mono);letter-spacing:.04em">D-EEGW-B4I4O-44</strong>
+          <span class="register-nr">D-EEGW-B4I4O-44</span>
         </p>
         <p>
-          Das Vermittlerregister wird geführt beim:<br>
+          Die Eintragung kannst du jederzeit prüfen bei der gemeinsamen Registerstelle:<br>
           Deutscher Industrie- und Handelskammertag (DIHK) e.&nbsp;V., Breite Straße 29, 10178 Berlin,<br>
-          <a href="https://www.vermittlerregister.info" target="_blank" rel="noopener">www.vermittlerregister.info</a>
+          Telefon: 030 20308-0 · <a href="https://www.vermittlerregister.info" target="_blank" rel="noopener">www.vermittlerregister.info</a>
         </p>
         <p>
           Zuständige Aufsichts- und Erlaubnisbehörde:<br>
@@ -313,18 +295,27 @@ footer nav{display:flex;gap:26px}
       </section>
 
       <section>
-        <h2><span class="nr">05</span>Berufsrechtliche Regelungen</h2>
-        <ul>
-          <li>§ 34d Gewerbeordnung (GewO)</li>
-          <li>§§ 59–68 Gesetz über den Versicherungsvertrag (VVG)</li>
-          <li>Verordnung über die Versicherungsvermittlung und -beratung (VersVermV)</li>
-        </ul>
-        <p>Die berufsrechtlichen Regelungen sind einsehbar über <a href="https://www.gesetze-im-internet.de" target="_blank" rel="noopener">www.gesetze-im-internet.de</a>.</p>
+        <h2><span class="nr">04</span>Vergütung</h2>
+        <p>
+          Für die Vermittlung von Versicherungsverträgen erhält der Vermittler eine <strong>Provision vom
+          Versicherer</strong>, die im Versicherungsbeitrag enthalten ist. Du zahlst für Beratung und Vermittlung
+          kein gesondertes Honorar und keine zusätzlichen Gebühren.
+        </p>
       </section>
 
       <section>
-        <h2><span class="nr">06</span>Außergerichtliche Streitbeilegung</h2>
-        <p>Für die außergerichtliche Beilegung von Streitigkeiten im Zusammenhang mit der Versicherungsvermittlung können folgende Schlichtungsstellen angerufen werden:</p>
+        <h2><span class="nr">05</span>Beteiligungen</h2>
+        <p>
+          Ludwig Siebenbürgen hält keine direkte oder indirekte Beteiligung von mehr als 10&nbsp;% an den
+          Stimmrechten oder am Kapital eines Versicherungsunternehmens. Umgekehrt hält kein
+          Versicherungsunternehmen und keine Muttergesellschaft eines Versicherungsunternehmens eine direkte
+          oder indirekte Beteiligung von mehr als 10&nbsp;% an den Stimmrechten oder am Kapital des Vermittlers.
+        </p>
+      </section>
+
+      <section>
+        <h2><span class="nr">06</span>Schlichtungsstellen</h2>
+        <p>Für die außergerichtliche Beilegung von Streitigkeiten im Zusammenhang mit der Versicherungsvermittlung kannst du folgende Schlichtungsstellen anrufen:</p>
         <ul>
           <li>Versicherungsombudsmann e.&nbsp;V., Postfach 08 06 32, 10006 Berlin, <a href="https://www.versicherungsombudsmann.de" target="_blank" rel="noopener">www.versicherungsombudsmann.de</a></li>
           <li>Ombudsmann Private Kranken- und Pflegeversicherung, Postfach 06 02 22, 10052 Berlin, <a href="https://www.pkv-ombudsmann.de" target="_blank" rel="noopener">www.pkv-ombudsmann.de</a></li>
@@ -333,35 +324,15 @@ footer nav{display:flex;gap:26px}
       </section>
 
       <section>
-        <h2><span class="nr">07</span>Haftung für Inhalte</h2>
-        <p>
-          Die Inhalte dieser Seite wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit
-          und Aktualität der Inhalte wird jedoch keine Gewähr übernommen. Maßgeblich für den Umfang des
-          Versicherungsschutzes sind ausschließlich die jeweiligen Versicherungsbedingungen und der
-          Versicherungsschein.
-        </p>
-      </section>
-
-      <section>
-        <h2><span class="nr">08</span>Haftung für Links</h2>
-        <p>
-          Diese Seite enthält Links zu externen Websites Dritter, auf deren Inhalte kein Einfluss besteht.
-          Für diese fremden Inhalte ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.
-          Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft;
-          rechtswidrige Inhalte waren nicht erkennbar.
-        </p>
-      </section>
-
-      <section>
-        <h2><span class="nr">09</span>Urheberrecht</h2>
-        <p>
-          Die durch den Seitenbetreiber erstellten Inhalte und Werke auf dieser Seite unterliegen dem
-          deutschen Urheberrecht. Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung
-          außerhalb der Grenzen des Urheberrechts bedürfen der schriftlichen Zustimmung. ERGO ist eine
-          Marke der ERGO Group AG.
-        </p>
+        <h2><span class="nr">07</span>Stand dieser Information</h2>
+        <p>Stand: Juli 2026. Diese Erstinformation wird bei Änderungen der Angaben aktualisiert.</p>
       </section>
     </div>
+
+    <button type="button" class="btn drucken" onclick="window.print()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M8 14h8v7H8z"/></svg>
+      <span>Drucken / als PDF speichern</span>
+    </button>
   </div>
 </main>
 
@@ -371,8 +342,8 @@ footer nav{display:flex;gap:26px}
     <span>© 2026 Ludwig Siebenbürgen · Versicherungsvermittler</span>
     <nav aria-label="Rechtliches">
       <a href="index.html">Startseite</a>
+      <a href="impressum.html">Impressum</a>
       <a href="datenschutz.html">Datenschutz</a>
-      <a href="erstinformation.html">Erstinformation</a>
     </nav>
   </div>
 </footer>
