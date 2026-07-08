@@ -1,8 +1,8 @@
-# Fahrradwebsite – Fahrradkasko-Landingpage
+# Fahrradwebsite – Rennradkasko-Landingpage
 
-Statische Landingpage (`index.html`) für die Fahrradkasko-Beratung von Ludwig Siebenbürgen.
+Statische Landingpage (`index.html`) für die Rennradkasko-Beratung von Ludwig Siebenbürgen.
 
-Live unter: https://fahrradkasko.de
+Live unter: https://rennradkasko.de
 
 ## Aufbau
 
