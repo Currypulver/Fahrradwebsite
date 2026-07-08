@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#0B0A0F" id="meta-theme-color">
+<script>
+(function(){
+  try{
+    // Standard ist der Dunkelmodus – hell nur, wenn ausdrücklich gewählt
+    var stored = localStorage.getItem('theme');
+    var dark = stored !== 'light';
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    var m = document.getElementById('meta-theme-color');
+    if (m) m.setAttribute('content', dark ? '#0B0A0F' : '#F4F2ED');
+  } catch(e){
+    document.documentElement.setAttribute('data-theme','dark');
+  }
+})();
+</script>
+<title>Impressum – ERGO Fahrradkasko | Ludwig Siebenbürgen</title>
+<meta name="description" content="Impressum: Ludwig Siebenbürgen, Juniorpartner der ERGO-Agentur Hannes Kaselow, Stephanstr. 2, 18055 Rostock – Anbieterkennzeichnung nach § 5 DDG.">
+<meta name="robots" content="noindex,follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   ERGO Fahrradkasko – Unterseite „Impressum" (Night-Ride-Stil)
+   Token-System und Typo-Rollen entsprechen index2.html
+   ============================================================ */
+:root{
+  --asphalt:#0B0A0F;
+  --asphalt-2:#14121A;
+  --asphalt-3:#1B1923;
+  --kreide:#F4F2ED;
+  --kreide-2:#9A97A3;
+  --ergo-rot:#EE0138;
+  --rot-tief:#B00028;
+  --rot-glow:rgba(238,1,56,.35);
+
+  --bg:var(--asphalt);
+  --ink:var(--kreide);
+  --ink-2:var(--kreide-2);
+  --line:rgba(255,255,255,.09);
+  --line-2:rgba(255,255,255,.22);
+  --card:var(--asphalt-3);
+
+  --display:"Archivo",system-ui,sans-serif;
+  --body:"Instrument Sans",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"Cascadia Mono",monospace;
+
+  --max:1240px;
+  --radius:10px;
+  --radius-s:6px;
+  --ease:cubic-bezier(.16,1,.3,1);
+  color-scheme:dark;
+}
+[data-theme="light"]{
+  --bg:#F4F2ED;
+  --ink:#141217;
+  --ink-2:#55525E;
+  --line:rgba(11,10,15,.13);
+  --line-2:rgba(11,10,15,.34);
+  --card:#FFFFFF;
+  color-scheme:light;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--body);
+  background:var(--bg);
+  color:var(--ink);
+  font-size:16.5px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:clip;
+  transition:background-color .3s ease,color .3s ease;
+}
+::selection{background:var(--ergo-rot);color:#fff}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+
+/* Filmkorn über der ganzen Seite */
+body::after{
+  content:"";position:fixed;inset:-10%;z-index:100;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+.display{
+  font-family:var(--display);
+  font-stretch:64%;
+  font-weight:880;
+  line-height:.92;
+  letter-spacing:.004em;
+  text-transform:uppercase;
+}
+.display .kursiv{font-style:italic}
+.display .rot{color:var(--ergo-rot)}
+.mono-label{
+  font-family:var(--mono);font-size:11.5px;font-weight:500;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);
+}
+.mono-label b{color:var(--ergo-rot);font-weight:500}
+.etappe-mark{
+  display:flex;align-items:center;gap:16px;margin-bottom:26px;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;
+}
+.etappe-mark .etikett{color:var(--ink-2)}
+.etappe-mark::after{content:"";height:1px;flex:1;background:var(--line)}
+.etappe-mark::before{content:"";width:8px;height:8px;background:var(--ergo-rot);flex:none}
+@media(max-width:560px){.etappe-mark{gap:12px}.etappe-mark::after{display:none}}
+
+/* ---------- Navigation (statisch, immer mit Hintergrund) ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:60;
+  background:rgba(11,10,15,.78);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);
+  transition:background .3s ease,border-color .3s ease;
+}
+[data-theme="light"] .nav{background:rgba(244,242,237,.85)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:78px}
+.brand{display:flex;align-items:baseline;gap:14px;text-decoration:none}
+.brand-mark{
+  font-family:var(--display);font-stretch:64%;font-weight:900;font-style:italic;
+  font-size:30px;color:var(--ergo-rot);line-height:1;letter-spacing:.01em;
+}
+.brand-sub{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--ink-2);border-left:1px solid var(--line-2);padding-left:14px;
+}
+.nav-actions{display:flex;align-items:center;gap:14px}
+.theme-toggle{
+  width:44px;height:44px;border-radius:50%;flex:none;cursor:pointer;
+  border:1.5px solid var(--line-2);background:transparent;color:var(--ink);
+  display:grid;place-items:center;
+  transition:border-color .2s ease,background-color .2s ease,color .2s ease;
+}
+.theme-toggle:hover{border-color:var(--ink)}
+.theme-toggle svg{width:20px;height:20px}
+.theme-toggle .i-sun{display:block}
+.theme-toggle .i-moon{display:none}
+[data-theme="light"] .theme-toggle .i-sun{display:none}
+[data-theme="light"] .theme-toggle .i-moon{display:block}
+.btn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-family:var(--display);font-stretch:72%;font-weight:800;font-style:italic;
+  font-size:13.5px;letter-spacing:.05em;text-transform:uppercase;
+  padding:12px 24px;min-height:44px;border-radius:var(--radius-s);
+  text-decoration:none;border:1.5px solid var(--line-2);color:var(--ink);cursor:pointer;overflow:hidden;
+  transition:color .3s var(--ease),border-color .3s var(--ease);
+}
+.btn::before{
+  content:"";position:absolute;inset:0;background:var(--ink);
+  transform:scaleY(0);transform-origin:bottom;transition:transform .35s var(--ease);
+}
+.btn:hover,.btn:focus-visible{color:var(--bg);border-color:var(--ink)}
+.btn:hover::before,.btn:focus-visible::before{transform:scaleY(1)}
+.btn span{position:relative;z-index:1}
+.btn svg{width:16px;height:16px;flex:none;position:relative;z-index:1}
+@media(max-width:480px){
+  .brand-sub{display:none}
+  .btn{padding:10px 16px;font-size:12px}
+  .theme-toggle{width:40px;height:40px}
+}
+
+/* ---------- Inhalt ---------- */
+.seite{padding:calc(78px + clamp(50px,7vw,90px)) 0 clamp(80px,10vw,130px)}
+h1.display{font-size:clamp(46px,8vw,110px);margin-bottom:clamp(30px,4vw,52px)}
+.lead{font-size:clamp(16px,1.4vw,18px);color:var(--ink-2);max-width:62ch;margin-bottom:clamp(36px,5vw,60px)}
+
+.legal{max-width:860px}
+.legal section{border-top:1px solid var(--line);padding:30px 0 34px}
+.legal section:last-child{border-bottom:1px solid var(--line)}
+.legal h2{
+  font-family:var(--display);font-stretch:68%;font-weight:850;font-size:19px;
+  text-transform:uppercase;letter-spacing:.02em;margin-bottom:14px;
+  display:flex;align-items:baseline;gap:14px;
+}
+.legal h2 .nr{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.1em;color:var(--ergo-rot);font-style:normal}
+.legal p{color:var(--ink-2);font-size:15.5px;max-width:70ch;margin-bottom:12px}
+.legal p:last-child{margin-bottom:0}
+.legal p strong{color:var(--ink);font-weight:600}
+.legal a{text-decoration:underline;text-underline-offset:2px;transition:color .2s ease}
+.legal a:hover{color:var(--ergo-rot)}
+.legal address{font-style:normal;color:var(--ink-2);font-size:15.5px}
+.legal address strong{color:var(--ink);font-weight:600}
+.legal ul{list-style:none;display:grid;gap:10px;margin:6px 0 12px}
+.legal ul li{
+  display:flex;gap:12px;align-items:flex-start;color:var(--ink-2);font-size:15.5px;max-width:70ch;
+}
+.legal ul li::before{content:"";width:7px;height:7px;background:var(--ergo-rot);flex:none;margin-top:8px}
+
+/* Anbieter-Karte im Stil der Berater-Karte */
+.anbieter-card{
+  display:flex;gap:20px;align-items:flex-start;
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:26px;margin:6px 0 4px;max-width:560px;
+  transition:border-color .3s ease,transform .3s var(--ease);
+}
+.anbieter-card:hover{border-color:var(--line-2);transform:translateY(-3px)}
+.ls-foto{
+  width:56px;height:56px;border-radius:50%;flex:none;display:grid;place-items:center;color:#fff;
+  background:linear-gradient(135deg,var(--ergo-rot),var(--rot-tief));
+  font-family:var(--display);font-stretch:70%;font-style:italic;font-weight:900;font-size:19px;
+}
+
+/* Platzhalter: vor Veröffentlichung ersetzen */
+.platzhalter{
+  font-family:var(--mono);font-size:13px;color:var(--ergo-rot);
+  background:rgba(238,1,56,.08);border:1px dashed rgba(238,1,56,.45);border-radius:4px;
+  padding:2px 8px;white-space:nowrap;
+}
+
+/* ---------- Footer (schlank) ---------- */
+footer{
+  background:var(--asphalt);color:var(--kreide-2);padding:34px 0;font-size:13px;
+  border-top:1px solid rgba(255,255,255,.09);
+}
+.foot-zeile{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer a{color:var(--kreide);text-decoration:none;transition:color .15s ease}
+footer a:hover{color:var(--ergo-rot)}
+footer nav{display:flex;gap:26px}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+:focus-visible{outline:3px solid var(--ergo-rot);outline-offset:3px;border-radius:4px}
+</style>
+</head>
+<body>
+
+<!-- ===================== NAVIGATION ===================== -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index2.html" aria-label="ERGO Fahrradkasko – zur Startseite">
+      <span class="brand-mark">ERGO</span>
+      <span class="brand-sub">Fahrradkasko</span>
+    </a>
+    <div class="nav-actions">
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Farbschema wechseln" aria-pressed="false">
+        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>
+        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+      <a class="btn" href="index2.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+        <span>Zur Startseite</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== IMPRESSUM ===================== -->
+<main class="seite">
+  <div class="wrap">
+    <div class="etappe-mark"><span class="etikett">Rechtliches — Anbieterkennzeichnung</span></div>
+    <h1 class="display">Impres<span class="kursiv rot">sum.</span></h1>
+    <p class="lead">Angaben gemäß § 5 Digitale-Dienste-Gesetz (DDG) und § 18 Abs. 2 Medienstaatsvertrag (MStV) für diese Website.</p>
+
+    <div class="legal">
+      <section>
+        <h2><span class="nr">01</span>Anbieter</h2>
+        <div class="anbieter-card">
+          <span class="ls-foto" aria-hidden="true">LS</span>
+          <address>
+            <strong>Ludwig Siebenbürgen</strong><br>
+            Versicherungsvermittler · Juniorpartner der <a href="https://hannes-kaselow.ergo.de" target="_blank" rel="noopener">ERGO-Agentur Hannes Kaselow</a><br>
+            Stephanstr. 2<br>
+            18055 Rostock<br>
+            Deutschland
+          </address>
+        </div>
+      </section>
+
+      <section>
+        <h2><span class="nr">02</span>Kontakt</h2>
+        <p>
+          Telefon: <a href="tel:+4915224827997">0152 / 24827997</a><br>
+          E-Mail: <a href="mailto:ludwig.siebenbuergen@ergo.de">ludwig.siebenbuergen@ergo.de</a>
+        </p>
+      </section>
+
+      <section>
+        <h2><span class="nr">03</span>Verantwortlich für den Inhalt</h2>
+        <p>Verantwortlich im Sinne des § 18 Abs. 2 MStV:</p>
+        <p><strong>Ludwig Siebenbürgen</strong>, Stephanstr. 2, 18055 Rostock</p>
+      </section>
+
+      <section>
+        <h2><span class="nr">04</span>Tätigkeit als Versicherungsvermittler</h2>
+        <p>
+          Tätig als Versicherungsvertreter nach § 34d Gewerbeordnung (GewO), vermittelt werden
+          Versicherungsprodukte der <strong>ERGO Versicherung AG</strong>, ERGO-Platz 1, 40477 Düsseldorf,
+          bzw. der Gesellschaften der ERGO Group AG.
+        </p>
+        <p>
+          Eingetragen im Vermittlerregister unter der Registrierungsnummer:
+          <span class="platzhalter">[D-XXXX-XXXXX-XX – bitte ergänzen]</span>
+        </p>
+        <p>
+          Das Vermittlerregister wird geführt beim:<br>
+          Deutscher Industrie- und Handelskammertag (DIHK) e.&nbsp;V., Breite Straße 29, 10178 Berlin,<br>
+          <a href="https://www.vermittlerregister.info" target="_blank" rel="noopener">www.vermittlerregister.info</a>
+        </p>
+        <p>
+          Zuständige Behörde:<br>
+          Industrie- und Handelskammer zu Rostock, Ernst-Barlach-Straße 1–3, 18055 Rostock,
+          <a href="https://www.rostock.ihk.de" target="_blank" rel="noopener">www.rostock.ihk.de</a>
+          <span class="platzhalter">[bitte prüfen]</span>
+        </p>
+        <p>
+          Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG:
+          <span class="platzhalter">[falls vorhanden ergänzen, sonst Zeile entfernen]</span>
+        </p>
+      </section>
+
+      <section>
+        <h2><span class="nr">05</span>Berufsrechtliche Regelungen</h2>
+        <ul>
+          <li>§ 34d Gewerbeordnung (GewO)</li>
+          <li>§§ 59–68 Gesetz über den Versicherungsvertrag (VVG)</li>
+          <li>Verordnung über die Versicherungsvermittlung und -beratung (VersVermV)</li>
+        </ul>
+        <p>Die berufsrechtlichen Regelungen sind einsehbar über <a href="https://www.gesetze-im-internet.de" target="_blank" rel="noopener">www.gesetze-im-internet.de</a>.</p>
+      </section>
+
+      <section>
+        <h2><span class="nr">06</span>Außergerichtliche Streitbeilegung</h2>
+        <p>Für die außergerichtliche Beilegung von Streitigkeiten im Zusammenhang mit der Versicherungsvermittlung können folgende Schlichtungsstellen angerufen werden:</p>
+        <ul>
+          <li>Versicherungsombudsmann e.&nbsp;V., Postfach 08 06 32, 10006 Berlin, <a href="https://www.versicherungsombudsmann.de" target="_blank" rel="noopener">www.versicherungsombudsmann.de</a></li>
+          <li>Ombudsmann Private Kranken- und Pflegeversicherung, Postfach 06 02 22, 10052 Berlin, <a href="https://www.pkv-ombudsmann.de" target="_blank" rel="noopener">www.pkv-ombudsmann.de</a></li>
+        </ul>
+        <p>An Streitbeilegungsverfahren vor diesen Verbraucherschlichtungsstellen wird teilgenommen.</p>
+      </section>
+
+      <section>
+        <h2><span class="nr">07</span>Haftung für Inhalte</h2>
+        <p>
+          Die Inhalte dieser Seite wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit
+          und Aktualität der Inhalte wird jedoch keine Gewähr übernommen. Maßgeblich für den Umfang des
+          Versicherungsschutzes sind ausschließlich die jeweiligen Versicherungsbedingungen und der
+          Versicherungsschein.
+        </p>
+      </section>
+
+      <section>
+        <h2><span class="nr">08</span>Haftung für Links</h2>
+        <p>
+          Diese Seite enthält Links zu externen Websites Dritter, auf deren Inhalte kein Einfluss besteht.
+          Für diese fremden Inhalte ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.
+          Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft;
+          rechtswidrige Inhalte waren nicht erkennbar.
+        </p>
+      </section>
+
+      <section>
+        <h2><span class="nr">09</span>Urheberrecht</h2>
+        <p>
+          Die durch den Seitenbetreiber erstellten Inhalte und Werke auf dieser Seite unterliegen dem
+          deutschen Urheberrecht. Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung
+          außerhalb der Grenzen des Urheberrechts bedürfen der schriftlichen Zustimmung. ERGO ist eine
+          Marke der ERGO Group AG.
+        </p>
+      </section>
+    </div>
+  </div>
+</main>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="wrap foot-zeile">
+    <span>© 2026 Ludwig Siebenbürgen · ERGO Versicherungsberater</span>
+    <nav aria-label="Rechtliches">
+      <a href="index2.html">Startseite</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+/* Farbschema (Hell-/Dunkelmodus) */
+const htmlEl = document.documentElement;
+const themeToggle = document.getElementById('theme-toggle');
+const metaThemeColor = document.getElementById('meta-theme-color');
+const THEME_COLORS = { light:'#F4F2ED', dark:'#0B0A0F' };
+function applyTheme(theme){
+  htmlEl.setAttribute('data-theme', theme);
+  if (metaThemeColor) metaThemeColor.setAttribute('content', THEME_COLORS[theme]);
+  themeToggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+}
+applyTheme(htmlEl.getAttribute('data-theme') === 'light' ? 'light' : 'dark');
+themeToggle.addEventListener('click', () => {
+  const next = htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', next);
+  applyTheme(next);
+});
+</script>
+</body>
+</html>
