@@ -334,7 +334,13 @@ h2.display{font-size:clamp(40px,6vw,84px)}
 .hero-links{opacity:0;animation:einblenden .9s ease .55s forwards}
 @keyframes einblenden{to{opacity:1}}
 .hero-links .lead{margin-bottom:32px}
+.hero-claim{
+  font-size:clamp(17px,1.55vw,21px);font-weight:600;line-height:1.42;
+  color:var(--ink);margin-bottom:18px;max-width:36ch;
+}
+.hero-claim b{color:var(--ergo-rot);font-weight:700}
 .hero-cta{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:40px}
+.google-bewertungen.hero-proof{margin:0 0 40px;width:fit-content;max-width:100%}
 
 /* Telemetrie-Leiste statt Chips */
 .telemetrie{
@@ -1136,12 +1142,23 @@ img.ls-foto,img.berater-foto{object-fit:cover}
     </h1>
     <div class="hero-unten">
       <div class="hero-links">
+        <p class="hero-claim">Beraten von <b>Ludwig</b> – Radsportler, kein Callcenter. Ein direkter Draht, keine Warteschleife.</p>
         <p class="lead">Weltweit. Rund um die Uhr. Zum Neuwert. Die Fahrradkasko schützt jedes Rad deines Haushalts gegen Diebstahl, Sturz und Beschädigung – mit Schutzbrief für unterwegs, fest inklusive. Das Beste: nur ein Vertrag für alle deine Räder!</p>
         <div class="hero-cta">
           <a class="btn btn-primary magnetic" href="#kontakt"><span class="btn-label">Kostenlose Beratung</span></a>
           <a class="btn btn-ghost magnetic" href="#paket"><span class="btn-label">Angebot</span></a>
           <a class="btn btn-ghost magnetic" href="#leistungen"><span class="btn-label">Leistungen ansehen</span></a>
         </div>
+        <a class="google-bewertungen hero-proof" href="https://www.google.com/maps/search/?api=1&amp;query=ERGO+Versicherung+Hannes+Kaselow+Stephanstr.+2+Rostock" target="_blank" rel="noopener" aria-label="123 Google-Bewertungen der ERGO-Agentur Hannes Kaselow ansehen">
+          <span class="gb-sterne" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.5L21 9.3l-5 4.6L17.4 21 12 17.6 6.6 21 8 13.9l-5-4.6 6.1-.8z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.5L21 9.3l-5 4.6L17.4 21 12 17.6 6.6 21 8 13.9l-5-4.6 6.1-.8z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.5L21 9.3l-5 4.6L17.4 21 12 17.6 6.6 21 8 13.9l-5-4.6 6.1-.8z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.5L21 9.3l-5 4.6L17.4 21 12 17.6 6.6 21 8 13.9l-5-4.6 6.1-.8z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.5L21 9.3l-5 4.6L17.4 21 12 17.6 6.6 21 8 13.9l-5-4.6 6.1-.8z"/></svg>
+          </span>
+          <span class="gb-text"><strong>123 Google-Bewertungen</strong> · <span class="gb-marke">ERGO-Agentur Hannes Kaselow</span></span>
+        </a>
         <div class="telemetrie" aria-label="Die wichtigsten Leistungen im Überblick">
           <span>Geltung<b>24/7 · weltweit</b></span>
           <span>Erstattung<b>zum Neuwert</b></span>
