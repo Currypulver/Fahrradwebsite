@@ -18,7 +18,7 @@
 
 **Decision-makers:** Der Radbesitzer selbst – trifft die Kaufentscheidung allein.
 
-**Primary use case:** Ambitionierte Rennradfahrer mit hochwertigem Rad (oft Carbon, häufig im vier- bis fünfstelligen Bereich) wollen ihr Rad umfassend gegen Sturz, Diebstahl, Vandalismus und Beschädigung absichern – ohne die Lücken, die typische Hausratverträge bei hochwertigen Rädern lassen.
+**Primary use case:** Ambitionierte Rennradfahrer mit hochwertigem Rad (oft Carbon, häufig im vier- bis fünfstelligen Bereich) wollen ihr Rad umfassend gegen Sturz, Diebstahl, Vandalismus und Beschädigung absichern – ohne die Lücken, die typische Hausratverträge bei hochwertigen Rädern lassen. **Fokus ist das Rennrad**; Alltags-/Trekkingräder und E-Bikes (Pedelecs) des Haushalts sind ausdrücklich Teil der Zielgruppe und automatisch mitversichert.
 
 **Jobs to be done:**
 - „Sichere mein teures Rad so ab, dass ich im Schadensfall den Neuwert bekomme – nicht den abgeschriebenen Zeitwert."
@@ -80,7 +80,7 @@
 | „Das ist bestimmt teuer." | Beitrag richtet sich nach der Versicherungssumme; bis zu 15 % günstiger mit weiteren Sachverträgen, optionale Selbstbeteiligung senkt den Beitrag. Persönliches Angebot ist kostenlos und unverbindlich. |
 | „Mein Rad steht sicher / ich hab ein gutes Schloss." | Versichert sind auch Sturz, Vandalismus und Beschädigung – nicht nur Diebstahl. Schloss genügt (keine Markenvorgabe); nachts draußen abgeschlossen ist voll versichert. |
 
-**Anti-persona:** Wer nur ein günstiges Alltags-/Baumarktrad besitzt und keinen Wert auf umfassenden Neuwertschutz legt; gewerbliche Nutzer; E-Bikes über 25 km/h (versicherungspflichtige S-Pedelecs) sind nicht Zielgruppe des Kernprodukts.
+**Anti-persona:** Gewerbliche Nutzer (überwiegend gewerbliche Radnutzung); Halter von S-Pedelecs / E-Bikes über 25 km/h (versicherungspflichtig, nicht abgedeckt); Personen, die gar keinen Wert auf umfassenden Neuwertschutz legen. (Hinweis: Günstige Alltagsräder sind *kein* Ausschluss – sie sind als Haushaltsrad automatisch mitversichert; der Fokus in der Ansprache liegt aber auf hochwertigen Rennrädern.)
 
 ## Switching Dynamics
 **Push:** Unsicherheit, ob das teure Rad überhaupt (ausreichend) versichert ist; schlechte Erfahrung mit Hotlines; Angst vor Diebstahl-/Sturzschaden.
