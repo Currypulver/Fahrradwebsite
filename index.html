@@ -19,8 +19,8 @@
   }
 })();
 </script>
-<title>Rennrad Vollkasko Versicherung – Rennradkasko | Zum Neuwert, ohne Selbstbeteiligung</title>
-<meta name="description" content="Rennrad Vollkasko Versicherung ohne Selbstbeteiligung: Fahrradkasko mit Neuwert-Erstattung und Fahrradschutzbrief (Pannenhilfe, auch im Ausland) – für Rennrad, Gravel Bike mit Carbonrahmen, Zeitfahrrad (TT) und E-Bike. Persönliche Beratung: Ludwig Siebenbürgen, Rostock.">
+<title>Rennrad Vollkasko Versicherung – Rennradkasko | Ein Produkt der ERGO – zum Neuwert, ohne Selbstbeteiligung</title>
+<meta name="description" content="Rennrad Vollkasko Versicherung ohne Selbstbeteiligung: Fahrradkasko mit Neuwert-Erstattung und Fahrradschutzbrief (Pannenhilfe, auch im Ausland) – für Rennrad, Gravel Bike mit Carbonrahmen, Zeitfahrrad (TT) und E-Bike. Ein Produkt der ERGO – persönliche Beratung: Ludwig Siebenbürgen, Rostock.">
 <link rel="canonical" href="https://rennradkasko.de/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="de_DE">
@@ -977,6 +977,62 @@ footer a:hover{color:#fff}
 .kanal .k-icon.cal{background:var(--asphalt-3);border:1px solid rgba(255,255,255,.25)}
 img.ls-foto,img.berater-foto{object-fit:cover}
 
+/* ---------- Ebenen-Leiste: fixierte Sprungnavigation (mobil) ---------- */
+.ebenen-nav{
+  position:fixed;top:78px;left:0;right:0;z-index:59;display:none;
+  border-bottom:1px solid transparent;
+  transition:transform .4s var(--ease),background .3s ease,border-color .3s ease;
+}
+.nav.scrolled + .ebenen-nav{
+  background:rgba(11,10,15,.78);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-color:var(--line);
+}
+[data-theme="light"] .nav.scrolled + .ebenen-nav{background:rgba(244,242,237,.85)}
+/* Wenn sich die Hauptnav beim Runterscrollen versteckt, rutscht die Leiste an den oberen Rand */
+.nav.nav-hidden + .ebenen-nav{transform:translateY(-78px)}
+.ebenen-track{
+  display:flex;gap:8px;overflow-x:auto;padding:9px 20px 11px;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch;
+}
+.ebenen-track::-webkit-scrollbar{display:none}
+.ebenen-track a{
+  flex:none;text-decoration:none;
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-2);padding:7px 14px;border:1px solid var(--line-2);border-radius:999px;
+  background:var(--bg);
+  transition:color .2s ease,border-color .2s ease,background-color .2s ease;
+}
+.ebenen-track a.aktiv{color:#fff;background:var(--ergo-rot);border-color:var(--ergo-rot)}
+@media(max-width:960px){
+  .ebenen-nav{display:block}
+  html{scroll-padding-top:148px}
+  .hero{padding-top:calc(130px + clamp(28px,5vw,56px))}
+}
+
+/* ---------- „Ein Produkt der ERGO" – Subtitel im Hero ---------- */
+.ergo-sub{
+  display:inline-flex;align-items:center;gap:8px;margin-bottom:18px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink-2);border:1px solid var(--line-2);border-radius:999px;padding:8px 16px;
+}
+.ergo-sub b{color:var(--ergo-rot);font-weight:700;letter-spacing:.2em}
+
+/* ---------- Preiskarte: Kombi-Badge auf Mobil in den Fluss (kein Überlappen) ---------- */
+@media(max-width:640px){
+  .preis-head .tag{position:static;display:inline-block;margin-bottom:14px}
+}
+
+/* ---------- „Top 3"-Listen: auf Mobil erst 3 Einträge, Rest per Button ---------- */
+.mehr-zeile{display:none}
+.mehr-zeile .mehr-btn{width:100%}
+@media(max-width:700px){
+  .mobil-versteckt{display:none}
+  .mehr-zeile{display:block}
+  .bento .mehr-zeile,.sb-grid .mehr-zeile{grid-column:1/-1}
+  .preis-card .mehr-zeile{padding:0 34px 28px}
+}
+
 /* ---------- Reduced Motion & Fokus ---------- */
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -1031,7 +1087,7 @@ img.ls-foto,img.berater-foto{object-fit:cover}
   <div class="wrap nav-inner">
     <a class="brand" href="#top" aria-label="Rennradkasko – zum Seitenanfang">
       <span class="brand-mark">Rennradkasko</span>
-      <span class="brand-sub">Ludwig Siebenbürgen</span>
+      <span class="brand-sub">Ein Produkt der ERGO</span>
     </a>
     <nav aria-label="Hauptnavigation">
       <ul class="nav-links">
@@ -1051,10 +1107,23 @@ img.ls-foto,img.berater-foto{object-fit:cover}
   </div>
 </header>
 
+<!-- Ebenen-Leiste: fixierte Sprungnavigation für Mobil (bleibt beim Scrollen sichtbar) -->
+<nav class="ebenen-nav" id="ebenen-nav" aria-label="Ebenen der Seite">
+  <div class="ebenen-track" id="ebenen-track">
+    <a href="#paket">Angebot</a>
+    <a href="#leistungen">Leistungen</a>
+    <a href="#schutzbrief">Schutzbrief</a>
+    <a href="#warum">Warum?</a>
+    <a href="#faq">FAQ</a>
+    <a href="#kontakt">Kontakt</a>
+  </div>
+</nav>
+
 <main id="top">
 <!-- ===================== HERO · KM 0 ===================== -->
 <section class="hero" data-etappe="Start">
   <div class="wrap">
+    <div class="ergo-sub">Ein Produkt der <b>ERGO</b></div>
     <div class="eyebrow-row">
       <span class="mono-label">Rennradkasko <b>///</b> Rennrad · Gravel · Zeitfahrrad (TT Bike) · E-Bike</span>
     </div>
@@ -1264,7 +1333,7 @@ img.ls-foto,img.berater-foto{object-fit:cover}
     </div>
 
     <div class="paket-grid">
-      <div class="preis-card reveal">
+      <div class="preis-card reveal mehr-scope">
         <div class="preis-head">
           <span class="tag">Festes Kombi-Paket</span>
           <h3>Hausrat Best + Fahrradkasko + Schutzbrief</h3>
@@ -1278,12 +1347,15 @@ img.ls-foto,img.berater-foto{object-fit:cover}
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Voller Hausratschutz für deine Wohnung – zum Neuwert, unabhängig von der Wohnungsgröße¹</span></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Fahrradkasko bis 10.000&nbsp;€ Versicherungssumme – höhere Summen jederzeit möglich</span></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Fest inklusive: Allgefahrendeckung, Schutzbrief (Mobilitätsschutz), Akku- und Elektronikschutz – kein optionaler Baustein</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Jedes Rad des Haushalts automatisch mitversichert – vom Rennrad bis zum Lastenrad, E-Bike (Pedelec)² inklusive, ohne Preisunterschied je Radtyp</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Maßgeblich ist der Wert deines teuersten Rads – nicht die Summe aller Räder im Haushalt</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Grundsätzlich ohne Selbstbeteiligung – optional wählbar, um den Beitrag zu reduzieren</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Bis zu 15&nbsp;% günstiger, wenn bereits weitere Versicherungsverträge aus der Sachsparte bestehen</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Differenzdeckung beim Wechsel: bis zu 1&nbsp;Jahr ohne Mehrbeitrag, wenn du von einem anderen Versicherer kommst</span></li>
+          <li class="mobil-versteckt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Jedes Rad des Haushalts automatisch mitversichert – vom Rennrad bis zum Lastenrad, E-Bike (Pedelec)² inklusive, ohne Preisunterschied je Radtyp</span></li>
+          <li class="mobil-versteckt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Maßgeblich ist der Wert deines teuersten Rads – nicht die Summe aller Räder im Haushalt</span></li>
+          <li class="mobil-versteckt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Grundsätzlich ohne Selbstbeteiligung – optional wählbar, um den Beitrag zu reduzieren</span></li>
+          <li class="mobil-versteckt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Bis zu 15&nbsp;% günstiger, wenn bereits weitere Versicherungsverträge aus der Sachsparte bestehen</span></li>
+          <li class="mobil-versteckt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Differenzdeckung beim Wechsel: bis zu 1&nbsp;Jahr ohne Mehrbeitrag, wenn du von einem anderen Versicherer kommst</span></li>
         </ul>
+        <div class="mehr-zeile">
+          <button type="button" class="btn btn-ghost mehr-btn"><span class="btn-label">Alle 8 Leistungen anzeigen</span></button>
+        </div>
         <div class="preis-cta">
           <a class="btn btn-primary" href="#kontakt"><span class="btn-label">Unverbindliches Angebot anfragen</span></a>
         </div>
@@ -1350,7 +1422,7 @@ img.ls-foto,img.berater-foto{object-fit:cover}
       <p class="lead">Die Fahrradkasko ist eine Allgefahrendeckung: versichert ist jede Art von Beschädigung, Zerstörung, Diebstahl, Einbruchdiebstahl und Raub – nicht nur eine Liste einzelner Gefahren.</p>
     </div>
 
-    <div class="bento">
+    <div class="bento mehr-scope">
       <div class="card card-weit reveal">
         <div>
           <h3 class="display">Allgefahrendeckung – weltweit &amp; rund um die Uhr</h3>
@@ -1390,22 +1462,26 @@ img.ls-foto,img.berater-foto{object-fit:cover}
         <p>Mutwillige Zerstörung, Transportschäden, Missgeschicke: Als Allgefahrendeckung greift der Schutz auch dann, wenn es kein klassischer „Versicherungsfall von der Liste“ ist.</p>
       </div>
 
-      <div class="card reveal" style="--i:0">
+      <div class="card reveal mobil-versteckt" style="--i:0">
         <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.6-9.3-9A5.4 5.4 0 0 1 12 6.7 5.4 5.4 0 0 1 21.3 12C19 16.4 12 21 12 21z"/></svg></div>
         <h3>Neuwert statt Zeitwert</h3>
         <p>Jedes Fahrrad und E-Bike (Pedelec)² deines Haushalts ist automatisch zum Neuwert versichert – bis zur gewählten Versicherungssumme.</p>
       </div>
 
-      <div class="card reveal" style="--i:1">
+      <div class="card reveal mobil-versteckt" style="--i:1">
         <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="7" width="12" height="14" rx="2"/><path d="M10 4h4M12 11v6M9.5 14h5"/></svg></div>
         <h3>Akku- &amp; Elektronikschutz</h3>
         <p>Fürs E-Bike: Akkuschutz gegen Leistungsverlust in den ersten drei Jahren plus Elektronikschutz bei Kurzschluss, Induktion, Überspannung und Feuchtigkeit.</p>
       </div>
 
-      <div class="card reveal" style="--i:2">
+      <div class="card reveal mobil-versteckt" style="--i:2">
         <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
         <h3>Schutzbrief inklusive</h3>
         <p>Panne unterwegs? Der Mobilitätsschutz erstattet Pannenhilfe, Rücktransport, Ersatzrad und mehr – fest im Paket, kein Zusatzbaustein.</p>
+      </div>
+
+      <div class="mehr-zeile">
+        <button type="button" class="btn btn-ghost mehr-btn"><span class="btn-label">Alle Leistungen anzeigen</span></button>
       </div>
 
       <div class="card card-rot reveal">
@@ -1460,7 +1536,7 @@ img.ls-foto,img.berater-foto{object-fit:cover}
       </div>
     </div>
 
-    <div class="sb-grid">
+    <div class="sb-grid mehr-scope">
       <div class="sb-item reveal" style="--i:0">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
         <h4>Pannenhilfe vor Ort</h4>
@@ -1476,30 +1552,33 @@ img.ls-foto,img.berater-foto{object-fit:cover}
         <h4>Transport des Rads</h4>
         <p>Zur nächsten Werkstatt</p>
       </div>
-      <div class="sb-item reveal" style="--i:3">
+      <div class="sb-item reveal mobil-versteckt" style="--i:3">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13M13 6l6 6-6 6"/></svg>
         <h4>Weiterfahrt</h4>
         <p>Zum Wohnsitz oder Zielort</p>
       </div>
-      <div class="sb-item reveal" style="--i:0">
+      <div class="sb-item reveal mobil-versteckt" style="--i:0">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9l8-5 8 5M6 10v9h12v-9M9 19v-5h6v5"/></svg>
         <h4>Abholung &amp; Rücktransport</h4>
         <p>Des reparierten Fahrrads</p>
       </div>
-      <div class="sb-item reveal" style="--i:1">
+      <div class="sb-item reveal mobil-versteckt" style="--i:1">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.5" cy="16.5" r="3.5"/><circle cx="17.5" cy="16.5" r="3.5"/><path d="M6.5 16.5l4-7h5l2 7M10.5 9.5H8"/></svg>
         <h4>Ersatzrad / Ersatz-E-Bike</h4>
         <p>Für maximal 7 Tage</p>
       </div>
-      <div class="sb-item reveal" style="--i:2">
+      <div class="sb-item reveal mobil-versteckt" style="--i:2">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 18h18M6 10V7h6v3"/></svg>
         <h4>Übernachtung</h4>
         <p>Für maximal 7 Tage</p>
       </div>
-      <div class="sb-item reveal" style="--i:3">
+      <div class="sb-item reveal mobil-versteckt" style="--i:3">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
         <h4>On top zur Kasko</h4>
         <p>Zusätzlich zur vereinbarten Entschädigung</p>
+      </div>
+      <div class="mehr-zeile">
+        <button type="button" class="btn btn-ghost mehr-btn"><span class="btn-label">Alle 8 Schutzbrief-Leistungen anzeigen</span></button>
       </div>
     </div>
 
@@ -2005,6 +2084,52 @@ document.querySelectorAll('.faq-item').forEach(item => {
   slider.addEventListener('input', update);
   update();
 })();
+
+/* Ebenen-Leiste: aktive Ebene markieren + aktiven Chip in Sicht halten */
+(() => {
+  const leiste = document.getElementById('ebenen-nav');
+  const track = document.getElementById('ebenen-track');
+  if (!leiste || !track) return;
+  const chips = Array.from(track.querySelectorAll('a[href^="#"]'));
+  const chipZuId = {};
+  chips.forEach(c => { chipZuId[c.getAttribute('href').slice(1)] = c; });
+  const setAktiv = (id) => {
+    const aktiv = chipZuId[id];
+    chips.forEach(c => {
+      c.classList.toggle('aktiv', c === aktiv);
+      if (c === aktiv) c.setAttribute('aria-current','true');
+      else c.removeAttribute('aria-current');
+    });
+    if (aktiv){
+      track.scrollTo({
+        left: aktiv.offsetLeft - (track.clientWidth - aktiv.offsetWidth) / 2,
+        behavior: reduceMotion ? 'auto' : 'smooth'
+      });
+    }
+  };
+  const spyEbenen = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) setAktiv(e.target.id); });
+  }, {rootMargin:'-30% 0px -60% 0px'});
+  const hero = document.querySelector('.hero');
+  if (hero) spyEbenen.observe(hero); // im Hero: kein Chip aktiv
+  ['paket','leistungen','schutzbrief','warum','faq','kontakt'].forEach(id => {
+    const s = document.getElementById(id);
+    if (s) spyEbenen.observe(s);
+  });
+})();
+
+/* „Top 3"-Listen: auf Mobil erst 3 Einträge – Rest per Button einblenden */
+document.querySelectorAll('.mehr-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const scope = btn.closest('.mehr-scope');
+    if (scope) scope.querySelectorAll('.mobil-versteckt').forEach(el => {
+      el.classList.remove('mobil-versteckt');
+      el.classList.add('in'); // Reveal-Animation ggf. direkt abschließen
+    });
+    const zeile = btn.closest('.mehr-zeile');
+    (zeile || btn).remove();
+  });
+});
 
 /* FAQ: zunächst 5 Fragen – Rest per Klick einblenden */
 (() => {
