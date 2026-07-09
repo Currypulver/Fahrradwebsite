@@ -969,9 +969,6 @@ footer a:hover{color:#fff}
 .rechner-ergebnis .re-jahr{font-family:var(--mono);font-size:12px;color:var(--ink-2)}
 .rechner-hinweis{margin-top:14px;font-size:12px;color:var(--ink-2);opacity:.85;line-height:1.55}
 
-/* ---------- FAQ: erst 5 Fragen, Rest aufklappbar ---------- */
-.faq-item.faq-versteckt{display:none}
-#faq-mehr{margin-top:30px}
 
 /* ---------- Kanal-Icon Online-Termin + echte Fotos ---------- */
 .kanal .k-icon.cal{background:var(--asphalt-3);border:1px solid rgba(255,255,255,.25)}
@@ -1023,15 +1020,20 @@ img.ls-foto,img.berater-foto{object-fit:cover}
   .preis-head .tag{position:static;display:inline-block;margin-bottom:14px}
 }
 
-/* ---------- „Top 3"-Listen: auf Mobil erst 3 Einträge, Rest per Button ---------- */
-.mehr-zeile{display:none}
-.mehr-zeile .mehr-btn{width:100%}
-@media(max-width:700px){
-  .mobil-versteckt{display:none}
-  .mehr-zeile{display:block}
-  .bento .mehr-zeile,.sb-grid .mehr-zeile{grid-column:1/-1}
-  .preis-card .mehr-zeile{padding:0 34px 28px}
-}
+/* ---------- „Top 3"-Listen: überall erst 3 Einträge, Rest per Button ---------- */
+/* !important, damit die Utility auch spezifischere Regeln wie
+   „.preis-liste li{display:flex}" sicher überschreibt */
+.mobil-versteckt{display:none!important}
+.mehr-zeile{display:block;margin-top:4px}
+.preis-card .mehr-zeile{padding:0 34px 28px}
+.preis-card .mehr-zeile .mehr-btn{width:100%}
+.bento .mehr-zeile{grid-column:1/-1;display:flex;justify-content:center;margin-top:2px}
+.bento .mehr-zeile .mehr-btn{width:min(340px,100%)}
+
+/* ---------- Ganze Sektionen (Schutzbrief, FAQ) einklappen ---------- */
+.section-head .sektion-toggle{margin-top:30px}
+.sektion-inhalt{display:none}
+.sektion-inhalt.offen{display:block}
 
 /* ---------- Reduced Motion & Fokus ---------- */
 @media(prefers-reduced-motion:reduce){
@@ -1346,7 +1348,8 @@ img.ls-foto,img.berater-foto{object-fit:cover}
         <ul class="preis-liste">
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Voller Hausratschutz für deine Wohnung – zum Neuwert, unabhängig von der Wohnungsgröße¹</span></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Fahrradkasko bis 10.000&nbsp;€ Versicherungssumme – höhere Summen jederzeit möglich</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Fest inklusive: Allgefahrendeckung, Schutzbrief (Mobilitätsschutz), Akku- und Elektronikschutz – kein optionaler Baustein</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Alle Rahmen-Materialien mitversichert – Carbon, Aluminium, Stahl, Titan &amp; Co., ohne Aufpreis je Bauart</span></li>
+          <li class="mobil-versteckt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Fest inklusive: Allgefahrendeckung, Schutzbrief (Mobilitätsschutz), Akku- und Elektronikschutz – kein optionaler Baustein</span></li>
           <li class="mobil-versteckt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Jedes Rad des Haushalts automatisch mitversichert – vom Rennrad bis zum Lastenrad, E-Bike (Pedelec)² inklusive, ohne Preisunterschied je Radtyp</span></li>
           <li class="mobil-versteckt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Maßgeblich ist der Wert deines teuersten Rads – nicht die Summe aller Räder im Haushalt</span></li>
           <li class="mobil-versteckt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Grundsätzlich ohne Selbstbeteiligung – optional wählbar, um den Beitrag zu reduzieren</span></li>
@@ -1354,7 +1357,7 @@ img.ls-foto,img.berater-foto{object-fit:cover}
           <li class="mobil-versteckt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Differenzdeckung beim Wechsel: bis zu 1&nbsp;Jahr ohne Mehrbeitrag, wenn du von einem anderen Versicherer kommst</span></li>
         </ul>
         <div class="mehr-zeile">
-          <button type="button" class="btn btn-ghost mehr-btn"><span class="btn-label">Alle 8 Leistungen anzeigen</span></button>
+          <button type="button" class="btn btn-ghost mehr-btn"><span class="btn-label">Alle 9 Leistungen anzeigen</span></button>
         </div>
         <div class="preis-cta">
           <a class="btn btn-primary" href="#kontakt"><span class="btn-label">Unverbindliches Angebot anfragen</span></a>
@@ -1519,8 +1522,10 @@ img.ls-foto,img.berater-foto{object-fit:cover}
     <div class="section-head reveal">
       <h2 class="display">Panne? <span class="kursiv rot">Schutzbrief</span><br>an Bord.</h2>
       <p class="lead">Mehrtagestour durch die Alpen, Gravel-Wochenende oder Pendeln bei jedem Wetter: Ist eine Fahrt mit deinem versicherten Rad wegen einer Panne nicht möglich, organisierst du dir selbst Hilfe – wir erstatten die Kosten. Dein Fahrradschutzbrief gilt weltweit: Pannenhilfe fürs Fahrrad, auch im Ausland.</p>
+      <button type="button" class="btn btn-ghost sektion-toggle" data-ziel="schutzbrief-inhalt" aria-expanded="false"><span class="btn-label">Schutzbrief-Leistungen anzeigen</span></button>
     </div>
 
+    <div class="sektion-inhalt" id="schutzbrief-inhalt">
     <div class="sb-stats">
       <div class="sb-stat reveal" style="--i:0">
         <div class="zahl"><em data-count="500">0</em>&nbsp;€</div>
@@ -1536,7 +1541,7 @@ img.ls-foto,img.berater-foto{object-fit:cover}
       </div>
     </div>
 
-    <div class="sb-grid mehr-scope">
+    <div class="sb-grid">
       <div class="sb-item reveal" style="--i:0">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
         <h4>Pannenhilfe vor Ort</h4>
@@ -1552,38 +1557,36 @@ img.ls-foto,img.berater-foto{object-fit:cover}
         <h4>Transport des Rads</h4>
         <p>Zur nächsten Werkstatt</p>
       </div>
-      <div class="sb-item reveal mobil-versteckt" style="--i:3">
+      <div class="sb-item reveal" style="--i:3">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h13M13 6l6 6-6 6"/></svg>
         <h4>Weiterfahrt</h4>
         <p>Zum Wohnsitz oder Zielort</p>
       </div>
-      <div class="sb-item reveal mobil-versteckt" style="--i:0">
+      <div class="sb-item reveal" style="--i:0">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9l8-5 8 5M6 10v9h12v-9M9 19v-5h6v5"/></svg>
         <h4>Abholung &amp; Rücktransport</h4>
         <p>Des reparierten Fahrrads</p>
       </div>
-      <div class="sb-item reveal mobil-versteckt" style="--i:1">
+      <div class="sb-item reveal" style="--i:1">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.5" cy="16.5" r="3.5"/><circle cx="17.5" cy="16.5" r="3.5"/><path d="M6.5 16.5l4-7h5l2 7M10.5 9.5H8"/></svg>
         <h4>Ersatzrad / Ersatz-E-Bike</h4>
         <p>Für maximal 7 Tage</p>
       </div>
-      <div class="sb-item reveal mobil-versteckt" style="--i:2">
+      <div class="sb-item reveal" style="--i:2">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 18h18M6 10V7h6v3"/></svg>
         <h4>Übernachtung</h4>
         <p>Für maximal 7 Tage</p>
       </div>
-      <div class="sb-item reveal mobil-versteckt" style="--i:3">
+      <div class="sb-item reveal" style="--i:3">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
         <h4>On top zur Kasko</h4>
         <p>Zusätzlich zur vereinbarten Entschädigung</p>
-      </div>
-      <div class="mehr-zeile">
-        <button type="button" class="btn btn-ghost mehr-btn"><span class="btn-label">Alle 8 Schutzbrief-Leistungen anzeigen</span></button>
       </div>
     </div>
 
     <div class="sb-note reveal">
       <p><strong>Gut zu wissen:</strong> Erstattet werden die Kosten für die von dir selbst organisierten Leistungen – maximal 500&nbsp;€ pro Ereignis und 1.000&nbsp;€ pro Jahr, zusätzlich zur vereinbarten Fahrradkasko-Entschädigung. Eine freiwillig vereinbarte Selbstbeteiligung wird beim Mobilitätsschutz nicht abgezogen.</p>
+    </div>
     </div>
   </div>
 </section>
@@ -1654,8 +1657,10 @@ img.ls-foto,img.berater-foto{object-fit:cover}
     <div class="etappe-mark reveal"><span class="etikett">Etappe 05 — Häufige Fragen</span></div>
     <div class="section-head reveal">
       <h2 class="display">Kurz &amp; klar<br><span class="kursiv rot">beantwortet.</span></h2>
+      <button type="button" class="btn btn-ghost sektion-toggle" data-ziel="faq-inhalt" aria-expanded="false"><span class="btn-label">Häufige Fragen anzeigen</span></button>
     </div>
 
+    <div class="sektion-inhalt" id="faq-inhalt">
     <div class="faq-liste">
       <div class="faq-item reveal" style="--i:0">
         <button class="faq-q" aria-expanded="false"><span class="nr">01</span>Welche Räder sind versichert?
@@ -1692,44 +1697,42 @@ img.ls-foto,img.berater-foto{object-fit:cover}
         <div class="faq-a"><div><p>Unterwegs abgestellte Räder müssen mit einem Schloss gesichert sein – eine bestimmte Marke oder Preisklasse ist nicht vorgeschrieben. Die Schlosspflicht entfällt nur in ausschließlich selbst genutzten, verschlossenen Räumen (z.&nbsp;B. deinem eigenen Kellerabteil), im verschlossenen Auto sowie im angehängten, verschlossenen Anhänger oder Wohnwagen. Wichtig: Im gemeinschaftlich genutzten Keller oder Fahrradraum brauchst du weiterhin ein Schloss.</p></div></div>
       </div>
 
-      <div class="faq-item reveal faq-versteckt" style="--i:5">
+      <div class="faq-item reveal" style="--i:5">
         <button class="faq-q" aria-expanded="false"><span class="nr">06</span>Was ist mit dem Akku meines E-Bikes?
           <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
         <div class="faq-a"><div><p>Der Akkuschutz sichert dich in den ersten drei Jahren gegen Leistungsverlust ab. Zusätzlich greift der Elektronikschutz bei Schäden durch Kurzschluss, Induktion, Überspannung oder Feuchtigkeit.</p></div></div>
       </div>
 
-      <div class="faq-item reveal faq-versteckt" style="--i:6">
+      <div class="faq-item reveal" style="--i:6">
         <button class="faq-q" aria-expanded="false"><span class="nr">07</span>Gibt es eine Selbstbeteiligung?
           <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
         <div class="faq-a"><div><p>Grundsätzlich nein. Du kannst optional eine Selbstbeteiligung vereinbaren, um deinen Beitrag zu senken – beim Schutzbrief (Mobilitätsschutz) wird sie aber in keinem Fall abgezogen.</p></div></div>
       </div>
 
-      <div class="faq-item reveal faq-versteckt" style="--i:7">
+      <div class="faq-item reveal" style="--i:7">
         <button class="faq-q" aria-expanded="false"><span class="nr">08</span>Ich habe schon eine Hausratversicherung – lohnt sich der Wechsel?
           <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
         <div class="faq-a"><div><p>Oft ja – viele Hausratverträge sichern hochwertige Räder gar nicht oder nur eingeschränkt ab. Beim Wechsel schließt die Differenzdeckung die Lücke zu deinem bestehenden Vertrag: bis zu ein Jahr lang, ohne Mehrbeitrag.</p></div></div>
       </div>
 
-      <div class="faq-item reveal faq-versteckt" style="--i:8">
+      <div class="faq-item reveal" style="--i:8">
         <button class="faq-q" aria-expanded="false"><span class="nr">09</span>Was ist nicht versichert?
           <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
         <div class="faq-a"><div><p>Nicht versichert sind unter anderem vorsätzlich verursachte Schäden, Schäden durch Verlieren, Stehen- oder Liegenlassen sowie Schäden, für die der Hersteller oder Lieferant haftet (Garantiefälle). Alle Details regeln die Versicherungsbedingungen.</p></div></div>
       </div>
 
-      <div class="faq-item reveal faq-versteckt" style="--i:9">
+      <div class="faq-item reveal" style="--i:9">
         <button class="faq-q" aria-expanded="false"><span class="nr">10</span>Was passiert bei grober Fahrlässigkeit?
           <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
         <div class="faq-a"><div><p>Gute Nachricht: In der Hausratversicherung Best wird die Entschädigung nicht gekürzt, wenn du einen Schaden grob fahrlässig herbeigeführt hast – auf dieses Kürzungsrecht verzichtet der Versicherer ausdrücklich. Vorsätzlich verursachte Schäden bleiben ausgeschlossen, und deine Mitwirkungspflichten (z.&nbsp;B. Sicherheitsvorschriften wie die Schlosspflicht) gelten weiterhin.</p></div></div>
       </div>
 
-      <button type="button" class="btn btn-ghost" id="faq-mehr" aria-expanded="false">
-        <span class="btn-label">Alle 10 Fragen anzeigen</span>
-      </button>
+    </div>
     </div>
   </div>
 </section>
@@ -2118,7 +2121,7 @@ document.querySelectorAll('.faq-item').forEach(item => {
   });
 })();
 
-/* „Top 3"-Listen: auf Mobil erst 3 Einträge – Rest per Button einblenden */
+/* „Top 3"-Listen: erst 3 Einträge – Rest per Button einblenden */
 document.querySelectorAll('.mehr-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const scope = btn.closest('.mehr-scope');
@@ -2131,15 +2134,34 @@ document.querySelectorAll('.mehr-btn').forEach(btn => {
   });
 });
 
-/* FAQ: zunächst 5 Fragen – Rest per Klick einblenden */
+/* Einklappbare Sektionen (Schutzbrief, FAQ): erst per Button/Link aufklappen –
+   das kürzt die Seite und bringt schneller zum Kontaktformular. */
 (() => {
-  const btn = document.getElementById('faq-mehr');
-  if (!btn) return;
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.faq-item.faq-versteckt').forEach(el => el.classList.remove('faq-versteckt'));
-    btn.setAttribute('aria-expanded', 'true');
-    btn.remove();
+  const sektionen = {}; // Sektions-ID -> { inhalt, btn }
+  document.querySelectorAll('.sektion-toggle').forEach(btn => {
+    const inhalt = document.getElementById(btn.dataset.ziel);
+    const sektion = btn.closest('section');
+    if (!inhalt || !sektion) return;
+    sektionen[sektion.id] = { inhalt, btn };
+    btn.addEventListener('click', () => oeffnen(sektion.id));
   });
+  function oeffnen(id){
+    const s = sektionen[id];
+    if (!s || s.inhalt.classList.contains('offen')) return false;
+    s.inhalt.classList.add('offen');
+    if (s.btn){ s.btn.setAttribute('aria-expanded','true'); s.btn.style.display = 'none'; }
+    // in der eben eingeblendeten Sektion die Reveal-Animationen abschließen
+    s.inhalt.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
+    return true;
+  }
+  // Jeder Link auf eine einklappbare Sektion (Ebenen-Leiste, Menü, Footer) klappt sie zuerst auf
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    const ziel = a.getAttribute('href').slice(1);
+    if (sektionen[ziel]) a.addEventListener('click', () => oeffnen(ziel));
+  });
+  // Direkter Aufruf per URL-Anker (#faq / #schutzbrief) klappt die Sektion auf
+  const ausAnker = decodeURIComponent(location.hash.slice(1));
+  if (sektionen[ausAnker]) oeffnen(ausAnker);
 })();
 
 /* Formular → E-Mail (mailto) */
