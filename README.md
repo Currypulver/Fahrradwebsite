@@ -4,19 +4,18 @@ Statische Landingpage (`index.html`) für die Rennradkasko-Beratung von Ludwig S
 
 Live unter: https://rennradkasko.de
 
-## Deployment (GitHub Pages)
+## Deployment (Hostinger + GitHub)
 
-Jeder Push auf `main` wird automatisch über GitHub Actions
-(`.github/workflows/deploy.yml`) zu GitHub Pages deployt:
+Das GitHub-Repository ist mit Hostinger verbunden (hPanel → **Erweitert → GIT**).
+Hostinger deployt den `main`-Branch: Jeder Merge nach `main` wird über den
+Auto-Deploy-Webhook auf den Webspace übernommen und ist danach unter
+https://rennradkasko.de erreichbar.
 
-- Standard-Adresse: https://currypulver.github.io/Fahrradwebsite/
-- Eigene Domain verbinden: In den Repo-Einstellungen unter
-  **Settings → Pages → Custom domain** die Domain `rennradkasko.de` eintragen
-  und beim Domain-Anbieter folgende DNS-Einträge setzen:
-  - `rennradkasko.de` (Apex): `A`-Records auf `185.199.108.153`,
-    `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
-  - `www.rennradkasko.de`: `CNAME` auf `currypulver.github.io`
-  - Danach in den Pages-Einstellungen **Enforce HTTPS** aktivieren.
+- Deploy-Branch: `main`
+- Ausgeliefert wird der Repo-Inhalt (Root mit `index.html`) – kein Build-Schritt
+  nötig, die Seite ist rein statisch.
+- Manuell neu ausrollen: in hPanel unter GIT auf **Deploy** klicken bzw. den
+  Webhook auslösen.
 
 ## Aufbau
 
