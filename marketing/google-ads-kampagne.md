@@ -230,9 +230,8 @@ negative Wortgruppe verlangt die Wörter in Reihenfolge, negativ-exakt nur die e
 
 ## 6. Gebote, Budget & Tracking
 
-- **Conversion-Tracking zuerst** (Pflicht vor dem Livegang): WhatsApp-Klick, „Anrufen"-Klick und
-  Formular-Absendung als Conversions messen (Google-Ads-Tag / GA4-Import). Ohne diese Messung
-  optimiert die Gebotsautomatik blind.
+- **Conversion-Tracking zuerst** (Pflicht vor dem Livegang) – Details siehe Abschnitt 6a.
+  Ohne diese Messung optimiert die Gebotsautomatik blind.
 - **Gebotsstrategie nach Volumen:**
   | Conversions/Monat | Strategie |
   |---|---|
@@ -244,6 +243,35 @@ negative Wortgruppe verlangt die Wörter in Reihenfolge, negativ-exakt nur die e
   dann 1–2 Wochen warten (jede Änderung startet die Lernphase neu).
 - **Standardeinstellungen je neuer Suchkampagne:** Suchnetzwerk-Partner **AUS**, Displaynetzwerk
   **AUS**, Standort auf **„Anwesenheit"**.
+
+---
+
+## 6a. Conversion-Tracking konkret (deine Kontaktwege sind alle Klicks)
+
+Auf der Seite gibt es **kein klassisches Formular mit Danke-Seite** – alle Kontaktwege sind
+Klick-Links. Deshalb tracken wir **Klick-Events** (nicht Seitenaufrufe). Aktuell ist noch **kein
+Tag** installiert.
+
+| Conversion-Aktion | Link auf der Seite | Kategorie in Google Ads | Priorität |
+|---|---|---|---|
+| WhatsApp-Klick | `wa.me/4915224827997` | Kontakt / Lead absenden | **primär** |
+| Anruf-Klick | `tel:+4915224827997` | Anruf über Website | primär |
+| Termin (Calendly) | `calendly.com/rennradkasko` | Termin buchen | primär |
+| E-Mail-Klick | `mailto:ludwig.siebenbuergen@ergo.de` | Kontakt | sekundär |
+
+**Einrichtung in 2 Teilen:**
+
+1. **Google Ads (du):** *Tools → Zielvorhaben → Conversions → + Neue Conversion-Aktion →
+   Website*. Die 4 Aktionen oben manuell anlegen. Google liefert dabei den
+   **Google-Tag (`AW-XXXXXXXXX`)** und je Aktion ein **Conversion-Label**.
+2. **Code (Website):** Google-Tag einmal in den `<head>` von `index.html`, dann je Kontakt-Link
+   ein Klick-Event, das die passende Conversion feuert. *(Kann direkt im Repo umgesetzt werden,
+   sobald Tag-ID + Labels vorliegen. Deploy erst nach Merge nach `main`.)*
+
+**Volumen-Hinweis:** Smart Bidding braucht ~30 Conversions/Monat. Anfangs die Kontakt-Klicks als
+**eine** primäre Conversion („Kontaktaufnahme") bündeln, bis genug Volumen da ist – dann auf
+Ziel-CPA umstellen. WhatsApp bleibt der niedrigschwelligste, stärkste Kontaktweg und wird
+mitgezählt – alle Kontaktoptionen bleiben erhalten.
 
 ---
 
