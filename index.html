@@ -653,18 +653,11 @@ h2.display{font-size:clamp(40px,6vw,84px)}
   text-transform:uppercase;letter-spacing:.02em;max-width:17ch;
 }
 .preis-head .kombi{margin-top:10px;font-size:14px;color:var(--kreide-2)}
-.preis-zeile{padding:30px 34px 8px;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
-.preis-zeile .preis{
-  font-family:var(--display);font-stretch:64%;font-weight:900;font-style:italic;
-  font-size:clamp(46px,5.4vw,64px);line-height:1;
-}
-.preis-zeile .pro{font-family:var(--mono);font-size:13px;color:var(--ink-2)}
-.preis-liste{list-style:none;padding:22px 34px 32px;display:grid;gap:14px}
+.preis-liste{list-style:none;padding:28px 34px 32px;display:grid;gap:14px}
 .preis-liste li{display:flex;gap:13px;align-items:flex-start;font-size:15.5px}
 .preis-liste svg{width:20px;height:20px;color:var(--ergo-rot);flex:none;margin-top:2px}
 .preis-cta{padding:0 34px 34px}
 .preis-cta .btn{width:100%}
-.preis-fussnote{padding:0 34px 28px;font-size:12.5px;color:var(--ink-2);opacity:.85}
 
 .steps{list-style:none;counter-reset:s;display:grid;gap:0;margin-top:38px;position:relative}
 .steps li{
@@ -1359,10 +1352,6 @@ img.ls-foto,img.berater-foto{object-fit:cover}
           <h3>Hausrat Best + Fahrradkasko + Schutzbrief</h3>
           <p class="kombi">Ein Vertrag, ein Ansprechpartner – Wohnung und Räder komplett abgesichert.</p>
         </div>
-        <div class="preis-zeile">
-          <span class="preis">150–300&nbsp;€</span>
-          <span class="pro">/ Jahr¹</span>
-        </div>
         <ul class="preis-liste">
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Voller Hausratschutz für deine Wohnung – zum Neuwert, unabhängig von der Wohnungsgröße¹</span></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Fahrradkasko bis 10.000&nbsp;€ Versicherungssumme – höhere Summen jederzeit möglich</span></li>
@@ -1380,7 +1369,6 @@ img.ls-foto,img.berater-foto{object-fit:cover}
         <div class="preis-cta">
           <a class="btn btn-primary" href="#kontakt"><span class="btn-label">Unverbindliches Angebot anfragen</span></a>
         </div>
-        <p class="preis-fussnote">¹ Beispielhafte Preisspanne zur Einordnung – richtet sich nach der Versicherungssumme von Hausrat und Fahrradkasko: bei rund 650&nbsp;€/m² Hausrat-Versicherungssumme (Beispiel: Wohnfläche 50–75&nbsp;m²) und einer Fahrradkasko-Versicherungssumme von 6.000–8.000&nbsp;€ liegt der Jahresbeitrag üblicherweise bei 150–300&nbsp;€. Kleinere und größere Wohnungen sind genauso versicherbar – der Beitrag passt sich entsprechend an. Er hängt zusätzlich vom Wohnort und einer optional vereinbarten Selbstbeteiligung ab.</p>
       </div>
 
       <div class="reveal">
@@ -1887,7 +1875,7 @@ img.ls-foto,img.berater-foto{object-fit:cover}
           <li><a href="dokumente/versicherungsbedingungen-hausrat-best.pdf" target="_blank" rel="noopener">Versicherungsbedingungen (PDF)</a></li>
           <li><a href="dokumente/produktinfoblatt-fahrradschutz.pdf" target="_blank" rel="noopener">Produkt-Infoblatt Fahrradschutz (PDF)</a></li>
           <li><a href="impressum.html">Impressum</a></li>
-          <li><a href="datenschutz.html">Datenschutz</a></li>
+          <li><a href="datenschutz.html">Datenschutz</a></li><li><a href="#" data-cb-open>Cookie-Einstellungen</a></li>
           <li><a href="erstinformation.html">Erstinformation</a></li>
         </ul>
       </div>
@@ -2203,5 +2191,119 @@ ${name || ''}`
   window.location.href = `mailto:ludwig.siebenbuergen@ergo.de?subject=${betreff}&body=${body}`;
 });
 </script>
+<!-- ===================== CONSENT + TRACKING (DSGVO / Consent Mode v2) =====================
+     WICHTIG vor dem Livegang:
+     1. GA4-Property anlegen  -> Mess-ID unten bei G-XXXXXXXXXX eintragen
+     2. Google-Ads-Konto      -> Conversion-ID bei AW-XXXXXXXXX eintragen
+     3. datenschutz.html um den Abschnitt "Google Analytics / Google Ads" ergaenzen
+     Kein Tracking-Script laedt, bevor der Besucher aktiv zustimmt.
+============================================================================================ -->
+<style>
+#cb-consent{position:fixed;left:16px;right:16px;bottom:16px;z-index:9999;max-width:520px;margin:0 auto;
+  background:var(--tusche,#0B0A0F);color:var(--kreide,#F4F2ED);border:1px solid rgba(244,242,237,.14);
+  border-radius:16px;padding:22px 22px 18px;box-shadow:0 18px 50px rgba(0,0,0,.45);
+  font-size:14.5px;line-height:1.55;display:none}
+#cb-consent.cb-show{display:block}
+#cb-consent h4{margin:0 0 6px;font-size:15px;letter-spacing:.02em}
+#cb-consent p{margin:0 0 14px;color:rgba(244,242,237,.75)}
+#cb-consent a{color:var(--kreide,#F4F2ED);text-decoration:underline}
+#cb-consent .cb-row{display:flex;gap:10px;flex-wrap:wrap}
+#cb-consent button{flex:1 1 140px;cursor:pointer;border-radius:10px;padding:11px 16px;font-size:14px;
+  font-weight:600;border:1px solid rgba(244,242,237,.3);background:transparent;color:var(--kreide,#F4F2ED)}
+#cb-consent button.cb-accept{background:var(--ergo-rot,#EE0138);border-color:var(--ergo-rot,#EE0138);color:#fff}
+#cb-consent button:hover{filter:brightness(1.1)}
+</style>
+
+<div id="cb-consent" role="dialog" aria-modal="false" aria-labelledby="cb-title">
+  <h4 id="cb-title">Cookies &amp; Statistik</h4>
+  <p>Ich nutze Google Analytics und Google&nbsp;Ads-Conversion-Messung, um zu verstehen, wie Besucher
+     auf diese Seite finden. Die Daten helfen mir, Werbung sinnvoll einzusetzen. Ohne deine Zustimmung
+     wird nichts geladen. Details in der <a href="datenschutz.html">Datenschutzerkl&auml;rung</a>.</p>
+  <div class="cb-row">
+    <button type="button" class="cb-accept" id="cb-accept">Akzeptieren</button>
+    <button type="button" id="cb-decline">Ablehnen</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var KEY='cb-consent-v1';
+  var GA4_ID='G-XXXXXXXXXX';      // <- GA4 Mess-ID eintragen
+  var ADS_ID='AW-XXXXXXXXX';      // <- Google Ads Conversion-ID eintragen
+
+  window.dataLayer=window.dataLayer||[];
+  function gtag(){dataLayer.push(arguments);}
+  window.gtag=gtag;
+
+  /* Consent Mode v2: Standard = alles verweigert */
+  gtag('consent','default',{
+    ad_storage:'denied', ad_user_data:'denied', ad_personalization:'denied',
+    analytics_storage:'denied', wait_for_update:500
+  });
+
+  function loadTracking(){
+    gtag('consent','update',{
+      ad_storage:'granted', ad_user_data:'granted',
+      ad_personalization:'granted', analytics_storage:'granted'
+    });
+    var s=document.createElement('script');
+    s.async=true;
+    s.src='https://www.googletagmanager.com/gtag/js?id='+GA4_ID;
+    document.head.appendChild(s);
+    gtag('js',new Date());
+    gtag('config',GA4_ID);
+    gtag('config',ADS_ID);
+    bindConversionClicks();
+  }
+
+  /* Kontakt-Klicks als Conversions messen (WhatsApp / Telefon / E-Mail) */
+  var bound=false;
+  function bindConversionClicks(){
+    if(bound)return; bound=true;
+    document.addEventListener('click',function(e){
+      var a=e.target.closest&&e.target.closest('a'); if(!a)return;
+      var h=a.getAttribute('href')||''; var method=null;
+      if(h.indexOf('wa.me')>-1)method='whatsapp';
+      else if(h.indexOf('tel:')===0)method='telefon';
+      else if(h.indexOf('mailto:')===0)method='email';
+      if(method){
+        gtag('event','kontakt_klick',{method:method});
+        /* Nach Anlage der Ads-Conversion: Label unten eintragen und Zeile aktivieren
+        gtag('event','conversion',{send_to:ADS_ID+'/CONVERSION_LABEL'}); */
+      }
+    },true);
+  }
+
+  function hide(){document.getElementById('cb-consent').classList.remove('cb-show');}
+
+  var choice=null;
+  try{choice=localStorage.getItem(KEY);}catch(e){}
+
+  if(choice==='granted'){ loadTracking(); }
+  else if(choice!=='denied'){ document.getElementById('cb-consent').classList.add('cb-show'); }
+
+  document.getElementById('cb-accept').addEventListener('click',function(){
+    try{localStorage.setItem(KEY,'granted');}catch(e){}
+    hide(); loadTracking();
+  });
+  document.getElementById('cb-decline').addEventListener('click',function(){
+    try{localStorage.setItem(KEY,'denied');}catch(e){}
+    /* Widerruf sofort wirksam: Consent Mode auf "denied" zuruecksetzen */
+    gtag('consent','update',{
+      ad_storage:'denied', ad_user_data:'denied',
+      ad_personalization:'denied', analytics_storage:'denied'
+    });
+    hide();
+  });
+
+  /* Widerruf ueber Footer-Link: <a href="#" data-cb-open>Cookie-Einstellungen</a> */
+  document.addEventListener('click',function(e){
+    var t=e.target.closest&&e.target.closest('[data-cb-open]');
+    if(t){e.preventDefault();document.getElementById('cb-consent').classList.add('cb-show');}
+  });
+})();
+</script>
+<!-- ===================== ENDE CONSENT + TRACKING ===================== -->
+
 </body>
 </html>
