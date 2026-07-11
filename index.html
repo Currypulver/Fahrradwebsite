@@ -2300,6 +2300,11 @@ ${name || ''}`
   });
   document.getElementById('cb-decline').addEventListener('click',function(){
     try{localStorage.setItem(KEY,'denied');}catch(e){}
+    /* Widerruf sofort wirksam: Consent Mode auf "denied" zuruecksetzen */
+    gtag('consent','update',{
+      ad_storage:'denied', ad_user_data:'denied',
+      ad_personalization:'denied', analytics_storage:'denied'
+    });
     hide();
   });
 
