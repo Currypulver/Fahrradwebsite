@@ -70,8 +70,13 @@
     {"@type":"Question","name":"Was ist mit dem Akku meines E-Bikes?","acceptedAnswer":{"@type":"Answer","text":"Der Akkuschutz sichert in den ersten drei Jahren gegen Leistungsverlust ab, der Elektronikschutz bei Kurzschluss, Induktion, Überspannung und Feuchtigkeit."}},
     {"@type":"Question","name":"Gibt es eine Selbstbeteiligung?","acceptedAnswer":{"@type":"Answer","text":"Grundsätzlich nein – die Fahrradversicherung gilt ohne Selbstbeteiligung. Optional kann eine Selbstbeteiligung vereinbart werden, um den Beitrag zu senken."}},
     {"@type":"Question","name":"Ich habe schon eine Hausratversicherung – lohnt sich der Wechsel?","acceptedAnswer":{"@type":"Answer","text":"Oft ja: Die Differenzdeckung schließt beim Wechsel die Lücke zum bestehenden Vertrag – bis zu ein Jahr lang, ohne Mehrbeitrag."}},
+    {"@type":"Question","name":"Warum sind Hausrat und Fahrradkasko ein gemeinsamer Vertrag?","acceptedAnswer":{"@type":"Answer","text":"Ein Vertrag sichert Wohnung und alle Räder zusammen ab – mit einem Ansprechpartner statt vieler Einzelverträge. Das Kombi-Paket kostet meist weniger als eine reine Fahrradversicherung beim Spezial-Versicherer, bei dem die Wohnung nicht mitversichert ist."}},
     {"@type":"Question","name":"Was ist nicht versichert?","acceptedAnswer":{"@type":"Answer","text":"Unter anderem vorsätzlich verursachte Schäden, Schäden durch Verlieren, Stehen- oder Liegenlassen sowie Garantiefälle des Herstellers."}},
-    {"@type":"Question","name":"Was passiert bei grober Fahrlässigkeit?","acceptedAnswer":{"@type":"Answer","text":"In der Hausratversicherung Best wird die Entschädigung bei grob fahrlässig herbeigeführten Schäden nicht gekürzt – auf dieses Kürzungsrecht verzichtet der Versicherer ausdrücklich."}}
+    {"@type":"Question","name":"Was passiert bei grober Fahrlässigkeit?","acceptedAnswer":{"@type":"Answer","text":"In der Hausratversicherung Best wird die Entschädigung bei grob fahrlässig herbeigeführten Schäden nicht gekürzt – auf dieses Kürzungsrecht verzichtet der Versicherer ausdrücklich."}},
+    {"@type":"Question","name":"Wie läuft der Schadensfall ab?","acceptedAnswer":{"@type":"Answer","text":"Der Schaden wird direkt beim persönlichen Ansprechpartner gemeldet – per WhatsApp, Telefon oder E-Mail. Mit Kaufbeleg oder aussagekräftigen Fotos des Rads sind Schäden bis 5.000 € bei vollständigen Unterlagen in der Regel innerhalb einer Woche reguliert; höhere Schäden werden genauer geprüft."}},
+    {"@type":"Question","name":"Ab wann gilt der Schutz?","acceptedAnswer":{"@type":"Answer","text":"Ab dem vereinbarten Versicherungsbeginn – ohne Wartezeit. Das Rad ist vom ersten Tag an vollständig versichert."}},
+    {"@type":"Question","name":"Welche Laufzeit hat der Vertrag?","acceptedAnswer":{"@type":"Answer","text":"Die Laufzeit ist wählbar: ein Jahr oder drei Jahre. Beim Drei-Jahres-Vertrag reduziert sich der Beitrag zusätzlich."}},
+    {"@type":"Question","name":"Ist ein gebrauchtes Rad versicherbar?","acceptedAnswer":{"@type":"Answer","text":"Ja – das Alter des Rads spielt keine Rolle. Entschädigt wird zum Neuwert: Bei Totalschaden oder Diebstahl wird der Betrag erstattet, den ein gleichwertiges neues Rad heute kostet."}}
   ]
 }
 </script>
@@ -316,11 +321,11 @@ h2.display{font-size:clamp(40px,6vw,84px)}
     radial-gradient(1100px 520px at 88% -6%, rgba(238,1,56,.10) 0%, transparent 62%),
     radial-gradient(900px 500px at -10% 110%, rgba(238,1,56,.05) 0%, transparent 55%);
 }
-.hero .eyebrow-row{display:flex;align-items:center;gap:14px;margin-bottom:clamp(22px,3vw,36px)}
+.hero .eyebrow-row{display:flex;align-items:center;gap:14px;margin-bottom:clamp(18px,2.4vw,28px)}
 .hero .eyebrow-row::before{content:"";width:34px;height:1.5px;background:var(--ergo-rot)}
 .hero h1{
-  font-size:clamp(62px,11vw,172px);
-  margin-bottom:clamp(26px,3.4vw,44px);
+  font-size:clamp(56px,9.5vw,148px);
+  margin-bottom:clamp(22px,2.8vw,36px);
 }
 .hero h1 .mask{display:block;overflow:hidden;padding:.14em 0 .03em;margin-top:-.14em}
 .hero h1 .line{display:inline-block;transform:translateY(115%);animation:rise 1.1s var(--ease) forwards}
@@ -340,7 +345,7 @@ h2.display{font-size:clamp(40px,6vw,84px)}
   color:var(--ink);margin-bottom:18px;max-width:36ch;
 }
 .hero-claim b{color:var(--ergo-rot);font-weight:700}
-.hero-cta{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:40px}
+.hero-cta{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:28px}
 .google-bewertungen.hero-proof{margin:0 0 40px;width:fit-content;max-width:100%}
 
 /* Telemetrie-Leiste statt Chips */
@@ -804,6 +809,15 @@ h2.display{font-size:clamp(40px,6vw,84px)}
 }
 .formular .btn{width:100%;margin-top:8px}
 .formular small{display:block;margin-top:16px;font-size:12.5px;color:var(--ink-2);text-align:center;opacity:.8}
+.formular small a{color:var(--ink);text-decoration:underline;text-underline-offset:2px}
+.f-hinweis{color:var(--ergo-rot);font-size:13.5px;margin:-6px 0 14px}
+.skip-link{
+  position:fixed;top:14px;left:14px;z-index:200;
+  background:var(--ergo-rot);color:#fff;padding:12px 20px;border-radius:var(--radius-s);
+  font-weight:600;font-size:14px;text-decoration:none;
+  transform:translateY(-250%);transition:transform .2s ease;
+}
+.skip-link:focus{transform:none}
 @media(max-width:920px){.kontakt-grid{grid-template-columns:1fr}}
 
 /* ---------- Footer ---------- */
@@ -1034,6 +1048,11 @@ img.ls-foto,img.berater-foto{object-fit:cover}
 .section-head .sektion-toggle{margin-top:30px}
 .sektion-inhalt{display:none}
 .sektion-inhalt.offen{display:block}
+/* Desktop: Inhalte offen zeigen – Einklappen nur auf Mobil */
+@media(min-width:961px){
+  .sektion-inhalt{display:block}
+  .sektion-toggle{display:none}
+}
 
 /* ---------- Reduced Motion & Fokus ---------- */
 @media(prefers-reduced-motion:reduce){
@@ -1049,6 +1068,7 @@ img.ls-foto,img.berater-foto{object-fit:cover}
 </style>
 </head>
 <body>
+<a class="skip-link" href="#top">Zum Inhalt springen</a>
 
 <!-- ===================== BERGETAPPE (Parallax-Hintergrund) =====================
      Stilisiertes Etappenprofil einer Tour-de-France-2026-Bergetappe.
@@ -1137,13 +1157,12 @@ img.ls-foto,img.berater-foto{object-fit:cover}
     <div class="hero-unten">
       <div class="hero-links">
         <p class="hero-claim">Beraten von <b>Ludwig</b> – Radsportler, kein Callcenter. Ein direkter Draht, keine Warteschleife.</p>
-        <p class="lead">Weltweit. Rund um die Uhr. Zum Neuwert. Die Fahrradkasko schützt jedes Rad deines Haushalts gegen Diebstahl, Sturz und Beschädigung – mit Schutzbrief für unterwegs, fest inklusive. Das Beste: nur ein Vertrag für alle deine Räder!</p>
         <div class="hero-cta">
           <a class="btn btn-primary magnetic" href="#kontakt"><span class="btn-label">Kostenlose Beratung</span></a>
-          <a class="btn btn-ghost magnetic" href="#paket"><span class="btn-label">Angebot</span></a>
-          <a class="btn btn-ghost magnetic" href="#leistungen"><span class="btn-label">Leistungen ansehen</span></a>
+          <a class="btn btn-ghost magnetic" href="#paket"><span class="btn-label">Angebot ansehen</span></a>
         </div>
-        <a class="google-bewertungen hero-proof" href="https://www.google.com/maps/search/?api=1&amp;query=ERGO+Versicherung+Hannes+Kaselow+Stephanstr.+2+Rostock" target="_blank" rel="noopener" aria-label="123 Google-Bewertungen der ERGO-Agentur Hannes Kaselow ansehen">
+        <p class="lead">Weltweit. Rund um die Uhr. Zum Neuwert. Die Fahrradkasko schützt jedes Rad deines Haushalts gegen Diebstahl, Sturz und Beschädigung – mit Schutzbrief für unterwegs, fest inklusive. Das Beste: nur ein Vertrag für alle deine Räder!</p>
+        <a class="google-bewertungen hero-proof" href="https://www.google.com/maps/search/?api=1&amp;query=ERGO+Versicherung+Hannes+Kaselow+Stephanstr.+2+Rostock" target="_blank" rel="noopener" aria-label="Über 120 Google-Bewertungen der ERGO-Agentur Hannes Kaselow ansehen">
           <span class="gb-sterne" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.5L21 9.3l-5 4.6L17.4 21 12 17.6 6.6 21 8 13.9l-5-4.6 6.1-.8z"/></svg>
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.5L21 9.3l-5 4.6L17.4 21 12 17.6 6.6 21 8 13.9l-5-4.6 6.1-.8z"/></svg>
@@ -1151,7 +1170,7 @@ img.ls-foto,img.berater-foto{object-fit:cover}
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.5L21 9.3l-5 4.6L17.4 21 12 17.6 6.6 21 8 13.9l-5-4.6 6.1-.8z"/></svg>
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.5L21 9.3l-5 4.6L17.4 21 12 17.6 6.6 21 8 13.9l-5-4.6 6.1-.8z"/></svg>
           </span>
-          <span class="gb-text"><strong>123 Google-Bewertungen</strong> · <span class="gb-marke">ERGO-Agentur Hannes Kaselow</span></span>
+          <span class="gb-text"><strong>Über 120 Google-Bewertungen</strong> · <span class="gb-marke">ERGO-Agentur Hannes Kaselow</span></span>
         </a>
         <div class="telemetrie" aria-label="Die wichtigsten Leistungen im Überblick">
           <span>Geltung<b>24/7 · weltweit</b></span>
@@ -1725,17 +1744,52 @@ img.ls-foto,img.berater-foto{object-fit:cover}
       </div>
 
       <div class="faq-item reveal" style="--i:8">
-        <button class="faq-q" aria-expanded="false"><span class="nr">09</span>Was ist nicht versichert?
+        <button class="faq-q" aria-expanded="false"><span class="nr">09</span>Warum sind Hausrat und Fahrradkasko ein gemeinsamer Vertrag?
+          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-a"><div><p>Weil du damit nur einen Vertrag verwaltest: Wohnung und alle Räder sind zusammen abgesichert – mit einem Ansprechpartner für alles. Dazu kommt der Preis: Das Kombi-Paket kostet meist weniger als eine reine Fahrradversicherung beim Spezial-Versicherer – dort zahlst du oft mehr, und deine Wohnung ist gar nicht mitversichert.</p></div></div>
+      </div>
+
+      <div class="faq-item reveal" style="--i:9">
+        <button class="faq-q" aria-expanded="false"><span class="nr">10</span>Was ist nicht versichert?
           <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
         <div class="faq-a"><div><p>Nicht versichert sind unter anderem vorsätzlich verursachte Schäden, Schäden durch Verlieren, Stehen- oder Liegenlassen sowie Schäden, für die der Hersteller oder Lieferant haftet (Garantiefälle). Alle Details regeln die Versicherungsbedingungen.</p></div></div>
       </div>
 
-      <div class="faq-item reveal" style="--i:9">
-        <button class="faq-q" aria-expanded="false"><span class="nr">10</span>Was passiert bei grober Fahrlässigkeit?
+      <div class="faq-item reveal" style="--i:10">
+        <button class="faq-q" aria-expanded="false"><span class="nr">11</span>Was passiert bei grober Fahrlässigkeit?
           <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
         <div class="faq-a"><div><p>Gute Nachricht: In der Hausratversicherung Best wird die Entschädigung nicht gekürzt, wenn du einen Schaden grob fahrlässig herbeigeführt hast – auf dieses Kürzungsrecht verzichtet der Versicherer ausdrücklich. Vorsätzlich verursachte Schäden bleiben ausgeschlossen, und deine Mitwirkungspflichten (z.&nbsp;B. Sicherheitsvorschriften wie die Schlosspflicht) gelten weiterhin.</p></div></div>
+      </div>
+
+      <div class="faq-item reveal" style="--i:11">
+        <button class="faq-q" aria-expanded="false"><span class="nr">12</span>Wie läuft der Schadensfall ab?
+          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-a"><div><p>Du meldest den Schaden direkt bei mir – per WhatsApp, Telefon oder E-Mail. Am besten hast du den Kaufbeleg deines Rads zur Hand; alternativ genügen aussagekräftige Fotos, auf denen Marke und Komponenten erkennbar sind. Sind die Unterlagen vollständig, sind Schäden bis 5.000&nbsp;€ in der Regel innerhalb einer Woche reguliert und ausgezahlt. Höhere Schäden gehen in eine genauere Prüfung und können etwas länger dauern.</p></div></div>
+      </div>
+
+      <div class="faq-item reveal" style="--i:12">
+        <button class="faq-q" aria-expanded="false"><span class="nr">13</span>Ab wann gilt der Schutz?
+          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-a"><div><p>Ab dem vereinbarten Versicherungsbeginn – eine Wartezeit gibt es nicht. Dein Rad ist vom ersten Tag an vollständig versichert.</p></div></div>
+      </div>
+
+      <div class="faq-item reveal" style="--i:13">
+        <button class="faq-q" aria-expanded="false"><span class="nr">14</span>Welche Laufzeit hat der Vertrag?
+          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-a"><div><p>Die Laufzeit wählst du selbst: ein Jahr oder drei Jahre. Beim Drei-Jahres-Vertrag sparst du zusätzlich am Beitrag. Welche Variante zu dir passt, klären wir gemeinsam im Angebot.</p></div></div>
+      </div>
+
+      <div class="faq-item reveal" style="--i:14">
+        <button class="faq-q" aria-expanded="false"><span class="nr">15</span>Ist mein gebrauchtes Rad versicherbar?
+          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-a"><div><p>Ja – wie alt dein Rad ist, spielt keine Rolle. Entschädigt wird zum Neuwert: Bei Totalschaden oder Diebstahl bekommst du den Betrag, den ein gleichwertiges neues Rad heute kostet.</p></div></div>
       </div>
 
     </div>
@@ -1762,7 +1816,7 @@ img.ls-foto,img.berater-foto{object-fit:cover}
         </div>
 
         <!-- Google-Bewertungen der ERGO-Agentur Hannes Kaselow – Klick öffnet das Google-Profil mit den Rezensionen -->
-        <a class="google-bewertungen" href="https://www.google.com/maps/search/?api=1&amp;query=ERGO+Versicherung+Hannes+Kaselow+Stephanstr.+2+Rostock" target="_blank" rel="noopener" aria-label="123 Google-Bewertungen der ERGO-Agentur Hannes Kaselow ansehen">
+        <a class="google-bewertungen" href="https://www.google.com/maps/search/?api=1&amp;query=ERGO+Versicherung+Hannes+Kaselow+Stephanstr.+2+Rostock" target="_blank" rel="noopener" aria-label="Über 120 Google-Bewertungen der ERGO-Agentur Hannes Kaselow ansehen">
           <span class="gb-sterne" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.5L21 9.3l-5 4.6L17.4 21 12 17.6 6.6 21 8 13.9l-5-4.6 6.1-.8z"/></svg>
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.5L21 9.3l-5 4.6L17.4 21 12 17.6 6.6 21 8 13.9l-5-4.6 6.1-.8z"/></svg>
@@ -1770,7 +1824,7 @@ img.ls-foto,img.berater-foto{object-fit:cover}
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.5L21 9.3l-5 4.6L17.4 21 12 17.6 6.6 21 8 13.9l-5-4.6 6.1-.8z"/></svg>
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.5L21 9.3l-5 4.6L17.4 21 12 17.6 6.6 21 8 13.9l-5-4.6 6.1-.8z"/></svg>
           </span>
-          <span class="gb-text"><strong>123 Google-Bewertungen</strong> · <span class="gb-marke">ERGO-Agentur Hannes Kaselow</span></span>
+          <span class="gb-text"><strong>Über 120 Google-Bewertungen</strong> · <span class="gb-marke">ERGO-Agentur Hannes Kaselow</span></span>
         </a>
 
         <div class="kanal">
@@ -1812,29 +1866,33 @@ img.ls-foto,img.berater-foto{object-fit:cover}
       <div class="formular reveal" style="--i:1">
         <h3>Rückruf &amp; Angebot anfragen</h3>
         <p>Kurz ausfüllen – ich melde mich in der Regel innerhalb eines Werktags bei dir.</p>
-        <div class="feld">
-          <label for="f-name">Name</label>
-          <input id="f-name" type="text" placeholder="Max Mustermann" autocomplete="name">
-        </div>
-        <div class="feld">
-          <label for="f-kontakt">E-Mail oder Telefon</label>
-          <input id="f-kontakt" type="text" placeholder="max@beispiel.de oder 0151 …" autocomplete="email">
-        </div>
-        <div class="feld">
-          <label for="f-anliegen">Anliegen</label>
-          <select id="f-anliegen">
-            <option>Angebot für Fahrradkasko-Paket</option>
-            <option>Rückruf gewünscht</option>
-            <option>Beratungstermin vereinbaren</option>
-            <option>Allgemeine Frage</option>
-          </select>
-        </div>
-        <div class="feld">
-          <label for="f-nachricht">Nachricht (optional)</label>
-          <textarea id="f-nachricht" placeholder="z. B.: Rennrad im Wert von 6.500 €, Wohnung 68 m² in Rostock …"></textarea>
-        </div>
-        <button class="btn btn-primary" id="f-senden" type="button"><span class="btn-label">Anfrage senden</span></button>
+        <form id="f-form" novalidate>
+          <div class="feld">
+            <label for="f-name">Name</label>
+            <input id="f-name" name="name" type="text" placeholder="Max Mustermann" autocomplete="name">
+          </div>
+          <div class="feld">
+            <label for="f-kontakt">E-Mail oder Telefon</label>
+            <input id="f-kontakt" name="kontakt" type="text" placeholder="max@beispiel.de oder 0151 …" autocomplete="email">
+          </div>
+          <div class="feld">
+            <label for="f-anliegen">Anliegen</label>
+            <select id="f-anliegen" name="anliegen">
+              <option>Angebot für Fahrradkasko-Paket</option>
+              <option>Rückruf gewünscht</option>
+              <option>Beratungstermin vereinbaren</option>
+              <option>Allgemeine Frage</option>
+            </select>
+          </div>
+          <div class="feld">
+            <label for="f-nachricht">Nachricht (optional)</label>
+            <textarea id="f-nachricht" name="nachricht" placeholder="z. B.: Rennrad im Wert von 6.500 €, Wohnung 68 m² in Rostock …"></textarea>
+          </div>
+          <p class="f-hinweis" id="f-hinweis" aria-live="polite" hidden>Bitte sag mir, wie ich dich erreichen kann – E-Mail-Adresse oder Telefonnummer genügt.</p>
+          <button class="btn btn-primary" id="f-senden" type="submit"><span class="btn-label">Anfrage senden</span></button>
+        </form>
         <small>Öffnet dein E-Mail-Programm mit der fertigen Anfrage. Kostenlos &amp; unverbindlich.</small>
+        <small>Kein E-Mail-Programm eingerichtet? Schreib mir direkt an <a href="mailto:ludwig.siebenbuergen@ergo.de">ludwig.siebenbuergen@ergo.de</a> oder per <a href="https://wa.me/4915224827997" target="_blank" rel="noopener">WhatsApp</a>.</small>
       </div>
     </div>
   </div>
@@ -2170,12 +2228,20 @@ document.querySelectorAll('.mehr-btn').forEach(btn => {
   if (sektionen[ausAnker]) oeffnen(ausAnker);
 })();
 
-/* Formular → E-Mail (mailto) */
-document.getElementById('f-senden').addEventListener('click', () => {
+/* Formular → E-Mail (mailto); Enter-Taste sendet, leere Anfragen werden abgefangen */
+document.getElementById('f-form').addEventListener('submit', (e) => {
+  e.preventDefault();
   const name = document.getElementById('f-name').value.trim();
   const kontakt = document.getElementById('f-kontakt').value.trim();
   const anliegen = document.getElementById('f-anliegen').value;
   const nachricht = document.getElementById('f-nachricht').value.trim();
+  const hinweis = document.getElementById('f-hinweis');
+  if (!kontakt){
+    hinweis.hidden = false;
+    document.getElementById('f-kontakt').focus();
+    return;
+  }
+  hinweis.hidden = true;
   const betreff = encodeURIComponent(`Anfrage Fahrradkasko – ${name || 'Neue Anfrage'}`);
   const body = encodeURIComponent(
 `Hallo,
