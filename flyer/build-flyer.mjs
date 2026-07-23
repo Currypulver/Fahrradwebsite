@@ -17,9 +17,10 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const globalRoot = execSync('npm root -g').toString().trim();
 const { chromium } = require(join(globalRoot, 'playwright'));
 
+// Kurze Payloads -> QR-Code mit wenigen Modulen -> auch bei ~16-20 mm sicher scanbar.
 const LINKS = {
   web: 'https://rennradkasko.de',
-  wa:  'https://wa.me/4915224827997?text=Hi%20Ludwig%2C%20ich%20interessiere%20mich%20f%C3%BCr%20die%20Fahrradkasko.',
+  wa:  'https://wa.me/4915224827997',   // öffnet direkt den WhatsApp-Chat mit 0152 24827997
 };
 
 // Zu bauende Varianten
@@ -30,7 +31,7 @@ const TARGETS = [
 
 async function qrSvg(text) {
   let svg = await QRCode.toString(text, {
-    type: 'svg', errorCorrectionLevel: 'Q', margin: 1,
+    type: 'svg', errorCorrectionLevel: 'M', margin: 2,
     color: { dark: '#0B0A0F', light: '#ffffff' },
   });
   svg = svg.replace(/\s(width|height)="[^"]*"/g, '');
