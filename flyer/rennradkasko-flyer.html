@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="de" class="mode-druck">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rennradkasko – Auslege-Flyer (Wickelfalz DIN lang)</title>
+<style>
+/* ============================================================
+   RENNRADKASKO · Auslege-Flyer · Wickelfalz DIN lang (6 Panels)
+   Art Direction aus rennradkasko.de übernommen: „Night Ride"
+   Bogen: A4 quer 297×210 mm · Panels 100 / 100 / 97 mm
+   Druckversion mit 3 mm Beschnitt (303×216) + Schnitt-/Falzmarken
+   ============================================================ */
+
+/* ---------- Schriften (lokal, wie auf der Website) ---------- */
+@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-stretch:62% 125%;
+  src:url('../assets/fonts/archivo-normal-100-900-latin.woff2') format('woff2'),
+      url('../assets/fonts/archivo-normal-100-900-latin-ext.woff2') format('woff2');}
+@font-face{font-family:'Archivo';font-style:italic;font-weight:100 900;font-stretch:62% 125%;
+  src:url('../assets/fonts/archivo-italic-100-900-latin.woff2') format('woff2'),
+      url('../assets/fonts/archivo-italic-100-900-latin-ext.woff2') format('woff2');}
+@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:400 700;
+  src:url('../assets/fonts/instrument-sans-normal-400-700-latin.woff2') format('woff2'),
+      url('../assets/fonts/instrument-sans-normal-400-700-latin-ext.woff2') format('woff2');}
+@font-face{font-family:'Instrument Sans';font-style:italic;font-weight:400 700;
+  src:url('../assets/fonts/instrument-sans-italic-400-700-latin.woff2') format('woff2');}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;
+  src:url('../assets/fonts/ibm-plex-mono-normal-400-latin.woff2') format('woff2'),
+      url('../assets/fonts/ibm-plex-mono-normal-400-latin-ext.woff2') format('woff2');}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;
+  src:url('../assets/fonts/ibm-plex-mono-normal-500-latin.woff2') format('woff2'),
+      url('../assets/fonts/ibm-plex-mono-normal-500-latin-ext.woff2') format('woff2');}
+
+:root{
+  --asphalt:#0B0A0F; --asphalt-2:#14121A; --asphalt-3:#1B1923; --card:#1B1923;
+  --kreide:#F4F2ED; --kreide-2:#9A97A3;
+  --ergo-rot:#EE0138; --rot-tief:#B00028; --rot-glow:rgba(238,1,56,.35);
+  --gold:#F5A623;
+  --beleg-bg:#FFFFFF; --beleg-linie:#E7E5EA; --beleg-ink:#19181D; --beleg-ink-2:#5C5A64; --beleg-ink-hell:#B8B6C2;
+  --line:rgba(255,255,255,.10); --line-2:rgba(255,255,255,.22);
+  --display:'Archivo',system-ui,sans-serif;
+  --body:'Instrument Sans',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact;color-adjust:exact;}
+
+html{background:#3a3a40;}
+body{font-family:var(--body);color:var(--kreide);line-height:1.5;-webkit-font-smoothing:antialiased;}
+
+/* Typo-Rollen (von der Website) */
+.display{font-family:var(--display);font-stretch:64%;font-weight:880;line-height:.9;
+  letter-spacing:.004em;text-transform:uppercase;}
+.display .kursiv{font-style:italic;}
+.display .rot{color:var(--ergo-rot);}
+.display .kontur{color:transparent;-webkit-text-stroke:1.2px var(--kreide);}
+.mono{font-family:var(--mono);text-transform:uppercase;letter-spacing:.16em;}
+.mono b{color:var(--ergo-rot);font-weight:500;}
+
+/* ---------- Bogen / Sheet ---------- */
+.sheet{
+  position:relative;background:var(--asphalt);color:var(--kreide);
+  overflow:hidden;margin:0 auto;
+}
+/* Druck: 303×216 mit 3 mm Beschnitt ringsum, Trim 297×210 */
+.mode-druck .sheet{width:303mm;height:216mm;padding:3mm;}
+/* Heim: exakt A4 quer, kein Beschnitt */
+.mode-heim  .sheet{width:297mm;height:210mm;padding:0;}
+.sheet + .sheet{page-break-before:always;}
+
+/* Weicher Rot-Glow im Hintergrund – wie auf der Website */
+.sheet::before{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(60% 45% at 82% 8%, rgba(238,1,56,.16), transparent 60%),
+    radial-gradient(55% 40% at 6% 96%, rgba(238,1,56,.12), transparent 60%);
+}
+/* Feines Filmkorn */
+.sheet::after{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:40;opacity:.05;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+.trim{position:relative;z-index:2;width:297mm;height:210mm;display:flex;}
+.panel{position:relative;height:210mm;flex:none;padding:12mm 8mm;display:flex;flex-direction:column;}
+.panel.p-cover{width:100mm;} .panel.p-back{width:100mm;} .panel.p-tuck{width:97mm;}
+.panel.p-leist{width:100mm;} .panel.p-mid{width:100mm;} .panel.p-preis{width:97mm;}
+/* Falz-Trennlinien zwischen den Panels (dezent) */
+.panel + .panel::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:1px;
+  background:repeating-linear-gradient(to bottom,rgba(255,255,255,.14) 0 4px,transparent 4px 9px);
+}
+
+/* ---------- Schnitt- & Falzmarken (nur Druck) ---------- */
+.marks{position:absolute;inset:0;z-index:30;pointer-events:none;display:none;}
+.mode-druck .marks{display:block;}
+.marks i{position:absolute;background:#fff;opacity:.9;}
+.marks i.crop{width:.2mm;height:3mm;} .marks i.crop.h{width:3mm;height:.2mm;}
+.marks i.fold{width:.25mm;height:4mm;background:var(--ergo-rot);opacity:.95;}
+.foldlbl{position:absolute;font-family:var(--mono);font-size:5px;letter-spacing:.1em;
+  color:var(--ergo-rot);text-transform:uppercase;}
+
+/* Heim: dezente Falzmarken an den Kanten */
+.hmarks{position:absolute;inset:0;z-index:30;pointer-events:none;display:none;}
+.mode-heim .hmarks{display:block;}
+.hmarks i{position:absolute;width:.3mm;height:5mm;background:var(--kreide-2);opacity:.55;}
+.hmarks i.b{top:auto;bottom:0;}
+
+/* ---------- gemeinsame Bausteine ---------- */
+.km{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:8px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--kreide-2);margin-bottom:9mm;}
+.km::before{content:"";width:7px;height:7px;background:var(--ergo-rot);flex:none;}
+.km::after{content:"";height:1px;flex:1;background:var(--line);}
+
+.eyebrow{font-family:var(--mono);font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--kreide-2);}
+.eyebrow b{color:var(--ergo-rot);font-weight:500;}
+
+.spacer{flex:1;}
+
+/* Marke / Logo */
+.brandrow{display:flex;align-items:center;gap:8px;}
+.logomark{width:26px;height:26px;border-radius:6px;background:var(--asphalt-2);
+  border:1px solid var(--line);flex:none;position:relative;overflow:hidden;}
+.logomark span{position:absolute;top:5px;width:3px;height:16px;background:var(--ergo-rot);
+  transform:skewX(-18deg);}
+.logomark span:nth-child(1){left:6px;} .logomark span:nth-child(2){left:11.5px;} .logomark span:nth-child(3){left:17px;}
+.wordmark{font-family:var(--display);font-stretch:64%;font-weight:900;font-style:italic;
+  color:var(--ergo-rot);font-size:19px;letter-spacing:.01em;line-height:1;}
+.ergo{font-family:var(--mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--kreide-2);}
+.ergo b{color:var(--kreide);font-weight:600;}
+
+/* Check-Liste */
+.checks{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.checks li{display:flex;gap:9px;align-items:flex-start;font-size:11px;line-height:1.35;}
+.checks svg{width:13px;height:13px;flex:none;margin-top:1px;color:var(--ergo-rot);}
+.checks b{font-weight:600;color:var(--kreide);}
+.checks small{display:block;color:var(--kreide-2);font-size:9.5px;line-height:1.3;margin-top:1px;}
+
+/* Telemetrie 2×2 */
+.telem{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--line);}
+.telem div{font-family:var(--mono);font-size:8px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--kreide-2);padding:8px 8px 8px 0;position:relative;}
+.telem div::before{content:"";position:absolute;top:-1px;left:0;width:16px;height:2px;background:var(--ergo-rot);}
+.telem b{display:block;color:var(--kreide);font-family:var(--display);font-stretch:70%;font-weight:850;
+  font-style:normal;font-size:13px;letter-spacing:.01em;margin-top:3px;text-transform:none;}
+
+/* Schritte */
+.steps{display:flex;flex-direction:column;gap:9px;}
+.step{display:flex;gap:10px;align-items:baseline;}
+.step .n{font-family:var(--mono);font-size:9px;color:var(--ergo-rot);flex:none;letter-spacing:.1em;}
+.step .t{font-size:10.5px;color:var(--kreide);} .step .t small{color:var(--kreide-2);display:block;font-size:9px;}
+
+/* Risk / Leistungs-Karten */
+.leistliste{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.leist{border:1px solid var(--line);border-radius:8px;background:var(--card);
+  padding:10px 12px;display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;}
+.leist .ic{width:15px;height:15px;color:var(--ergo-rot);margin-top:1px;}
+.leist h4{font-size:12px;font-weight:600;color:var(--kreide);letter-spacing:.005em;}
+.leist p{font-size:9.5px;color:var(--kreide-2);line-height:1.35;margin-top:2px;}
+
+/* Rad-Typen Chips */
+.chips{display:flex;flex-wrap:wrap;gap:6px;}
+.chip{font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid var(--line-2);border-radius:999px;padding:5px 10px;color:var(--kreide);}
+
+/* Schutzbrief Block */
+.schutz{border:1px solid var(--line);border-radius:8px;background:var(--asphalt-2);padding:12px 13px;}
+.schutz h4{font-family:var(--display);font-stretch:70%;font-weight:850;text-transform:uppercase;
+  font-size:13px;letter-spacing:.01em;display:flex;align-items:center;gap:8px;}
+.schutz h4 svg{width:16px;height:16px;color:var(--ergo-rot);}
+.schutz ul{list-style:none;margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;}
+.schutz li{font-size:9px;color:var(--kreide-2);display:flex;gap:5px;line-height:1.25;}
+.schutz li::before{content:"›";color:var(--ergo-rot);}
+.schutz .max{margin-top:8px;font-family:var(--mono);font-size:8px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--kreide-2);}
+
+/* Vorteile Mini-Liste */
+.vorteile{list-style:none;display:flex;flex-direction:column;gap:5px;}
+.vorteile li{font-size:10px;color:var(--kreide);display:flex;gap:8px;line-height:1.3;}
+.vorteile svg{width:12px;height:12px;color:var(--ergo-rot);flex:none;margin-top:2px;}
+
+/* Beleg (Preis-Panel) – weißes Papier auf Asphalt */
+.beleg{background:var(--beleg-bg);color:var(--beleg-ink);border-radius:4px;position:relative;
+  box-shadow:0 20px 50px -22px rgba(0,0,0,.65),0 0 60px -30px var(--rot-glow);
+  padding:16px 16px 14px;font-family:var(--display);font-stretch:104%;}
+.beleg::before,.beleg::after{content:"";position:absolute;left:0;right:0;height:9px;
+  background-image:radial-gradient(circle at 6px -2px,transparent 5px,var(--beleg-bg) 5.5px);
+  background-size:12px 9px;}
+.beleg::before{top:-8px;transform:scaleY(-1);} .beleg::after{bottom:-8px;}
+.beleg-head{text-align:center;border-bottom:2px dashed var(--beleg-linie);padding-bottom:9px;margin-bottom:9px;}
+.beleg-head .bt{font-weight:850;font-size:12px;letter-spacing:.2em;text-transform:uppercase;}
+.beleg-head .bs{font-family:var(--mono);font-size:8px;color:var(--beleg-ink-2);letter-spacing:.08em;
+  margin-top:4px;text-transform:uppercase;}
+.beleg table{width:100%;border-collapse:collapse;font-size:11px;}
+.beleg td{padding:4px 0;vertical-align:baseline;}
+.beleg td:last-child{text-align:right;font-weight:750;white-space:nowrap;font-family:var(--mono);font-size:10px;color:var(--beleg-ink);}
+.beleg .summe td{font-size:14px;font-weight:900;padding-top:8px;border-top:2px dashed var(--beleg-linie);}
+.beleg .summe td:last-child{color:var(--ergo-rot);font-size:14px;}
+.beleg-fazit{margin-top:10px;text-align:center;font-size:9.5px;letter-spacing:.05em;
+  text-transform:uppercase;font-weight:750;}
+.beleg-fazit .rot{color:var(--ergo-rot);}
+.beleg-stempel{position:absolute;top:12px;right:-8px;transform:rotate(9deg);
+  border:2px solid var(--ergo-rot);color:var(--ergo-rot);font-family:var(--display);
+  font-weight:900;font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 8px;border-radius:4px;background:rgba(255,255,255,.92);}
+
+/* Google-Bewertungen */
+.google{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:8px;
+  padding:8px 10px;background:var(--asphalt-2);}
+.stars{display:flex;gap:1px;color:var(--gold);flex:none;} .stars svg{width:12px;height:12px;}
+.google .gt{font-size:9px;color:var(--kreide-2);line-height:1.25;}
+.google .gt b{color:var(--kreide);font-weight:600;display:block;font-size:9.5px;}
+
+/* Foto */
+.foto{width:100%;border-radius:8px;overflow:hidden;border:1px solid var(--line);}
+.foto img{width:100%;height:100%;object-fit:cover;display:block;}
+
+/* CTA Button */
+.cta{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--ergo-rot);
+  color:#fff;font-family:var(--display);font-stretch:72%;font-weight:800;font-style:italic;
+  font-size:13px;letter-spacing:.05em;text-transform:uppercase;padding:11px 14px;border-radius:6px;
+  box-shadow:0 12px 26px -12px var(--rot-glow);}
+.cta svg{width:15px;height:15px;}
+
+/* Kontaktzeilen */
+.kontakt{display:flex;flex-direction:column;gap:9px;}
+.krow{display:flex;gap:10px;align-items:flex-start;}
+.krow .ki{width:17px;height:17px;color:var(--ergo-rot);flex:none;margin-top:1px;}
+.krow .kx b{display:block;font-size:11px;color:var(--kreide);font-weight:600;letter-spacing:.01em;}
+.krow .kx span{font-size:9.5px;color:var(--kreide-2);}
+
+/* QR */
+.qrblock{display:flex;gap:10px;}
+.qrcard{flex:1;text-align:center;}
+.qrcard .qrimg{background:#fff;border-radius:6px;padding:5px;width:100%;aspect-ratio:1;}
+.qrimg svg{width:100%;height:100%;display:block;}
+.qrcard .ql{font-family:var(--mono);font-size:7.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--kreide-2);margin-top:5px;}
+.qrcard .ql b{color:var(--ergo-rot);font-weight:500;}
+.qr-solo{width:26mm;}
+
+.legal{font-family:var(--body);font-size:6.8px;line-height:1.4;color:var(--kreide-2);letter-spacing:.005em;}
+.legal b{color:var(--kreide);font-weight:600;}
+
+.fn{font-size:7px;color:var(--kreide-2);line-height:1.35;}
+
+h2.head{margin-bottom:8px;} .lead{font-size:10.5px;color:var(--kreide-2);line-height:1.4;}
+
+/* Bildschirm-Vorschau: Bögen untereinander mit Abstand */
+@media screen{
+  html{padding:24px;}
+  .sheet{box-shadow:0 30px 80px -20px rgba(0,0,0,.6);margin-bottom:28px;}
+  .sheetlabel{max-width:303mm;margin:0 auto 8px;font-family:var(--mono);font-size:12px;
+    letter-spacing:.14em;text-transform:uppercase;color:#cfcfd6;}
+}
+@media print{ .sheetlabel{display:none;} html{padding:0;background:#fff;} }
+@page{size:303mm 216mm;margin:0;}
+</style>
+</head>
+<body>
+
+<!-- ============================ AUSSENSEITE ============================
+     L→R:  [ Teaser · Falzklappe (97) ] [ Rückseite/Kontakt (100) ] [ Titel (100) ]
+     ================================================================== -->
+<div class="sheetlabel">Außenseite — Titel rechts · Kontakt Mitte · Falzklappe links</div>
+<section class="sheet" id="aussen">
+  <div class="trim">
+
+    <!-- ===== TEASER / Falzklappe (Panel Z, 97 mm) ===== -->
+    <div class="panel p-tuck">
+      <div class="km">Auf einen Blick</div>
+      <h2 class="display" style="font-size:23px;">Alles<br>drin.<br><span class="kursiv rot">Ein Vertrag.</span></h2>
+      <p class="lead" style="margin-top:9px;">Weltweit, rund um die Uhr, zum Neuwert – für jedes Rad deines Haushalts.</p>
+
+      <div class="telem" style="margin-top:14px;">
+        <div>Geltung<b>24/7 · weltweit</b></div>
+        <div>Erstattung<b>zum Neuwert</b></div>
+        <div>Selbstbeteiligung<b>0 €</b></div>
+        <div>Schutzbrief<b>inklusive</b></div>
+      </div>
+
+      <ul class="checks" style="margin-top:16px;">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span><b>Allgefahrendeckung</b> – Diebstahl, Sturz, Raub &amp; Beschädigung</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span><b>Neuwert statt Zeitwert</b> – auch für gebrauchte Räder</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span><b>Akku- &amp; Elektronikschutz</b> fürs E-Bike / Pedelec</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span><b>Jedes Rad des Haushalts</b> – ein Beitrag, egal welcher Radtyp</span></li>
+      </ul>
+
+      <div class="spacer"></div>
+
+      <div class="mono" style="font-size:9px;color:var(--kreide-2);margin-top:12px;">In drei Schritten:</div>
+      <div class="steps" style="margin-top:8px;">
+        <div class="step"><span class="n">01</span><span class="t"><b style="color:var(--kreide)">Kurz anfragen</b><small>WhatsApp, Anruf oder E-Mail</small></span></div>
+        <div class="step"><span class="n">02</span><span class="t"><b style="color:var(--kreide)">Persönliches Angebot</b><small>kostenlos &amp; unverbindlich</small></span></div>
+        <div class="step"><span class="n">03</span><span class="t"><b style="color:var(--kreide)">Unterschreiben &amp; losfahren</b><small>fertig abgesichert</small></span></div>
+      </div>
+
+      <div class="mono" style="font-size:9px;color:var(--ergo-rot);margin-top:14px;">rennradkasko.de ›</div>
+    </div>
+
+    <!-- ===== RÜCKSEITE / Kontakt (Panel Y, 100 mm) ===== -->
+    <div class="panel p-back">
+      <div class="km">Kontakt · Beratung</div>
+      <h2 class="display" style="font-size:22px;">Sprich mit<br>jemandem, der<br><span class="kursiv rot">selbst fährt.</span></h2>
+      <p class="lead" style="margin-top:9px;">Ich berate dich persönlich – als Radsportler weiß ich, was dein Rad wert ist.</p>
+
+      <div class="kontakt" style="margin-top:14px;">
+        <div class="krow"><svg class="ki" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 14.96L2 22l5.2-1.5A9.9 9.9 0 1 0 12.04 2zm0 18.1a8.2 8.2 0 0 1-4.2-1.15l-.3-.18-3.08.89.84-3-.2-.31a8.2 8.2 0 1 1 6.94 3.75zm4.5-6.13c-.25-.12-1.46-.72-1.68-.8-.23-.09-.4-.13-.56.12-.16.25-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.22-1.45-1.37-1.7-.14-.24-.01-.38.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42h-.48c-.16 0-.43.06-.66.31-.22.25-.86.84-.86 2.05 0 1.2.88 2.37 1 2.53.13.17 1.74 2.65 4.2 3.72.59.25 1.05.4 1.4.52.6.19 1.13.16 1.56.1.47-.07 1.46-.6 1.66-1.17.21-.58.21-1.07.15-1.17-.06-.11-.23-.17-.47-.29z"/></svg><span class="kx"><b>WhatsApp · 0152 24827997</b><span>Schnellste Antwort – direkt aufs Handy</span></span></div>
+        <div class="krow"><svg class="ki" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.13.96.36 1.9.7 2.8a2 2 0 0 1-.45 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.45c.9.34 1.84.57 2.8.7A2 2 0 0 1 22 16.9z"/></svg><span class="kx"><b>0152 / 24827997</b><span>Mo–Fr direkt bei mir – ohne Warteschleife</span></span></div>
+        <div class="krow"><svg class="ki" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span class="kx"><b>ludwig.siebenbuergen@ergo.de</b><span>Für alles, was du schriftlich klären willst</span></span></div>
+        <div class="krow"><svg class="ki" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/><path d="M9 15.5l2 2 4-4.5"/></svg><span class="kx"><b>calendly.com/rennradkasko</b><span>Freien Termin für die Beratung wählen</span></span></div>
+      </div>
+
+      <div class="qrblock" style="margin-top:14px;">
+        <div class="qrcard"><div class="qrimg" data-qr="web"><!--QR_WEB_START--><svg preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 31 31" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h31v31H0z"/><path stroke="#0B0A0F" d="M1 1.5h7m4 0h4m4 0h2m1 0h7M1 2.5h1m5 0h1m1 0h5m2 0h3m1 0h1m2 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m2 0h1m2 0h2m2 0h1m1 0h2m2 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h5m1 0h2m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h1m3 0h2m1 0h1m2 0h2m2 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m3 0h2m3 0h1m4 0h1m1 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h1m1 0h1m2 0h1m1 0h5M2 9.5h1m1 0h4m1 0h3m3 0h1m4 0h1m1 0h2m1 0h2m1 0h1M3 10.5h2m1 0h1m2 0h1m3 0h1m2 0h4m4 0h2m1 0h2M2 11.5h2m1 0h5m2 0h1m1 0h1m5 0h7M2 12.5h5m1 0h2m1 0h2m1 0h2m1 0h5m3 0h2m2 0h1M3 13.5h2m2 0h1m3 0h3m1 0h1m5 0h3m2 0h1m1 0h1M4 14.5h2m3 0h4m1 0h2m1 0h1m5 0h1m1 0h1m1 0h3M1 15.5h4m2 0h1m1 0h3m2 0h1m1 0h1m2 0h2m2 0h2m1 0h1m2 0h1M4 16.5h1m3 0h2m1 0h1m1 0h1m1 0h1m4 0h4m1 0h5M2 17.5h1m4 0h1m3 0h1m1 0h3m2 0h2m2 0h1m1 0h1m1 0h1m1 0h1M1 18.5h1m6 0h2m8 0h1m4 0h1m1 0h1m1 0h1M1 19.5h3m1 0h6m1 0h2m3 0h1m1 0h2m3 0h1m4 0h1M1 20.5h4m3 0h2m1 0h2m3 0h2m1 0h6m2 0h3M1 21.5h2m1 0h2m1 0h4m3 0h1m2 0h2m1 0h8m1 0h1M9 22.5h1m2 0h1m1 0h3m1 0h4m3 0h3M1 23.5h7m2 0h2m3 0h2m3 0h2m1 0h1m1 0h1m1 0h1M1 24.5h1m5 0h1m1 0h7m3 0h3m3 0h2m1 0h1M1 25.5h1m1 0h3m1 0h1m1 0h2m3 0h3m1 0h1m1 0h6m2 0h1M1 26.5h1m1 0h3m1 0h1m1 0h2m1 0h4m3 0h1m4 0h1m3 0h1M1 27.5h1m1 0h3m1 0h1m2 0h1m1 0h1m2 0h2m2 0h1m1 0h2m1 0h2m1 0h3M1 28.5h1m5 0h1m1 0h4m4 0h1m3 0h2m2 0h1m1 0h1m1 0h1M1 29.5h7m2 0h2m4 0h1m3 0h1m1 0h4"/></svg><!--QR_WEB_END--></div><div class="ql">Zur <b>Website</b> · rennradkasko.de</div></div>
+        <div class="qrcard"><div class="qrimg" data-qr="wa"><!--QR_WA_START--><svg preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 51 51" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h51v51H0z"/><path stroke="#0B0A0F" d="M1 1.5h7m2 0h1m4 0h3m3 0h1m1 0h1m1 0h4m1 0h1m4 0h1m1 0h1m3 0h1m1 0h7M1 2.5h1m5 0h1m1 0h1m1 0h1m1 0h3m2 0h2m1 0h1m1 0h1m2 0h1m2 0h2m1 0h5m1 0h4m1 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h2m2 0h2m2 0h3m1 0h1m3 0h1m1 0h2m1 0h1m4 0h1m1 0h2m1 0h2m1 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m5 0h2m1 0h1m1 0h2m2 0h6m1 0h1m1 0h1m5 0h1m2 0h1m2 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m3 0h1m3 0h1m1 0h3m3 0h5m3 0h2m2 0h1m7 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m2 0h2m5 0h1m2 0h1m2 0h1m3 0h1m1 0h1m3 0h1m4 0h2m3 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M11 8.5h3m1 0h1m1 0h1m1 0h1m3 0h1m3 0h1m1 0h1m3 0h2m1 0h1m1 0h1m2 0h1M2 9.5h3m1 0h2m2 0h2m1 0h1m1 0h1m2 0h2m1 0h8m1 0h1m1 0h1m2 0h3m2 0h2m5 0h2M3 10.5h1m1 0h2m2 0h2m3 0h3m2 0h2m1 0h2m1 0h2m1 0h2m4 0h4m1 0h1m1 0h1m2 0h1m3 0h2M1 11.5h1m4 0h2m1 0h2m5 0h4m1 0h2m2 0h3m2 0h2m2 0h1m5 0h1m8 0h1M3 12.5h3m3 0h1m2 0h1m4 0h1m6 0h2m3 0h1m9 0h2m2 0h1m2 0h1m1 0h1M2 13.5h1m1 0h1m1 0h4m1 0h1m1 0h1m1 0h1m1 0h2m1 0h1m2 0h2m1 0h1m3 0h2m1 0h2m1 0h1m3 0h2m1 0h1m1 0h2M1 14.5h2m2 0h2m1 0h2m1 0h1m2 0h2m1 0h5m1 0h2m1 0h8m1 0h1m6 0h4M7 15.5h1m2 0h1m2 0h1m3 0h3m1 0h2m1 0h2m1 0h1m3 0h2m1 0h4m4 0h1m3 0h2m1 0h1M2 16.5h2m2 0h1m2 0h2m1 0h1m2 0h2m4 0h1m1 0h1m2 0h1m1 0h3m1 0h2m1 0h4m1 0h2m1 0h2m1 0h1m1 0h2M1 17.5h1m3 0h1m1 0h1m1 0h1m2 0h1m2 0h4m1 0h1m3 0h3m3 0h2m2 0h1m1 0h4m4 0h1m1 0h1M3 18.5h3m2 0h3m2 0h3m1 0h1m2 0h4m1 0h2m2 0h3m4 0h1m1 0h2m2 0h2m4 0h1M1 19.5h2m1 0h1m2 0h1m2 0h2m5 0h2m3 0h1m1 0h2m1 0h1m1 0h1m1 0h1m2 0h2m2 0h1m4 0h4M1 20.5h2m1 0h1m3 0h1m1 0h4m1 0h3m2 0h3m1 0h1m1 0h1m1 0h1m1 0h1m1 0h5m1 0h1m2 0h2m1 0h1m1 0h1m1 0h2M2 21.5h2m2 0h3m1 0h1m2 0h4m3 0h1m1 0h2m2 0h1m5 0h2m2 0h2m1 0h1m1 0h1m4 0h1M5 22.5h2m1 0h2m2 0h1m1 0h1m2 0h1m1 0h1m3 0h3m1 0h1m3 0h1m5 0h1m3 0h3m3 0h1M1 23.5h1m3 0h7m5 0h2m1 0h2m1 0h5m3 0h1m1 0h1m1 0h3m3 0h5m1 0h1M1 24.5h1m1 0h1m1 0h1m3 0h1m3 0h1m2 0h2m5 0h1m3 0h3m1 0h1m2 0h3m1 0h1m2 0h1m3 0h1m1 0h1m1 0h1M3 25.5h1m1 0h1m1 0h1m1 0h2m1 0h2m2 0h2m1 0h3m1 0h1m1 0h1m1 0h2m2 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h1m1 0h4M4 26.5h2m3 0h4m1 0h1m8 0h1m3 0h2m2 0h1m1 0h1m6 0h2m3 0h1m2 0h1M1 27.5h1m1 0h8m1 0h2m1 0h4m1 0h1m1 0h6m1 0h1m11 0h9M2 28.5h2m2 0h1m2 0h1m2 0h1m1 0h1m2 0h3m6 0h3m4 0h1m4 0h5m1 0h1m2 0h1m1 0h1M3 29.5h1m1 0h3m1 0h1m5 0h6m1 0h1m1 0h1m1 0h5m2 0h2m4 0h4m3 0h1m1 0h2M1 30.5h2m3 0h1m1 0h1m2 0h1m1 0h1m1 0h5m1 0h3m3 0h1m1 0h3m4 0h4m2 0h1m1 0h2m1 0h2M1 31.5h1m1 0h1m2 0h2m1 0h3m2 0h3m2 0h1m2 0h1m1 0h1m1 0h2m3 0h2m1 0h1m1 0h3m3 0h3M1 32.5h2m2 0h2m1 0h2m2 0h1m2 0h2m4 0h1m4 0h2m4 0h1m1 0h1m1 0h1m1 0h2m1 0h2m1 0h2m1 0h2M2 33.5h1m1 0h1m1 0h2m2 0h2m1 0h2m3 0h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h1m1 0h2m1 0h1m1 0h1m2 0h4m2 0h2M2 34.5h1m1 0h2m2 0h1m1 0h2m1 0h1m2 0h2m2 0h2m1 0h2m1 0h1m1 0h2m5 0h3m1 0h3m1 0h1m1 0h4M1 35.5h3m1 0h3m1 0h4m1 0h1m3 0h1m2 0h1m3 0h1m1 0h4m1 0h1m4 0h3m1 0h5m2 0h2M3 36.5h2m1 0h1m5 0h2m1 0h2m4 0h1m1 0h1m1 0h6m1 0h1m1 0h2m4 0h1m1 0h1m1 0h1m1 0h1m1 0h1M3 37.5h2m2 0h3m2 0h2m3 0h2m1 0h2m2 0h1m3 0h7m2 0h2m3 0h2m2 0h1m1 0h2M1 38.5h1m1 0h2m1 0h1m2 0h1m2 0h1m1 0h2m3 0h2m1 0h1m1 0h1m1 0h2m2 0h2m1 0h3m3 0h1m1 0h1m2 0h1m2 0h1M2 39.5h1m3 0h2m1 0h1m4 0h4m5 0h3m1 0h4m1 0h2m1 0h1m1 0h2m3 0h2m2 0h4M2 40.5h3m3 0h1m2 0h1m5 0h5m2 0h3m1 0h2m1 0h1m3 0h1m1 0h1m5 0h2m1 0h4M1 41.5h3m3 0h1m2 0h2m3 0h1m1 0h3m1 0h1m1 0h5m1 0h1m2 0h1m1 0h1m2 0h3m1 0h5m2 0h1M9 42.5h2m1 0h1m1 0h4m1 0h1m3 0h1m3 0h3m2 0h1m3 0h1m1 0h4m3 0h3M1 43.5h7m2 0h3m1 0h1m4 0h2m1 0h2m1 0h1m1 0h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h2M1 44.5h1m5 0h1m1 0h2m2 0h3m1 0h1m2 0h4m3 0h1m1 0h1m4 0h3m1 0h1m2 0h1m3 0h2m2 0h1M1 45.5h1m1 0h3m1 0h1m2 0h2m3 0h2m1 0h1m4 0h5m2 0h1m1 0h6m1 0h1m1 0h6m2 0h1M1 46.5h1m1 0h3m1 0h1m1 0h3m2 0h2m2 0h1m1 0h5m1 0h1m3 0h1m1 0h1m4 0h2m1 0h1m1 0h2m1 0h1m1 0h1m1 0h1M1 47.5h1m1 0h3m1 0h1m1 0h1m1 0h3m1 0h1m2 0h1m1 0h1m2 0h2m2 0h1m2 0h3m2 0h1m2 0h1m1 0h2m6 0h1M1 48.5h1m5 0h1m1 0h4m5 0h3m2 0h1m1 0h1m1 0h2m3 0h2m1 0h1m1 0h1m2 0h2m4 0h2M1 49.5h7m2 0h4m1 0h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h1m1 0h2m1 0h1m2 0h1m1 0h1m1 0h2m1 0h3m1 0h3"/></svg><!--QR_WA_END--></div><div class="ql">Direkt zu <b>WhatsApp</b></div></div>
+      </div>
+
+      <div class="spacer"></div>
+
+      <div class="brandrow" style="margin-top:12px;">
+        <span class="logomark"><span></span><span></span><span></span></span>
+        <div>
+          <div class="wordmark">Rennradkasko</div>
+          <div class="ergo">Ein Produkt der <b>ERGO</b></div>
+        </div>
+      </div>
+      <p class="legal" style="margin-top:9px;">
+        <b>Ludwig Siebenbürgen</b> · Versicherungsvermittler · Juniorpartner der ERGO-Agentur Hannes Kaselow ·
+        Stephanstr. 2, 18055 Rostock · Vermittler-Nr. D-EEGW-B4I4O-44, tätig als Versicherungsvertreter nach § 34d GewO.
+        Marketinginformation. Diese Übersicht ist verkürzt dargestellt – maßgeblich sind die Versicherungsbedingungen
+        (ERGO Hausratversicherung Best, KT2021HR) sowie dein Versicherungsschein.
+      </p>
+    </div>
+
+    <!-- ===== TITEL / Cover (Panel X, 100 mm) ===== -->
+    <div class="panel p-cover">
+      <div class="brandrow">
+        <span class="logomark"><span></span><span></span><span></span></span>
+        <div>
+          <div class="wordmark">Rennradkasko</div>
+          <div class="ergo">Ein Produkt der <b>ERGO</b></div>
+        </div>
+      </div>
+
+      <div style="margin-top:22px;" class="eyebrow">Rennrad <b>///</b> Gravel <b>///</b> TT-Bike <b>///</b> E-Bike</div>
+
+      <h1 class="display" style="font-size:52px;margin-top:12px;">
+        Vollkasko<br>
+        <span class="kontur">für dein</span><br>
+        <span class="kursiv rot">Rennrad.</span>
+      </h1>
+
+      <p style="margin-top:16px;font-size:12.5px;color:var(--kreide);max-width:33ch;line-height:1.45;">
+        Beraten von <b style="color:var(--kreide)">Ludwig</b> – Radsportler, kein Callcenter.
+        Ein direkter Draht, keine Warteschleife.
+      </p>
+
+      <div class="spacer"></div>
+
+      <div class="foto" style="height:52mm;">
+        <img src="../assets/berater-ludwig-gross.jpg" alt="Ludwig Siebenbürgen mit seinem Cannondale-Rennrad">
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px;">
+        <div>
+          <div class="display kursiv rot" style="font-size:15px;font-stretch:70%;">Kostenlose Beratung ›</div>
+          <div class="mono" style="font-size:9px;color:var(--kreide-2);margin-top:3px;">rennradkasko.de · 0152 24827997</div>
+        </div>
+        <div class="qrimg" data-qr="web" style="background:#fff;border-radius:5px;padding:3px;width:15mm;height:15mm;"><!--QR_WEB_START--><svg preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 31 31" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h31v31H0z"/><path stroke="#0B0A0F" d="M1 1.5h7m4 0h4m4 0h2m1 0h7M1 2.5h1m5 0h1m1 0h5m2 0h3m1 0h1m2 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m2 0h1m2 0h2m2 0h1m1 0h2m2 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m1 0h5m1 0h2m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h1m3 0h2m1 0h1m2 0h2m2 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m3 0h2m3 0h1m4 0h1m1 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M9 8.5h1m1 0h1m2 0h1m1 0h5M2 9.5h1m1 0h4m1 0h3m3 0h1m4 0h1m1 0h2m1 0h2m1 0h1M3 10.5h2m1 0h1m2 0h1m3 0h1m2 0h4m4 0h2m1 0h2M2 11.5h2m1 0h5m2 0h1m1 0h1m5 0h7M2 12.5h5m1 0h2m1 0h2m1 0h2m1 0h5m3 0h2m2 0h1M3 13.5h2m2 0h1m3 0h3m1 0h1m5 0h3m2 0h1m1 0h1M4 14.5h2m3 0h4m1 0h2m1 0h1m5 0h1m1 0h1m1 0h3M1 15.5h4m2 0h1m1 0h3m2 0h1m1 0h1m2 0h2m2 0h2m1 0h1m2 0h1M4 16.5h1m3 0h2m1 0h1m1 0h1m1 0h1m4 0h4m1 0h5M2 17.5h1m4 0h1m3 0h1m1 0h3m2 0h2m2 0h1m1 0h1m1 0h1m1 0h1M1 18.5h1m6 0h2m8 0h1m4 0h1m1 0h1m1 0h1M1 19.5h3m1 0h6m1 0h2m3 0h1m1 0h2m3 0h1m4 0h1M1 20.5h4m3 0h2m1 0h2m3 0h2m1 0h6m2 0h3M1 21.5h2m1 0h2m1 0h4m3 0h1m2 0h2m1 0h8m1 0h1M9 22.5h1m2 0h1m1 0h3m1 0h4m3 0h3M1 23.5h7m2 0h2m3 0h2m3 0h2m1 0h1m1 0h1m1 0h1M1 24.5h1m5 0h1m1 0h7m3 0h3m3 0h2m1 0h1M1 25.5h1m1 0h3m1 0h1m1 0h2m3 0h3m1 0h1m1 0h6m2 0h1M1 26.5h1m1 0h3m1 0h1m1 0h2m1 0h4m3 0h1m4 0h1m3 0h1M1 27.5h1m1 0h3m1 0h1m2 0h1m1 0h1m2 0h2m2 0h1m1 0h2m1 0h2m1 0h3M1 28.5h1m5 0h1m1 0h4m4 0h1m3 0h2m2 0h1m1 0h1m1 0h1M1 29.5h7m2 0h2m4 0h1m3 0h1m1 0h4"/></svg><!--QR_WEB_END--></div>
+      </div>
+    </div>
+
+  </div><!-- /trim -->
+
+  <!-- Marken -->
+  <div class="marks">
+    <!-- Schnittmarken an den 4 Trim-Ecken (Trim = 3..300 mm × 3..213 mm) -->
+    <i class="crop" style="left:3mm;top:0;"></i><i class="crop h" style="left:0;top:3mm;"></i>
+    <i class="crop" style="left:300mm;top:0;"></i><i class="crop h" style="left:300mm;top:3mm;"></i>
+    <i class="crop" style="left:3mm;top:213mm;"></i><i class="crop h" style="left:0;top:213mm;"></i>
+    <i class="crop" style="left:300mm;top:213mm;"></i><i class="crop h" style="left:300mm;top:213mm;"></i>
+    <!-- Falzmarken: Außen-Falze bei Trim-x 97 & 197 → Sheet-x 100 & 200 -->
+    <i class="fold" style="left:100mm;top:0;"></i><i class="fold" style="left:100mm;bottom:0;"></i>
+    <i class="fold" style="left:200mm;top:0;"></i><i class="fold" style="left:200mm;bottom:0;"></i>
+    <span class="foldlbl" style="left:101mm;top:4.5mm;">Falz</span>
+    <span class="foldlbl" style="left:201mm;top:4.5mm;">Falz</span>
+  </div>
+  <div class="hmarks">
+    <i style="left:97mm;top:0;"></i><i class="b" style="left:97mm;"></i>
+    <i style="left:197mm;top:0;"></i><i class="b" style="left:197mm;"></i>
+  </div>
+</section>
+
+
+<!-- ============================ INNENSEITE ============================
+     L→R:  [ Leistungen (100) ] [ Ein Vertrag / Schutzbrief (100) ] [ Preis + CTA · Falzklappe (97) ]
+     ================================================================= -->
+<div class="sheetlabel">Innenseite — beim Aufklappen von links nach rechts lesbar</div>
+<section class="sheet" id="innen">
+  <div class="trim">
+
+    <!-- ===== LEISTUNGEN (Panel X-Rückseite, 100 mm) ===== -->
+    <div class="panel p-leist">
+      <div class="km">Leistungen</div>
+      <h2 class="display head" style="font-size:34px;">Ein Paket.<br><span class="kursiv rot">Alles drin.</span></h2>
+      <p class="lead" style="margin-top:8px;">Festes Kombi-Paket aus Hausrat Best, Fahrradkasko und Schutzbrief – ein Vertrag, ein Ansprechpartner.</p>
+
+      <ul class="leistliste" style="margin-top:14px;">
+        <li class="leist"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><div><h4>Allgefahrendeckung</h4><p>Weltweit, rund um die Uhr, ohne Nachtzeitklausel – gegen Schaden, Zerstörung, Diebstahl, Einbruch &amp; Raub.</p></div></li>
+        <li class="leist"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V8a5 5 0 0 1 10 0v3"/></svg><div><h4>Diebstahl &amp; Raub</h4><p>Komplett- und Teilediebstahl – auch von fest verbauten Anbauteilen.</p></div></li>
+        <li class="leist"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4.5 12.5H11l-1 9L19.5 11H13z"/></svg><div><h4>Sturz &amp; Unfall</h4><p>Beschädigung nach Sturz oder Unfall – selbst verschuldet inklusive.</p></div></li>
+        <li class="leist"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2v6l4 2-4 2v6M10 22v-6L6 14l4-2V6"/></svg><div><h4>Neuwert statt Zeitwert</h4><p>Erstattung zum Neuwert – auch bei älteren oder gebrauchten Rädern.</p></div></li>
+        <li class="leist"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4.5 12.5H11l-1 9L19.5 11H13z"/></svg><div><h4>Akku- &amp; Elektronikschutz²</h4><p>Für E-Bikes/Pedelecs: Akku-Leistungsverlust &amp; Elektronik gegen Kurzschluss, Überspannung, Feuchtigkeit.</p></div></li>
+      </ul>
+
+      <div class="spacer"></div>
+      <div class="mono" style="font-size:8px;color:var(--kreide-2);">Ohne Selbstbeteiligung · optional zur Beitragssenkung wählbar</div>
+    </div>
+
+    <!-- ===== EIN VERTRAG / SCHUTZBRIEF (Panel Y-Rückseite, 100 mm) ===== -->
+    <div class="panel p-mid">
+      <div class="km">Ein Vertrag · Schutzbrief</div>
+      <h2 class="display head" style="font-size:30px;">Nur ein Vertrag<br><span class="kursiv rot">für alle Räder.</span></h2>
+      <p class="lead" style="margin-top:8px;">Jedes Rad deines Haushalts ist automatisch mitversichert – der Beitrag richtet sich nur nach deinem teuersten Rad.</p>
+
+      <div class="chips" style="margin-top:12px;">
+        <span class="chip">Rennrad</span><span class="chip">Gravel</span><span class="chip">MTB</span>
+        <span class="chip">City</span><span class="chip">TT-Bike</span><span class="chip">Lastenrad</span><span class="chip">E-Bike</span>
+      </div>
+
+      <div class="schutz" style="margin-top:14px;">
+        <h4><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Fahrrad-Schutzbrief inklusive</h4>
+        <ul>
+          <li>Pannenhilfe vor Ort</li>
+          <li>Bergung &amp; Transport</li>
+          <li>Weiterfahrt / Rückreise</li>
+          <li>Werkstatt-Transport</li>
+          <li>Ersatzrad (max. 7 Tage)</li>
+          <li>Übernachtung (max. 7 Tage)</li>
+        </ul>
+        <div class="max">Weltweit · max. 500 € / Fall · 1.000 € / Jahr – zusätzlich zur Kasko-Leistung</div>
+      </div>
+
+      <ul class="vorteile" style="margin-top:14px;">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span><b style="color:var(--kreide)">Keine Selbstbeteiligung</b> im Standard</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Alle Rahmen: Carbon, Alu, Stahl, Titan – ohne Aufpreis</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Differenzdeckung beim Wechsel – bis zu 1 Jahr, gratis</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Bis zu 15 % günstiger mit weiteren ERGO-Sachverträgen</span></li>
+      </ul>
+
+      <div class="spacer"></div>
+      <div style="border-top:1px solid var(--line);padding-top:11px;">
+        <div class="display kursiv" style="font-size:15px;font-stretch:70%;color:var(--kreide);">Ein Vertrag. <span class="rot">Alle Räder.</span></div>
+        <div class="mono" style="font-size:8px;color:var(--kreide-2);margin-top:4px;">Ein Ansprechpartner – rennradkasko.de</div>
+      </div>
+    </div>
+
+    <!-- ===== PREIS + CTA · Falzklappe (Panel Z-Rückseite, 97 mm) ===== -->
+    <div class="panel p-preis">
+      <div class="km">Beispiel · Beitrag</div>
+
+      <div class="beleg">
+        <div class="beleg-stempel">Beispiel</div>
+        <div class="beleg-head">
+          <div class="bt">Komplettpaket</div>
+          <div class="bs">Jahresbeitrag · inkl. Hausrat Best</div>
+        </div>
+        <table>
+          <tr><td>Rennrad-Wert</td><td>3.000 €</td></tr>
+          <tr><td>Fahrradkasko</td><td>inklusive</td></tr>
+          <tr><td>Schutzbrief</td><td>inklusive</td></tr>
+          <tr><td>Hausrat Best</td><td>inklusive</td></tr>
+          <tr class="summe"><td>Beitrag / Jahr</td><td>125–195 €¹</td></tr>
+        </table>
+        <div class="beleg-fazit">Persönliches Angebot – <span class="rot">kostenlos &amp; unverbindlich</span></div>
+      </div>
+
+      <div class="google" style="margin-top:16px;">
+        <span class="stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.5L21 9.3l-5 4.6L17.4 21 12 17.6 6.6 21 8 13.9l-5-4.6 6.1-.8z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.5L21 9.3l-5 4.6L17.4 21 12 17.6 6.6 21 8 13.9l-5-4.6 6.1-.8z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.5L21 9.3l-5 4.6L17.4 21 12 17.6 6.6 21 8 13.9l-5-4.6 6.1-.8z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.5L21 9.3l-5 4.6L17.4 21 12 17.6 6.6 21 8 13.9l-5-4.6 6.1-.8z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.5L21 9.3l-5 4.6L17.4 21 12 17.6 6.6 21 8 13.9l-5-4.6 6.1-.8z"/></svg>
+        </span>
+        <div class="gt"><b>Über 120 Google-Bewertungen</b>ERGO-Agentur Hannes Kaselow</div>
+      </div>
+
+      <div class="berater-mini" style="margin-top:14px;display:flex;gap:10px;align-items:center;">
+        <div class="foto" style="width:22mm;height:22mm;border-radius:50%;flex:none;"><img src="../assets/berater-ludwig.jpg" alt="Ludwig Siebenbürgen"></div>
+        <div>
+          <div class="display" style="font-size:13px;font-stretch:70%;">Ludwig Siebenbürgen</div>
+          <div style="font-size:8.5px;color:var(--kreide-2);line-height:1.3;margin-top:2px;">Spezialist für Fahrrad&shy;versicherungen · PSV Rostock</div>
+        </div>
+      </div>
+      <p style="font-size:9px;color:var(--kreide-2);font-style:italic;line-height:1.4;margin-top:8px;">„Ich fahre selbst Rennrad – ich weiß genau, worauf es bei einer guten Fahrradkasko ankommt.“</p>
+
+      <div class="spacer"></div>
+
+      <div class="cta" style="margin-top:12px;">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 14.96L2 22l5.2-1.5A9.9 9.9 0 1 0 12.04 2zm4.5 11.97c-.25-.12-1.46-.72-1.68-.8-.23-.09-.4-.13-.56.12-.16.25-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.22-1.45-1.37-1.7-.14-.24-.01-.38.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42h-.48c-.16 0-.43.06-.66.31-.22.25-.86.84-.86 2.05 0 1.2.88 2.37 1 2.53.13.17 1.74 2.65 4.2 3.72.59.25 1.05.4 1.4.52.6.19 1.13.16 1.56.1.47-.07 1.46-.6 1.66-1.17.21-.58.21-1.07.15-1.17z"/></svg>
+        Kostenlose Beratung
+      </div>
+      <div style="display:flex;align-items:center;gap:9px;margin-top:10px;">
+        <div class="qrimg" data-qr="wa" style="background:#fff;border-radius:5px;padding:3px;width:16mm;height:16mm;flex:none;"><!--QR_WA_START--><svg preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 51 51" shape-rendering="crispEdges"><path fill="#ffffff" d="M0 0h51v51H0z"/><path stroke="#0B0A0F" d="M1 1.5h7m2 0h1m4 0h3m3 0h1m1 0h1m1 0h4m1 0h1m4 0h1m1 0h1m3 0h1m1 0h7M1 2.5h1m5 0h1m1 0h1m1 0h1m1 0h3m2 0h2m1 0h1m1 0h1m2 0h1m2 0h2m1 0h5m1 0h4m1 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h2m2 0h2m2 0h3m1 0h1m3 0h1m1 0h2m1 0h1m4 0h1m1 0h2m1 0h2m1 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m5 0h2m1 0h1m1 0h2m2 0h6m1 0h1m1 0h1m5 0h1m2 0h1m2 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m3 0h1m3 0h1m1 0h3m3 0h5m3 0h2m2 0h1m7 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m2 0h2m5 0h1m2 0h1m2 0h1m3 0h1m1 0h1m3 0h1m4 0h2m3 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M11 8.5h3m1 0h1m1 0h1m1 0h1m3 0h1m3 0h1m1 0h1m3 0h2m1 0h1m1 0h1m2 0h1M2 9.5h3m1 0h2m2 0h2m1 0h1m1 0h1m2 0h2m1 0h8m1 0h1m1 0h1m2 0h3m2 0h2m5 0h2M3 10.5h1m1 0h2m2 0h2m3 0h3m2 0h2m1 0h2m1 0h2m1 0h2m4 0h4m1 0h1m1 0h1m2 0h1m3 0h2M1 11.5h1m4 0h2m1 0h2m5 0h4m1 0h2m2 0h3m2 0h2m2 0h1m5 0h1m8 0h1M3 12.5h3m3 0h1m2 0h1m4 0h1m6 0h2m3 0h1m9 0h2m2 0h1m2 0h1m1 0h1M2 13.5h1m1 0h1m1 0h4m1 0h1m1 0h1m1 0h1m1 0h2m1 0h1m2 0h2m1 0h1m3 0h2m1 0h2m1 0h1m3 0h2m1 0h1m1 0h2M1 14.5h2m2 0h2m1 0h2m1 0h1m2 0h2m1 0h5m1 0h2m1 0h8m1 0h1m6 0h4M7 15.5h1m2 0h1m2 0h1m3 0h3m1 0h2m1 0h2m1 0h1m3 0h2m1 0h4m4 0h1m3 0h2m1 0h1M2 16.5h2m2 0h1m2 0h2m1 0h1m2 0h2m4 0h1m1 0h1m2 0h1m1 0h3m1 0h2m1 0h4m1 0h2m1 0h2m1 0h1m1 0h2M1 17.5h1m3 0h1m1 0h1m1 0h1m2 0h1m2 0h4m1 0h1m3 0h3m3 0h2m2 0h1m1 0h4m4 0h1m1 0h1M3 18.5h3m2 0h3m2 0h3m1 0h1m2 0h4m1 0h2m2 0h3m4 0h1m1 0h2m2 0h2m4 0h1M1 19.5h2m1 0h1m2 0h1m2 0h2m5 0h2m3 0h1m1 0h2m1 0h1m1 0h1m1 0h1m2 0h2m2 0h1m4 0h4M1 20.5h2m1 0h1m3 0h1m1 0h4m1 0h3m2 0h3m1 0h1m1 0h1m1 0h1m1 0h1m1 0h5m1 0h1m2 0h2m1 0h1m1 0h1m1 0h2M2 21.5h2m2 0h3m1 0h1m2 0h4m3 0h1m1 0h2m2 0h1m5 0h2m2 0h2m1 0h1m1 0h1m4 0h1M5 22.5h2m1 0h2m2 0h1m1 0h1m2 0h1m1 0h1m3 0h3m1 0h1m3 0h1m5 0h1m3 0h3m3 0h1M1 23.5h1m3 0h7m5 0h2m1 0h2m1 0h5m3 0h1m1 0h1m1 0h3m3 0h5m1 0h1M1 24.5h1m1 0h1m1 0h1m3 0h1m3 0h1m2 0h2m5 0h1m3 0h3m1 0h1m2 0h3m1 0h1m2 0h1m3 0h1m1 0h1m1 0h1M3 25.5h1m1 0h1m1 0h1m1 0h2m1 0h2m2 0h2m1 0h3m1 0h1m1 0h1m1 0h2m2 0h1m1 0h1m2 0h1m1 0h1m2 0h1m1 0h1m1 0h4M4 26.5h2m3 0h4m1 0h1m8 0h1m3 0h2m2 0h1m1 0h1m6 0h2m3 0h1m2 0h1M1 27.5h1m1 0h8m1 0h2m1 0h4m1 0h1m1 0h6m1 0h1m11 0h9M2 28.5h2m2 0h1m2 0h1m2 0h1m1 0h1m2 0h3m6 0h3m4 0h1m4 0h5m1 0h1m2 0h1m1 0h1M3 29.5h1m1 0h3m1 0h1m5 0h6m1 0h1m1 0h1m1 0h5m2 0h2m4 0h4m3 0h1m1 0h2M1 30.5h2m3 0h1m1 0h1m2 0h1m1 0h1m1 0h5m1 0h3m3 0h1m1 0h3m4 0h4m2 0h1m1 0h2m1 0h2M1 31.5h1m1 0h1m2 0h2m1 0h3m2 0h3m2 0h1m2 0h1m1 0h1m1 0h2m3 0h2m1 0h1m1 0h3m3 0h3M1 32.5h2m2 0h2m1 0h2m2 0h1m2 0h2m4 0h1m4 0h2m4 0h1m1 0h1m1 0h1m1 0h2m1 0h2m1 0h2m1 0h2M2 33.5h1m1 0h1m1 0h2m2 0h2m1 0h2m3 0h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h1m1 0h2m1 0h1m1 0h1m2 0h4m2 0h2M2 34.5h1m1 0h2m2 0h1m1 0h2m1 0h1m2 0h2m2 0h2m1 0h2m1 0h1m1 0h2m5 0h3m1 0h3m1 0h1m1 0h4M1 35.5h3m1 0h3m1 0h4m1 0h1m3 0h1m2 0h1m3 0h1m1 0h4m1 0h1m4 0h3m1 0h5m2 0h2M3 36.5h2m1 0h1m5 0h2m1 0h2m4 0h1m1 0h1m1 0h6m1 0h1m1 0h2m4 0h1m1 0h1m1 0h1m1 0h1m1 0h1M3 37.5h2m2 0h3m2 0h2m3 0h2m1 0h2m2 0h1m3 0h7m2 0h2m3 0h2m2 0h1m1 0h2M1 38.5h1m1 0h2m1 0h1m2 0h1m2 0h1m1 0h2m3 0h2m1 0h1m1 0h1m1 0h2m2 0h2m1 0h3m3 0h1m1 0h1m2 0h1m2 0h1M2 39.5h1m3 0h2m1 0h1m4 0h4m5 0h3m1 0h4m1 0h2m1 0h1m1 0h2m3 0h2m2 0h4M2 40.5h3m3 0h1m2 0h1m5 0h5m2 0h3m1 0h2m1 0h1m3 0h1m1 0h1m5 0h2m1 0h4M1 41.5h3m3 0h1m2 0h2m3 0h1m1 0h3m1 0h1m1 0h5m1 0h1m2 0h1m1 0h1m2 0h3m1 0h5m2 0h1M9 42.5h2m1 0h1m1 0h4m1 0h1m3 0h1m3 0h3m2 0h1m3 0h1m1 0h4m3 0h3M1 43.5h7m2 0h3m1 0h1m4 0h2m1 0h2m1 0h1m1 0h1m1 0h3m1 0h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h2M1 44.5h1m5 0h1m1 0h2m2 0h3m1 0h1m2 0h4m3 0h1m1 0h1m4 0h3m1 0h1m2 0h1m3 0h2m2 0h1M1 45.5h1m1 0h3m1 0h1m2 0h2m3 0h2m1 0h1m4 0h5m2 0h1m1 0h6m1 0h1m1 0h6m2 0h1M1 46.5h1m1 0h3m1 0h1m1 0h3m2 0h2m2 0h1m1 0h5m1 0h1m3 0h1m1 0h1m4 0h2m1 0h1m1 0h2m1 0h1m1 0h1m1 0h1M1 47.5h1m1 0h3m1 0h1m1 0h1m1 0h3m1 0h1m2 0h1m1 0h1m2 0h2m2 0h1m2 0h3m2 0h1m2 0h1m1 0h2m6 0h1M1 48.5h1m5 0h1m1 0h4m5 0h3m2 0h1m1 0h1m1 0h2m3 0h2m1 0h1m1 0h1m2 0h2m4 0h2M1 49.5h7m2 0h4m1 0h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h1m1 0h2m1 0h1m2 0h1m1 0h1m1 0h2m1 0h3m1 0h3"/></svg><!--QR_WA_END--></div>
+        <div class="mono" style="font-size:8.5px;color:var(--kreide-2);line-height:1.5;">Scannen &amp; direkt<br>schreiben:<br><b style="color:var(--ergo-rot)">0152 24827997</b></div>
+      </div>
+
+      <p class="fn" style="margin-top:10px;">¹ Beispiel für ein Rennrad im Wert von 3.000 € im Komplettpaket inkl. Hausrat Best; abhängig von Wohnfläche, Wohnort, Versicherungssumme &amp; optionaler Selbstbeteiligung. ² Pedelecs bis 25 km/h. Marketinginformation – maßgeblich sind die Versicherungsbedingungen (ERGO Hausrat Best).</p>
+    </div>
+
+  </div><!-- /trim -->
+
+  <!-- Marken -->
+  <div class="marks">
+    <i class="crop" style="left:3mm;top:0;"></i><i class="crop h" style="left:0;top:3mm;"></i>
+    <i class="crop" style="left:300mm;top:0;"></i><i class="crop h" style="left:300mm;top:3mm;"></i>
+    <i class="crop" style="left:3mm;top:213mm;"></i><i class="crop h" style="left:0;top:213mm;"></i>
+    <i class="crop" style="left:300mm;top:213mm;"></i><i class="crop h" style="left:300mm;top:213mm;"></i>
+    <!-- Innen-Falze bei Trim-x 100 & 200 → Sheet-x 103 & 203 -->
+    <i class="fold" style="left:103mm;top:0;"></i><i class="fold" style="left:103mm;bottom:0;"></i>
+    <i class="fold" style="left:203mm;top:0;"></i><i class="fold" style="left:203mm;bottom:0;"></i>
+    <span class="foldlbl" style="left:104mm;top:4.5mm;">Falz</span>
+    <span class="foldlbl" style="left:204mm;top:4.5mm;">Falz</span>
+  </div>
+  <div class="hmarks">
+    <i style="left:100mm;top:0;"></i><i class="b" style="left:100mm;"></i>
+    <i style="left:200mm;top:0;"></i><i class="b" style="left:200mm;"></i>
+  </div>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "rennradkasko-flyer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Klappbarer Auslege-Flyer (Wickelfalz DIN lang) fuer Rennradkasko",
+  "scripts": {
+    "build": "node build-flyer.mjs"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.4"
+  }
+}
