@@ -1,4 +1,4 @@
-// Build-Skript für den Rennradkasko-Auslege-Flyer.
+// Build-Skript für die Rennradkasko-Auslege-Flyer.
 // 1. Erzeugt QR-Codes offline (kein externer Dienst) und schreibt sie ins HTML.
 // 2. Rendert die druckfertigen PDFs (Druckerei + Heimdruck) via Headless-Chromium.
 //
@@ -14,27 +14,25 @@ import QRCode from 'qrcode';
 
 const require = createRequire(import.meta.url);
 const __dirname = dirname(fileURLToPath(import.meta.url));
-
-// Playwright liegt global – über npm root -g auflösen.
 const globalRoot = execSync('npm root -g').toString().trim();
 const { chromium } = require(join(globalRoot, 'playwright'));
-
-const HTML = join(__dirname, 'rennradkasko-flyer.html');
 
 const LINKS = {
   web: 'https://rennradkasko.de',
   wa:  'https://wa.me/4915224827997?text=Hi%20Ludwig%2C%20ich%20interessiere%20mich%20f%C3%BCr%20die%20Fahrradkasko.',
 };
 
-// ---- QR-Code als scharfes SVG erzeugen (schwarz auf weiß = beste Scan-Sicherheit) ----
+// Zu bauende Varianten
+const TARGETS = [
+  { html: 'rennradkasko-flyer.html',    base: 'rennradkasko-flyer',    label: 'Wickelfalz DIN lang' },
+  { html: 'rennradkasko-flyer-a5.html', base: 'rennradkasko-flyer-a5', label: 'Einbruchfalz A5' },
+];
+
 async function qrSvg(text) {
   let svg = await QRCode.toString(text, {
-    type: 'svg',
-    errorCorrectionLevel: 'Q',
-    margin: 1,
+    type: 'svg', errorCorrectionLevel: 'Q', margin: 1,
     color: { dark: '#0B0A0F', light: '#ffffff' },
   });
-  // feste Größen entfernen, damit CSS die Größe bestimmt
   svg = svg.replace(/\s(width|height)="[^"]*"/g, '');
   svg = svg.replace('<svg ', '<svg preserveAspectRatio="xMidYMid meet" ');
   return svg.replace(/\n/g, '');
@@ -45,50 +43,48 @@ function inject(html, name, svg) {
   return html.replace(re, `$1${svg}$3`);
 }
 
-async function main() {
-  // 1) QR-Codes ins HTML schreiben (idempotent)
-  const qrWeb = await qrSvg(LINKS.web);
-  const qrWa  = await qrSvg(LINKS.wa);
-  let html = await readFile(HTML, 'utf8');
+async function buildTarget(page, t, qrWeb, qrWa) {
+  const htmlPath = join(__dirname, t.html);
+  let html = await readFile(htmlPath, 'utf8');
   html = inject(html, 'WEB', qrWeb);
   html = inject(html, 'WA', qrWa);
-  await writeFile(HTML, html, 'utf8');
-  console.log('✓ QR-Codes erzeugt und ins HTML eingebettet');
+  await writeFile(htmlPath, html, 'utf8');
 
-  // 2) PDFs rendern
-  const browser = await chromium.launch();
-  const page = await browser.newPage();
-  await page.goto('file://' + HTML, { waitUntil: 'networkidle' });
+  await page.goto('file://' + htmlPath, { waitUntil: 'networkidle' });
   await page.evaluate(() => document.fonts.ready);
 
-  // Druckerei-Version: 303×216 mm (A4 quer + 3 mm Beschnitt), Schnitt-/Falzmarken
   await page.evaluate(() => { document.documentElement.className = 'mode-druck'; });
   await page.pdf({
-    path: join(__dirname, 'rennradkasko-flyer-druck.pdf'),
+    path: join(__dirname, `${t.base}-druck.pdf`),
     width: '303mm', height: '216mm', printBackground: true, pageRanges: '1-2',
     margin: { top: 0, right: 0, bottom: 0, left: 0 },
   });
-  console.log('✓ rennradkasko-flyer-druck.pdf (Druckerei, mit Beschnitt & Marken)');
 
-  // Heimdruck-Version: exakt A4 quer, kein Beschnitt, dezente Falzmarken
   await page.evaluate(() => { document.documentElement.className = 'mode-heim'; });
   await page.pdf({
-    path: join(__dirname, 'rennradkasko-flyer-a4.pdf'),
+    path: join(__dirname, `${t.base}-a4.pdf`),
     width: '297mm', height: '210mm', printBackground: true, pageRanges: '1-2',
     margin: { top: 0, right: 0, bottom: 0, left: 0 },
   });
-  console.log('✓ rennradkasko-flyer-a4.pdf (Heimdruck, A4 quer)');
 
-  // Vorschau-PNGs zur Sichtkontrolle
   await page.evaluate(() => { document.documentElement.className = 'mode-druck'; });
   const sheets = await page.$$('.sheet');
-  const names = ['aussen', 'innen'];
   for (let i = 0; i < sheets.length; i++) {
-    await sheets[i].screenshot({ path: join(__dirname, `preview-${names[i]}.png`), scale: 'css' });
+    await sheets[i].screenshot({ path: join(__dirname, `preview-${t.base}-${i === 0 ? 'aussen' : 'innen'}.png`), scale: 'css' });
   }
-  console.log('✓ preview-aussen.png / preview-innen.png');
+  console.log(`✓ ${t.label}: ${t.base}-druck.pdf · ${t.base}-a4.pdf · Previews`);
+}
 
+async function main() {
+  const qrWeb = await qrSvg(LINKS.web);
+  const qrWa  = await qrSvg(LINKS.wa);
+  console.log('✓ QR-Codes erzeugt (Website + direkter WhatsApp-Chat)');
+
+  const browser = await chromium.launch();
+  const page = await browser.newPage();
+  for (const t of TARGETS) await buildTarget(page, t, qrWeb, qrWa);
   await browser.close();
+  console.log('Fertig.');
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

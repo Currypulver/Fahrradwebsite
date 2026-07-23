@@ -1,32 +1,44 @@
-# Rennradkasko – Auslege-Flyer (Wickelfalz DIN lang)
+# Rennradkasko – Auslege-Flyer
 
 Klappbarer Flyer zum Auslegen in Fahrradläden. Greift das Branding der Website
 (rennradkasko.de) 1:1 auf: gleiche Schriften (Archivo, Instrument Sans, IBM Plex Mono),
 Farben (Asphalt-Schwarz, ERGO-Rot) und der „Night Ride"-Look.
 
-## Format
+Es gibt **zwei Faltvarianten** – beide werden auf einem A4-quer-Bogen beidseitig gedruckt:
 
-- **Faltung:** Wickelfalz (Rollenfalz) DIN lang – A4 quer, in 3 Teile gefaltet
-- **Endformat gefaltet:** 99 × 210 mm (passt in Standard-Prospektständer)
-- **Panels:** 100 / 100 / 97 mm – die einwärts einrollende Klappe ist bewusst 3 mm schmaler
-- **6 Panels:** Titel · Kontakt · Falzklappe (außen) / Leistungen · Ein Vertrag · Preis+CTA (innen)
+### Variante 1 · Wickelfalz DIN lang (6 Panels)
+- A4 quer, in 3 Teile gefaltet · Endformat **99 × 210 mm** (passt in Prospektständer)
+- Panels 100 / 100 / 97 mm – die einrollende Klappe ist bewusst 3 mm schmaler
+- Außen: Titel · Kontakt · Falzklappe · Innen: Leistungen · Ein Vertrag · Preis+CTA
+
+### Variante 2 · Einbruchfalz A5 (4 Panels)
+- A4 quer, **einmal mittig** gefaltet · Endformat **A5 (148,5 × 210 mm)**
+- Außen: Rückseite/Kontakt · Titel · Innen: Leistungen · Beitrag+CTA
+- E-Mail und Telefonnummer stehen direkt **neben den QR-Codes**
 
 ## Dateien
 
 | Datei | Zweck |
 |-------|-------|
-| `rennradkasko-flyer.html` | Quelldatei (Layout, editierbar) |
-| `rennradkasko-flyer-druck.pdf` | **Für die Druckerei** – 303 × 216 mm, 3 mm Beschnitt, Schnitt- & Falzmarken |
-| `rennradkasko-flyer-a4.pdf` | **Zum Selberdrucken** – A4 quer, ohne Beschnitt, dezente Falzhilfen |
-| `build-flyer.mjs` | Baut QR-Codes + beide PDFs neu |
+| `rennradkasko-flyer.html` / `rennradkasko-flyer-a5.html` | Quelldateien (editierbar) |
+| `rennradkasko-flyer-druck.pdf` · `rennradkasko-flyer-a5-druck.pdf` | **Für die Druckerei** – 303 × 216 mm, 3 mm Beschnitt, Schnitt- & Falzmarken |
+| `rennradkasko-flyer-a4.pdf` · `rennradkasko-flyer-a5-a4.pdf` | **Zum Selberdrucken** – A4 quer, ohne Beschnitt, dezente Falzhilfen |
+| `build-flyer.mjs` | Baut QR-Codes + alle PDFs neu |
+
+## QR-Codes
+
+- **Website-QR →** `https://rennradkasko.de`
+- **WhatsApp-QR →** `https://wa.me/4915224827997` (öffnet direkt den Chat mit 0152 24827997,
+  vorausgefüllte Nachricht). Beide offline erzeugt (kein externer Dienst), geprüft dekodierbar.
 
 ## Drucken
 
 - **Beidseitig (Duplex)**, Wenden **über die kurze Kante** – nur so liegen Vorder- und
   Rückseite deckungsgleich übereinander.
-- **Druckerei:** `rennradkasko-flyer-druck.pdf` verwenden (randabfallende Farben + Marken).
-- **Selbstdruck:** `rennradkasko-flyer-a4.pdf` auf A4 quer, Skalierung 100 % / „tatsächliche Größe".
-- Danach an den beiden Falzlinien zur Rolle falten (rechte Klappe zuerst einschlagen).
+- **Druckerei:** die `*-druck.pdf` der gewünschten Variante verwenden (randabfallende Farben + Marken).
+- **Selbstdruck:** die `*-a4.pdf` auf A4 quer, Skalierung 100 % / „tatsächliche Größe".
+- Danach falten: Variante 1 an den zwei Falzlinien zur Rolle (rechte Klappe zuerst),
+  Variante 2 einmal mittig.
 
 ## Neu bauen
 
