@@ -828,6 +828,19 @@ h2.display{font-size:clamp(40px,6vw,84px)}
 .formular small{display:block;margin-top:16px;font-size:12.5px;color:var(--ink-2);text-align:center;opacity:.8}
 .formular small a{color:var(--ink);text-decoration:underline;text-underline-offset:2px}
 .f-hinweis{color:var(--rot-text);font-size:13.5px;margin:-6px 0 14px}
+.f-status{font-size:13.5px;color:var(--ink-2);margin:-6px 0 14px}
+/* hidden-Attribut hat Vorrang vor display-Regeln von Klassen wie .btn */
+[hidden]{display:none!important}
+.f-wege{display:grid;gap:10px;margin-top:8px}
+.formular .f-wege .btn{margin-top:0}
+.f-link{display:block;width:100%;margin-top:14px;background:none;border:0;padding:6px 0;cursor:pointer;
+  font-family:var(--body);font-size:13px;color:var(--ink-2);text-decoration:underline;text-underline-offset:3px;
+  transition:color .2s ease}
+.f-link:hover,.f-link:focus-visible{color:var(--ink)}
+.f-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.f-danke{border:1px solid var(--line);border-radius:var(--radius-s);padding:22px 24px}
+.f-danke strong{display:block;font-family:var(--display);font-stretch:68%;font-weight:860;font-size:20px;text-transform:uppercase;margin-bottom:8px}
+.f-danke p{font-size:14.5px;color:var(--ink-2);margin-bottom:16px}
 .skip-link{
   position:fixed;top:14px;left:14px;z-index:200;
   background:var(--ergo-rot);color:#fff;padding:12px 20px;border-radius:var(--radius-s);
@@ -1960,11 +1973,22 @@ img.ls-foto,img.berater-foto{object-fit:cover}
             <label for="f-nachricht">Nachricht (optional)</label>
             <textarea id="f-nachricht" name="nachricht" placeholder="z. B.: Rennrad im Wert von 6.500 €, Wohnung 68 m² in Rostock …"></textarea>
           </div>
+          <input class="f-hp" name="firma" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
           <p class="f-hinweis" id="f-hinweis" aria-live="polite" hidden>Bitte sag mir, wie ich dich erreichen kann – E-Mail-Adresse oder Telefonnummer genügt.</p>
-          <button class="btn btn-primary" id="f-senden" type="submit"><span class="btn-label">Anfrage senden</span></button>
+          <p class="f-status" id="f-status" aria-live="polite" hidden></p>
+          <button class="btn btn-primary" id="f-senden" type="submit" hidden><span class="btn-label">Anfrage senden</span></button>
+          <div class="f-wege">
+            <a class="btn btn-primary" id="f-wa" href="https://wa.me/4915224827997" target="_blank" rel="noopener"><span class="btn-label">Per WhatsApp senden</span></a>
+            <a class="btn btn-ghost" id="f-mail" href="mailto:ludwig.siebenbuergen@ergo.de"><span class="btn-label">Per E-Mail senden</span></a>
+          </div>
+          <button class="f-link" id="f-kopieren" type="button">Oder Text kopieren und selbst verschicken</button>
         </form>
-        <small>Öffnet dein E-Mail-Programm mit der fertigen Anfrage. Kostenlos &amp; unverbindlich.</small>
-        <small>Kein E-Mail-Programm eingerichtet? Schreib mir direkt an <a href="mailto:ludwig.siebenbuergen@ergo.de">ludwig.siebenbuergen@ergo.de</a> oder per <a href="https://wa.me/4915224827997" target="_blank" rel="noopener">WhatsApp</a>.</small>
+        <div class="f-danke" id="f-danke" tabindex="-1" hidden>
+          <strong>Danke – deine Anfrage ist angekommen.</strong>
+          <p>Ich melde mich in der Regel innerhalb eines Werktags. Wenn es schnell gehen soll:</p>
+          <a class="btn btn-ghost" href="https://wa.me/4915224827997" target="_blank" rel="noopener"><span class="btn-label">WhatsApp an Ludwig</span></a>
+        </div>
+        <small>Kostenlos &amp; unverbindlich – <a href="datenschutz.html">Hinweise zum Datenschutz</a>.</small>
       </div>
     </div>
   </div>
@@ -2301,34 +2325,85 @@ document.querySelectorAll('.mehr-btn').forEach(btn => {
   if (sektionen[ausAnker]) oeffnen(ausAnker);
 })();
 
-/* Formular → E-Mail (mailto); Enter-Taste sendet, leere Anfragen werden abgefangen */
-document.getElementById('f-form').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const name = document.getElementById('f-name').value.trim();
-  const kontakt = document.getElementById('f-kontakt').value.trim();
-  const anliegen = document.getElementById('f-anliegen').value;
-  const nachricht = document.getElementById('f-nachricht').value.trim();
-  const hinweis = document.getElementById('f-hinweis');
-  if (!kontakt){
-    hinweis.hidden = false;
-    document.getElementById('f-kontakt').focus();
-    return;
+/* Formular: Versand per WhatsApp oder E-Mail – ohne Server. Optional Direktversand an einen Formular-Endpunkt. */
+(() => {
+  // Direktversand aktivieren: URL eines Formular-Endpunkts eintragen (EU-Hosting, Auftragsverarbeitungsvertrag,
+  // Nennung in datenschutz.html). Leer = die Buttons "Per WhatsApp / Per E-Mail senden" uebernehmen den Versand.
+  var FORMULAR_ENDPUNKT = '';
+
+  const form = document.getElementById('f-form'); if (!form) return;
+  const $ = (id) => document.getElementById(id);
+  const felder = { name: $('f-name'), kontakt: $('f-kontakt'), anliegen: $('f-anliegen'), nachricht: $('f-nachricht') };
+  const hinweis = $('f-hinweis'), status = $('f-status'), wa = $('f-wa'), mail = $('f-mail'),
+        kopieren = $('f-kopieren'), senden = $('f-senden'), danke = $('f-danke');
+  const WA = '4915224827997', MAIL = 'ludwig.siebenbuergen@ergo.de', TEL = '0152 / 24827997';
+
+  const werte = () => ({ name: felder.name.value.trim(), kontakt: felder.kontakt.value.trim(),
+                         anliegen: felder.anliegen.value, nachricht: felder.nachricht.value.trim() });
+  const textWhatsApp = (w) => `Hi Ludwig, ich interessiere mich für die Fahrradkasko.\n\nAnliegen: ${w.anliegen}\nName: ${w.name || '-'}\nErreichbar unter: ${w.kontakt || '-'}${w.nachricht ? '\n\n' + w.nachricht : ''}`;
+  const textMail = (w) => `Hallo,\n\nich interessiere mich für die Fahrradkasko.\n\nName: ${w.name || '-'}\nErreichbar unter: ${w.kontakt || '-'}\nAnliegen: ${w.anliegen}\n${w.nachricht ? 'Nachricht:\n' + w.nachricht + '\n\n' : ''}Viele Grüße\n${w.name || ''}`;
+
+  /* Die Links tragen immer die aktuellen Eingaben – so funktionieren sie per Tastatur, Mittelklick und ohne Popup-Sperre */
+  function aktualisieren(){
+    const w = werte();
+    wa.href = `https://wa.me/${WA}?text=${encodeURIComponent(textWhatsApp(w))}`;
+    mail.href = `mailto:${MAIL}?subject=${encodeURIComponent('Anfrage Fahrradkasko – ' + (w.name || 'Neue Anfrage'))}&body=${encodeURIComponent(textMail(w))}`;
   }
-  hinweis.hidden = true;
-  const betreff = encodeURIComponent(`Anfrage Fahrradkasko – ${name || 'Neue Anfrage'}`);
-  const body = encodeURIComponent(
-`Hallo,
+  form.addEventListener('input', aktualisieren);
+  form.addEventListener('change', aktualisieren);
+  aktualisieren();
 
-ich interessiere mich für die Fahrradkasko.
+  const zeigeStatus = (text) => { status.textContent = text || ''; status.hidden = !text; };
+  function gueltig(){
+    if (werte().kontakt){ hinweis.hidden = true; return true; }
+    hinweis.hidden = false; zeigeStatus(''); felder.kontakt.focus(); return false;
+  }
+  [wa, mail].forEach(a => a.addEventListener('click', (e) => { if (!gueltig()) e.preventDefault(); }));
 
-Name: ${name || '-'}
-Erreichbar unter: ${kontakt || '-'}
-Anliegen: ${anliegen}
-${nachricht ? 'Nachricht:\n' + nachricht + '\n\n' : ''}Viele Grüße
-${name || ''}`
-  );
-  window.location.href = `mailto:ludwig.siebenbuergen@ergo.de?subject=${betreff}&body=${body}`;
-});
+  kopieren.addEventListener('click', async () => {
+    if (!gueltig()) return;
+    const text = textWhatsApp(werte());
+    let ok = false;
+    try { await navigator.clipboard.writeText(text); ok = true; }
+    catch (err) {
+      const t = document.createElement('textarea'); t.value = text; t.setAttribute('readonly', '');
+      t.style.cssText = 'position:absolute;left:-9999px'; document.body.appendChild(t); t.select();
+      try { ok = document.execCommand('copy'); } catch (e2) {}
+      t.remove();
+    }
+    zeigeStatus(ok ? `Kopiert. Schick den Text an ${MAIL} oder an ${TEL}.` : 'Kopieren hat nicht geklappt – nimm WhatsApp oder E-Mail oben.');
+    if (ok && window.gtag) gtag('event', 'kontakt_klick', { method: 'kopieren' });
+  });
+
+  function fertig(){
+    if (window.gtag) gtag('event', 'anfrage_gesendet', { method: 'formular' });
+    form.hidden = true;
+    danke.querySelector('a').href = wa.href;
+    danke.hidden = false;
+    danke.focus();
+  }
+
+  /* Enter-Taste (ohne Endpunkt: nur pruefen und zu den Versandwegen fuehren) bzw. Direktversand */
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!gueltig()) return;
+    if (!FORMULAR_ENDPUNKT){ zeigeStatus('Fast geschafft – wähle unten, ob die Anfrage per WhatsApp oder per E-Mail rausgeht.'); wa.focus(); return; }
+    if (form.querySelector('.f-hp').value){ fertig(); return; }   // Honeypot: Bots sehen die Dankesseite, es wird nichts gesendet
+    const label = senden.querySelector('.btn-label');
+    senden.disabled = true; label.textContent = 'Wird gesendet…';
+    try {
+      const r = await fetch(FORMULAR_ENDPUNKT, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(Object.assign(werte(), { seite: location.href })) });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      fertig();
+    } catch (err) {
+      senden.disabled = false; label.textContent = 'Anfrage senden';
+      zeigeStatus('Direktversand gerade nicht möglich – nimm einfach WhatsApp oder E-Mail unten, deine Angaben sind schon drin.');
+    }
+  });
+
+  if (FORMULAR_ENDPUNKT){ senden.hidden = false; wa.classList.replace('btn-primary', 'btn-ghost'); }
+})();
 </script>
 <!-- ===================== CONSENT + TRACKING (DSGVO / Consent Mode v2) =====================
      Erledigt: GA4-Mess-ID unten eingetragen; datenschutz.html deckt Analytics + Ads ab.
