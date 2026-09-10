@@ -73,7 +73,8 @@
     {"@type":"Question","name":"Was ist nicht versichert?","acceptedAnswer":{"@type":"Answer","text":"Unter anderem vorsätzlich verursachte Schäden, Schäden durch Verlieren, Stehen- oder Liegenlassen sowie Garantiefälle des Herstellers."}},
     {"@type":"Question","name":"Was passiert bei grober Fahrlässigkeit?","acceptedAnswer":{"@type":"Answer","text":"In der Hausratversicherung Best wird die Entschädigung bei grob fahrlässig herbeigeführten Schäden nicht gekürzt – auf dieses Kürzungsrecht verzichtet der Versicherer ausdrücklich."}},
     {"@type":"Question","name":"Wie läuft der Schadensfall ab?","acceptedAnswer":{"@type":"Answer","text":"Der Schaden wird direkt beim persönlichen Ansprechpartner gemeldet – per WhatsApp, Telefon oder E-Mail. Kaufbeleg oder aussagekräftige Fotos des Rads genügen; Rechnungen oder Screenshots benötigter Ersatzteile lassen sich per WhatsApp oder E-Mail einreichen. Schäden bis 5.000 € sind bei vollständigen Unterlagen in der Regel innerhalb weniger Tage reguliert und bezahlt – ohne Vorkasse. Höhere Schäden werden genauer geprüft."}},
-    {"@type":"Question","name":"Ist ein gebrauchtes Rad versicherbar?","acceptedAnswer":{"@type":"Answer","text":"Ja – das Alter des Rads spielt keine Rolle. Entschädigt wird zum Neuwert: Bei Totalschaden oder Diebstahl wird der Betrag erstattet, den ein gleichwertiges neues Rad heute kostet."}}
+    {"@type":"Question","name":"Ist ein gebrauchtes Rad versicherbar?","acceptedAnswer":{"@type":"Answer","text":"Ja – das Alter des Rads spielt keine Rolle. Entschädigt wird zum Neuwert: Bei Totalschaden oder Diebstahl wird der Betrag erstattet, den ein gleichwertiges neues Rad heute kostet."}},
+    {"@type":"Question","name":"Ist mein S-Pedelec versicherbar?","acceptedAnswer":{"@type":"Answer","text":"Nein. S-Pedelecs mit Unterstützung bis 45 km/h gelten als Kleinkrafträder, sind versicherungspflichtig und daher nicht über die Fahrradkasko versicherbar. Versicherbar sind Pedelecs mit Tretunterstützung bis 25 km/h. Für S-Pedelecs gibt es eigene Policen – der Berater hilft weiter."}}
   ]
 }
 </script>
@@ -1041,6 +1042,20 @@ img.ls-foto,img.berater-foto{object-fit:cover}
 .bento .mehr-zeile{grid-column:1/-1;display:flex;justify-content:center;margin-top:2px}
 .bento .mehr-zeile .mehr-btn{width:min(340px,100%)}
 
+/* ---------- E-Bike-Sektion ---------- */
+.ebike-cta{display:flex;justify-content:flex-end}
+@media(max-width:920px){
+  .ebike-cta{justify-content:flex-start}
+  /* dritte Karte ueber die volle Breite, damit im 2-spaltigen Raster kein Loch bleibt */
+  #ebike .bento .card:nth-child(3){grid-column:1/-1}
+}
+/* Header-Nav mit fuenf Links: im schmalen Desktop-Band enger setzen, „E-Bike" nicht am Bindestrich umbrechen */
+@media(max-width:1199px){
+  .nav-links{gap:22px}
+  .nav-links a{white-space:nowrap}
+}
+@media(max-width:1099px){ .brand-sub{display:none} }
+
 /* ---------- Ganze Sektionen (Schutzbrief, FAQ) einklappen ---------- */
 .section-head .sektion-toggle{margin-top:30px}
 .sektion-inhalt{display:none}
@@ -1113,6 +1128,7 @@ img.ls-foto,img.berater-foto{object-fit:cover}
         <li><a href="#paket">Angebot</a></li>
         <li><a href="#leistungen">Leistungen</a></li>
         <li><a href="#schutzbrief">Schutzbrief</a></li>
+        <li><a href="#ebike">E-Bike</a></li>
         <li><a href="#faq">FAQ</a></li>
       </ul>
     </nav>
@@ -1132,6 +1148,7 @@ img.ls-foto,img.berater-foto{object-fit:cover}
     <a href="#paket">Angebot</a>
     <a href="#leistungen">Leistungen</a>
     <a href="#schutzbrief">Schutzbrief</a>
+    <a href="#ebike">E-Bike</a>
     <a href="#warum">Warum?</a>
     <a href="#faq">FAQ</a>
     <a href="#kontakt">Kontakt</a>
@@ -1613,10 +1630,61 @@ img.ls-foto,img.berater-foto{object-fit:cover}
   </div>
 </section>
 
+<!-- ===================== E-BIKE · KM 30 (heller Akt) ===================== -->
+<section class="section hell" id="ebike" data-etappe="E-Bike">
+  <div class="wrap">
+    <div class="etappe-mark reveal"><span class="etikett">Etappe 04 — Fürs E-Bike</span></div>
+    <div class="section-head reveal">
+      <h2 class="display">E-Bike-Versicherung<br>zum <span class="kursiv rot">Neuwert.</span></h2>
+      <p class="lead">E-Rennrad, E-Gravel, Trekking-E-Bike oder E-MTB – jedes Pedelec² deines Haushalts ist automatisch mitversichert: zum Neuwert, weltweit und rund um die Uhr. Akku- und Elektronikschutz sind fest im Paket, und der Beitrag richtet sich nur nach dem Wert deines Rads – nicht nach dem Radtyp.</p>
+    </div>
+
+    <div class="bento">
+      <div class="card reveal" style="--i:0">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="7" width="12" height="14" rx="2"/><path d="M10 4h4M12 11v6M9.5 14h5"/></svg></div>
+        <h3>Akkuschutz</h3>
+        <p>Der Akku ist oft das teuerste Einzelteil am E-Bike. Verliert er in den ersten drei Jahren an Leistung, greift der Akkuschutz – fest im Paket, kein Zusatzbaustein.</p>
+      </div>
+
+      <div class="card reveal" style="--i:1">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3v4M15 3v4M7 7h10v4a5 5 0 0 1-10 0z"/><path d="M12 16v5"/></svg></div>
+        <h3>Elektronikschutz</h3>
+        <p>Kurzschluss, Überspannung, Induktion oder Feuchtigkeit: Schäden an der Elektronik deines E-Bikes sind mitversichert – auch nach der nassen Herbstrunde.</p>
+      </div>
+
+      <div class="card reveal" style="--i:2">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+        <h3>Diebstahl &amp; Raub</h3>
+        <p>Teure E-Bikes sind ein beliebtes Diebstahlziel. Vorm Supermarkt, am Bahnhof oder aus dem Keller: Diebstahl, Einbruchdiebstahl und Raub sind versichert. Ein Schloss genügt – keine Markenvorgabe.</p>
+      </div>
+
+      <div class="card card-weit reveal">
+        <div>
+          <h3 class="display">Angebot fürs E-Bike?<br>Eine Nachricht reicht.</h3>
+          <p>Schreib mir kurz, welches E-Bike du fährst und was es gekostet hat. Du bekommst ein persönliches Angebot – ohne Hotline, ohne Überraschungen im Kleingedruckten.</p>
+          <div class="globe-badges">
+            <span>Kein Aufpreis je Radtyp</span><span>Dienstrad mitversichert</span><span>Alle Räder im Haushalt</span>
+          </div>
+        </div>
+        <div class="ebike-cta">
+          <a class="btn btn-hell" href="https://wa.me/4915224827997?text=Hi%20Ludwig%2C%20ich%20brauche%20ein%20Angebot%20f%C3%BCr%20mein%20E-Bike." target="_blank" rel="noopener"><span class="btn-label">WhatsApp an Ludwig</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="exclusions reveal">
+      <strong>Nicht über die Fahrradkasko versicherbar:</strong>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>S-Pedelecs bis 45&nbsp;km/h (versicherungspflichtig)</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Überwiegend gewerblich genutzte E-Bikes</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Garantiefälle des Herstellers</span>
+    </div>
+  </div>
+</section>
+
 <!-- ===================== WARUM FAHRRADKASKO ===================== -->
 <section class="section" id="warum" data-etappe="Die Risiken">
   <div class="wrap">
-    <div class="etappe-mark reveal"><span class="etikett">Etappe 04 — Warum Fahrradkasko?</span></div>
+    <div class="etappe-mark reveal"><span class="etikett">Etappe 05 — Warum Fahrradkasko?</span></div>
     <div class="warum-grid">
       <div class="warum-sticky reveal">
         <h2 class="display">Ein kleiner <span class="kursiv">Moment.</span><br>Eine große <span class="kursiv rot">Rechnung.</span></h2>
@@ -1676,7 +1744,7 @@ img.ls-foto,img.berater-foto{object-fit:cover}
 <!-- ===================== FAQ · KM 36 (hell) ===================== -->
 <section class="section hell" id="faq" data-etappe="Fragen">
   <div class="wrap">
-    <div class="etappe-mark reveal"><span class="etikett">Etappe 05 — Häufige Fragen</span></div>
+    <div class="etappe-mark reveal"><span class="etikett">Etappe 06 — Häufige Fragen</span></div>
     <div class="section-head reveal">
       <h2 class="display">Kurz &amp; klar<br><span class="kursiv rot">beantwortet.</span></h2>
       <button type="button" class="btn btn-ghost sektion-toggle" data-ziel="faq-inhalt" aria-expanded="false"><span class="btn-label">Häufige Fragen anzeigen</span></button>
@@ -1768,6 +1836,13 @@ img.ls-foto,img.berater-foto{object-fit:cover}
         <div class="faq-a"><div><p>Ja – wie alt dein Rad ist, spielt keine Rolle. Entschädigt wird zum Neuwert: Bei Totalschaden oder Diebstahl bekommst du den Betrag, den ein gleichwertiges neues Rad heute kostet.</p></div></div>
       </div>
 
+      <div class="faq-item reveal" style="--i:12">
+        <button class="faq-q" aria-expanded="false"><span class="nr">13</span>Ist mein S-Pedelec versicherbar?
+          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-a"><div><p>Nein. S-Pedelecs mit Unterstützung bis 45&nbsp;km/h gelten als Kleinkrafträder, sind versicherungspflichtig und deshalb nicht über die Fahrradkasko versicherbar. Versichert sind Pedelecs mit Tretunterstützung bis 25&nbsp;km/h². Für dein S-Pedelec gibt es eigene Policen – sprich mich einfach an.</p></div></div>
+      </div>
+
     </div>
     </div>
   </div>
@@ -1776,7 +1851,7 @@ img.ls-foto,img.berater-foto{object-fit:cover}
 <!-- ===================== KONTAKT · KM 40 ===================== -->
 <section class="section" id="kontakt" data-etappe="Kontakt">
   <div class="wrap">
-    <div class="etappe-mark reveal"><span class="etikett">Etappe 06 — Kontakt · Beratung</span></div>
+    <div class="etappe-mark reveal"><span class="etikett">Etappe 07 — Kontakt · Beratung</span></div>
     <div class="kontakt-grid">
       <div class="reveal">
         <h2 class="display">Sprich mit jemandem,<br>der <span class="kursiv rot">selbst fährt.</span></h2>
@@ -1898,6 +1973,7 @@ img.ls-foto,img.berater-foto{object-fit:cover}
           <li><a href="#paket">Angebot &amp; Preis</a></li>
           <li><a href="#leistungen">Leistungen</a></li>
           <li><a href="#schutzbrief">Schutzbrief</a></li>
+          <li><a href="#ebike">E-Bike</a></li>
           <li><a href="#warum">Warum Fahrradkasko?</a></li>
           <li><a href="#faq">FAQ</a></li>
           <li><a href="#kontakt">Kontakt</a></li>
@@ -2155,7 +2231,7 @@ document.querySelectorAll('.faq-item').forEach(item => {
   }, {rootMargin:'-30% 0px -60% 0px'});
   const hero = document.querySelector('.hero');
   if (hero) spyEbenen.observe(hero); // im Hero: kein Chip aktiv
-  ['paket','leistungen','schutzbrief','warum','faq','kontakt'].forEach(id => {
+  ['paket','leistungen','schutzbrief','ebike','warum','faq','kontakt'].forEach(id => {
     const s = document.getElementById(id);
     if (s) spyEbenen.observe(s);
   });

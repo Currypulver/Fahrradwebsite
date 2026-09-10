@@ -1,0 +1,71 @@
+{
+  "skill_name": "taste",
+  "evals": [
+    {
+      "id": 0,
+      "name": "linear-restraint",
+      "url": "https://linear.app",
+      "prompt": "/taste https://linear.app",
+      "rationale": "Linear's landing page is a textbook example of restraint — dark mode default, near-monochrome with one yellow accent across the whole page, single sans + single mono family, real product components as marketing illustration.",
+      "site_specific_keywords": ["Inter", "Berkeley", "dark", "yellow", "restraint"],
+      "assertions": [
+        {"text": "Output files exist ({domain}.md + {domain}.json)", "check": "files_exist"},
+        {"text": "{domain}.json is valid JSON", "check": "json_valid"},
+        {"text": "{domain}.json has top-level 'tokens' and 'taste' keys", "check": "json_has_root_keys"},
+        {"text": "{domain}.json contains source URL", "check": "json_has_source"},
+        {"text": "{domain}.json has at least 3 taste principles", "check": "json_taste_count_3_plus"},
+        {"text": "Each taste principle has trigger/decision/reason/evidence fields", "check": "json_taste_full_structure"},
+        {"text": "{domain}.md contains 'Design Map' section", "check": "md_has_design_map"},
+        {"text": "{domain}.md contains 'Taste DNA' section", "check": "md_has_taste_dna"},
+        {"text": "{domain}.md does not use banned slop phrases (clean/modern/sleek/seamless/intuitive/user-friendly/visually appealing as positive)", "check": "md_no_banned_phrases"},
+        {"text": "At least one taste principle is a restraint trade-off (mentions 'over', 'instead', 'rather than', 'no [feature]', 'never', 'refused')", "check": "md_has_restraint_signal"},
+        {"text": "Output mentions specific px/hex/ratio values (not just generic descriptions)", "check": "md_has_specific_values"},
+        {"text": "Output references THIS site's actual signals (e.g. Linear → Inter/dark; Are.na → grid/editorial; Stripe → tinted/sohne)", "check": "md_site_specific"}
+      ]
+    },
+    {
+      "id": 1,
+      "name": "arena-editorial",
+      "url": "https://www.are.na",
+      "prompt": "/taste https://www.are.na",
+      "rationale": "Are.na is editorial/utilitarian — light background, near-zero decoration, content-as-design philosophy, no card shadows, no accent color overlay.",
+      "site_specific_keywords": ["areal", "grid", "editorial", "block", "content"],
+      "assertions": [
+        {"text": "Output files exist ({domain}.md + {domain}.json)", "check": "files_exist"},
+        {"text": "{domain}.json is valid JSON", "check": "json_valid"},
+        {"text": "{domain}.json has top-level 'tokens' and 'taste' keys", "check": "json_has_root_keys"},
+        {"text": "{domain}.json contains source URL", "check": "json_has_source"},
+        {"text": "{domain}.json has at least 3 taste principles", "check": "json_taste_count_3_plus"},
+        {"text": "Each taste principle has trigger/decision/reason/evidence fields", "check": "json_taste_full_structure"},
+        {"text": "{domain}.md contains 'Design Map' section", "check": "md_has_design_map"},
+        {"text": "{domain}.md contains 'Taste DNA' section", "check": "md_has_taste_dna"},
+        {"text": "{domain}.md does not use banned slop phrases", "check": "md_no_banned_phrases"},
+        {"text": "At least one taste principle is a restraint trade-off", "check": "md_has_restraint_signal"},
+        {"text": "Output mentions specific px/hex/ratio values", "check": "md_has_specific_values"},
+        {"text": "Output references are.na's actual signals (areal font, grid layout, block-based content, near-zero decoration)", "check": "md_site_specific"}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "stripe-craft",
+      "url": "https://stripe.com",
+      "prompt": "/taste https://stripe.com",
+      "rationale": "Stripe is craft-heavy — tinted neutrals, multi-layer shadows, careful illustration system, restrained accent color, generous spacing.",
+      "site_specific_keywords": ["sohne", "tinted", "purple", "blue", "gradient", "craft"],
+      "assertions": [
+        {"text": "Output files exist ({domain}.md + {domain}.json)", "check": "files_exist"},
+        {"text": "{domain}.json is valid JSON", "check": "json_valid"},
+        {"text": "{domain}.json has top-level 'tokens' and 'taste' keys", "check": "json_has_root_keys"},
+        {"text": "{domain}.json contains source URL", "check": "json_has_source"},
+        {"text": "{domain}.json has at least 3 taste principles", "check": "json_taste_count_3_plus"},
+        {"text": "Each taste principle has trigger/decision/reason/evidence fields", "check": "json_taste_full_structure"},
+        {"text": "{domain}.md contains 'Design Map' section", "check": "md_has_design_map"},
+        {"text": "{domain}.md contains 'Taste DNA' section", "check": "md_has_taste_dna"},
+        {"text": "{domain}.md does not use banned slop phrases", "check": "md_no_banned_phrases"},
+        {"text": "At least one taste principle is a restraint trade-off", "check": "md_has_restraint_signal"},
+        {"text": "Output mentions specific px/hex/ratio values", "check": "md_has_specific_values"},
+        {"text": "Output references Stripe's actual signals (sohne font, gradients, tinted neutrals, careful spacing)", "check": "md_site_specific"}
+      ]
+    }
+  ]
+}

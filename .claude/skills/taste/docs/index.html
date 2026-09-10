@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>/taste — Design DNA Extractor for Claude Code</title>
+  <meta name="description" content="Abductive reasoning for design. Read any website's taste — tokens + the decisions behind them. A Claude Code skill.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link href="https://api.fontshare.com/v2/css?f[]=sentient@1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:         #FBFAF4;
+      --bg-card:    #E4E3D4;
+      --bg-code:    #E4E3D4;
+      --text:       #08090A;
+      --text-2:     #3D3D3A;
+      --text-3:     #6B6B67;
+      --border:     #DDDCD0;
+      --primary:    #16A8BC;
+      --secondary:  #A84B2F;
+      --primary-bg: rgba(22, 168, 188, 0.10);
+
+      --sans:    'Plus Jakarta Sans', system-ui, sans-serif;
+      --display: 'Sentient', Georgia, serif;
+      --mono:    'Berkeley Mono','Fira Code','Cascadia Code',monospace;
+
+      --hero-size: clamp(2rem, 1rem + 3.5vw, 3.75rem);
+      --h2-size:   clamp(1.75rem, 1rem + 2.5vw, 2.75rem);
+      --section:   clamp(3rem, 2rem + 3vw, 5rem);
+      --container: 1600px;
+      --pad:       clamp(3rem, 8vw, 8rem);
+      --r:         6px;
+      --r-lg:      10px;
+      --dur:       180ms;
+      --ease:      cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    em { font-style: normal; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 1rem; line-height: 1.6; }
+    a { color: inherit; text-decoration: none; }
+    code, pre { font-family: var(--mono); }
+    button { cursor: pointer; border: none; background: none; font: inherit; }
+
+    .container { max-width: var(--container); margin: 0 auto; padding: 0 var(--pad); }
+    section { padding: var(--section) 0; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+      z-index: 100;
+      background: rgba(229,227,212,0.8);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      border-radius: 100px; padding: 12px;
+    }
+    .nav-inner {
+      display: flex; align-items: center; gap: 100px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 12px;
+      text-decoration: none; color: #000;
+    }
+    .nav-logo img {
+      width: 36px; height: 36px; border-radius: 50%; object-fit: cover;
+    }
+    .nav-logo span {
+      font-family: var(--sans); font-weight: 700; font-size: 24px;
+      white-space: nowrap;
+    }
+    .nav-links { display: flex; align-items: center; gap: 24px; }
+    .nav-link {
+      display: inline-flex; align-items: center; gap: 8px; height: 36px;
+      font-family: var(--sans); font-size: 16px; font-weight: 600;
+      color: #000; text-decoration: none; white-space: nowrap;
+      transition: opacity var(--dur) var(--ease);
+    }
+    .nav-link:hover { opacity: 0.7; }
+    .nav-link svg { width: 24px; height: 24px; }
+    .nav-link .nav-avatar { width: 24px; height: 24px; padding: 2px; border-radius: 50%; object-fit: cover; box-sizing: border-box; }
+    .nav-bmc-icon { width: 24px; height: 24px; border-radius: 50%; background: #FFDD00; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .nav-link .rust { color: #A94B30; }
+    .nav-install {
+      display: inline-flex; align-items: center; justify-content: center;
+      height: 36px; padding: 7px 16px 8px;
+      background: var(--text); color: #fff;
+      font-family: var(--sans); font-size: 14px; font-weight: 700;
+      border-radius: 100px; border: none; text-decoration: none;
+      max-width: 0; overflow: hidden; padding-left: 0; padding-right: 0;
+      opacity: 0; pointer-events: none;
+      transform: translateX(12px);
+      transition: max-width 350ms cubic-bezier(0.4,0,0.2,1),
+                  padding 350ms cubic-bezier(0.4,0,0.2,1),
+                  opacity 300ms 80ms var(--ease),
+                  transform 350ms cubic-bezier(0.4,0,0.2,1);
+      white-space: nowrap;
+    }
+    .nav-install.visible {
+      max-width: 100px; padding-left: 16px; padding-right: 16px;
+      opacity: 1; pointer-events: auto; transform: translateX(0);
+    }
+    .nav-install.visible:hover { opacity: 0.85; }
+
+    /* HERO */
+    .hero { padding: clamp(7rem,6rem + 4vw,10rem) 0 0; border-top: none; }
+    .hero-center {
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      max-width: 900px; margin: 0 auto;
+    }
+    .hero-title {
+      font-family: var(--display); font-weight: 700;
+      font-size: clamp(4rem, 3rem + 5vw, 8rem);
+      line-height: 1.0; letter-spacing: -0.04em; margin-bottom: 1rem;
+    }
+    .hero-subtitle {
+      font-family: var(--sans); font-weight: 500;
+      font-size: clamp(1.5rem, 1rem + 2vw, 3rem);
+      line-height: 1.15; color: var(--text); max-width: 20ch; margin-bottom: 1.5rem;
+    }
+    .hero-desc {
+      font-size: clamp(0.95rem, 0.8rem + 0.5vw, 1.5rem);
+      color: var(--text-3); max-width: 50ch; line-height: 1.55; margin-bottom: 2.5rem;
+    }
+    #taste-trigger {
+      color: var(--primary); cursor: pointer; white-space: nowrap;
+      transition: color 150ms ease;
+    }
+    #taste-trigger:hover { color: #0C8FA1; }
+    #taste-trigger:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 2px; }
+
+    /* SHOWCASE — Mac overlay */
+    .hero-showcase { display: flex; flex-direction: column; align-items: center; width: 100%; }
+    .showcase-tabs {
+      position: absolute; z-index: 3;
+      display: flex; gap: 2.4%;
+      width: 44.5%;
+      top: 8.5%; left: 50%; transform: translateX(-50%);
+    }
+    .pill-bg {
+      display: none;
+    }
+    .showcase-tab {
+      flex: 1; aspect-ratio: 100/33; padding: 0;
+      border-radius: 100px; border: none; background: #fff;
+      font-family: var(--sans); font-size: clamp(0.5rem, 0.3rem + 0.6vw, 0.875rem); font-weight: 700; color: #000;
+      text-align: center; cursor: pointer; position: relative; z-index: 1;
+      display: flex; align-items: center; justify-content: center;
+      transition: box-shadow 80ms ease;
+      box-shadow:
+        0 2px 0 rgba(0,0,0,0.22),
+        0 4px 10px rgba(0,0,0,0.10),
+        0 1px 2px rgba(0,0,0,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.95),
+        inset 0 -1px 2px rgba(0,0,0,0.08);
+    }
+    .showcase-tab:hover {
+      color: #000;
+      box-shadow:
+        0 2px 0 rgba(0,0,0,0.26),
+        0 6px 14px rgba(0,0,0,0.13),
+        0 1px 2px rgba(0,0,0,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.95),
+        inset 0 -1px 2px rgba(0,0,0,0.08);
+    }
+    .showcase-tab:active {
+      box-shadow:
+        0 0px 0 rgba(0,0,0,0.1),
+        0 1px 3px rgba(0,0,0,0.08),
+        inset 0 1px 3px rgba(0,0,0,0.18),
+        inset 0 2px 6px rgba(0,0,0,0.10);
+    }
+    .showcase-tab.active {
+      color: #fff; background: #10AABF;
+      box-shadow:
+        0 0px 0 rgba(0,0,0,0.1),
+        0 1px 3px rgba(0,0,0,0.08),
+        inset 0 1px 3px rgba(0,80,92,0.3),
+        inset 0 2px 8px rgba(0,80,92,0.25);
+    }
+    .mac-wrap { position: relative; width: 100%; max-width: 1008px; }
+    .mac-wrap > img { display: block; width: 100%; height: auto; position: relative; z-index: 2; pointer-events: none; }
+    .showcase-frames {
+      position: absolute; z-index: 1; overflow: hidden;
+      left: 20.2%; top: 15.5%; width: 59.7%; height: 43.4%;
+    }
+    .showcase-frames iframe { position: absolute; top: 0; left: 0; width: calc(100% / 0.55); height: calc(100% / 0.55); border: none; display: none; transform: scale(0.55); transform-origin: top left; }
+    .showcase-frames iframe.active { display: block; }
+    h1 {
+      font-family: var(--display); font-weight: 700;
+      font-size: var(--hero-size); line-height: 1.0; letter-spacing: -0.04em;
+      max-width: 16ch; margin-bottom: 1.5rem;
+    }
+    .hero-actions { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 12px 24px; border-radius: 9999px;
+      background: var(--primary); color: #fff;
+      font-size: 1rem; font-weight: 600;
+      transition: opacity var(--dur) var(--ease);
+      box-shadow: inset 0 -4px 10px rgba(12,119,134,0.4);
+    }
+    .btn-primary:hover { opacity: 0.78; }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 12px 24px; border-radius: 9999px;
+      border: 1px solid var(--border);
+      font-size: 1rem; font-weight: 500;
+      transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease);
+    }
+    .btn-ghost:hover { border-color: var(--text-3); background: var(--bg-card); }
+
+    /* SECTION CHROME */
+    .eyebrow { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); margin-bottom: 0.875rem; }
+    h2 { font-family: var(--display); font-weight: 700; font-size: var(--h2-size); line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 1rem; }
+    .sub { font-size: clamp(0.9rem, 0.75rem + 0.8vw, 1.2rem); color: var(--text-2); max-width: 52ch; line-height: 1.55; margin-bottom: clamp(2rem,1.5rem + 2vw,3.5rem); }
+
+    /* SLIDER */
+    .slider-wrap {
+      position: relative; overflow: hidden; border-radius: var(--r-lg);
+      border: 1px solid var(--border); user-select: none; cursor: col-resize;
+      aspect-ratio: 16/7;
+    }
+    .s-pane { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .s-after { clip-path: inset(0 50% 0 0); }
+    .s-line { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #fff; transform: translateX(-50%); pointer-events: none; z-index: 10; }
+    .s-knob {
+      position: absolute; top: 50%; left: 50%; z-index: 11;
+      transform: translate(-50%,-50%);
+      width: 38px; height: 38px; border-radius: 50%;
+      background: #fff; border: 1.5px solid rgba(0,0,0,0.08);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+      display: flex; align-items: center; justify-content: center;
+      pointer-events: none; font-size: 0.7rem; color: #666; letter-spacing: -0.1em;
+    }
+    .s-tag {
+      position: absolute; top: 1rem; z-index: 12;
+      padding: 3px 10px; border-radius: 9999px;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .s-tag-l { left: 1rem; background: rgba(0,0,0,0.55); color: #fff; }
+    .s-tag-r { right: 1rem; background: rgba(255,255,255,0.9); color: #0A0A0A; }
+
+    /* pane mockups */
+    .pane-bad {
+      background: #1A1A30; height: 100%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 2.5rem; text-align: center; position: relative;
+    }
+    .pane-bad::before {
+      content: ''; position: absolute;
+      width: 380px; height: 380px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(110,70,240,0.45) 0%, transparent 70%);
+      top: 50%; left: 50%; transform: translate(-50%,-50%);
+    }
+    .pane-bad .demo-title { font-family: var(--display); font-weight: 700; font-size: clamp(1.25rem,1.5vw,2rem); color: #fff; margin-bottom: 0.75rem; position: relative; }
+    .pane-bad p { color: rgba(255,255,255,0.55); font-size: 0.875rem; margin-bottom: 1.5rem; position: relative; max-width: 36ch; }
+    .bad-cta { display: inline-block; padding: 10px 24px; border-radius: 9999px; background: linear-gradient(135deg,#7B5CF0,#5B8DEF); color: #fff; font-weight: 600; font-size: 0.875rem; position: relative; }
+
+    .pane-good { background: #08090A; height: 100%; display: flex; flex-direction: column; justify-content: center; padding: clamp(1.5rem,3vw,3rem); }
+    .pane-good-inner { max-width: 480px; }
+    .g-badge { display: inline-block; padding: 3px 10px; border-radius: 9999px; background: rgba(0,255,5,0.07); border: 1px solid rgba(0,255,5,0.15); color: rgba(0,220,5,0.8); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1.5rem; }
+    .pane-good .demo-title { font-family: var(--display); font-weight: 600; font-size: clamp(1.25rem,1.5vw,2.25rem); letter-spacing: -0.04em; line-height: 1.0; color: #F7F8F8; margin-bottom: 1rem; }
+    .pane-good p { font-size: 0.875rem; color: #8A8F98; margin-bottom: 1.75rem; line-height: 1.6; }
+    .g-card { border-radius: 6px; box-shadow: rgb(35,37,42) 0px 0px 0px 1px inset; padding: 0.875rem 1.125rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; background: rgba(255,255,255,0.025); }
+    .g-card span { color: #D0D6E0; font-size: 0.8rem; }
+    .g-card span:last-child { color: #62666D; }
+    .g-cta { display: inline-block; padding: 9px 20px; border-radius: 9999px; background: #F7F8F8; color: #08090A; font-size: 0.8rem; font-weight: 600; letter-spacing: -0.01em; }
+
+    /* THREE COLUMN */
+    .compare-grid { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; }
+    .compare-col { background: var(--bg-card); display: flex; flex-direction: column; }
+    .compare-col + .compare-col { border-left: 1px solid var(--border); }
+    .col-head { padding: 1.125rem 1.5rem; border-bottom: 1px solid var(--border); }
+    .col-tier { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); margin-bottom: 0.2rem; }
+    .compare-col:last-child .col-tier { color: var(--primary); }
+    .col-title { font-size: 0.9rem; font-weight: 600; }
+    .col-body { flex: 1; padding: 1.25rem 1.5rem; }
+    .col-caption { padding: 1rem 1.5rem; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--text-3); line-height: 1.5; }
+
+    .mk1 { background: linear-gradient(135deg,#667eea,#764ba2); border-radius: var(--r); padding: 1.5rem; min-height: 170px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.625rem; text-align: center; }
+    .mk1 .mk-title { color: #fff; font-size: 0.95rem; font-weight: 700; }
+    .mk1 p { color: rgba(255,255,255,0.65); font-size: 0.75rem; }
+    .mk1-btn { background: #fff; color: #4338CA; padding: 6px 14px; border-radius: 9999px; font-size: 0.75rem; font-weight: 700; }
+
+    .mk2 { background: #08090A; border-radius: var(--r); padding: 1.5rem; min-height: 170px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.625rem; text-align: center; }
+    .mk2 .mk-title { color: #F7F8F8; font-family: var(--display); font-size: 0.95rem; font-weight: 700; letter-spacing: -0.02em; }
+    .mk2 p { color: #8A8F98; font-size: 0.75rem; }
+    .mk2-btn { background: linear-gradient(135deg,rgba(120,80,255,0.75),rgba(90,130,240,0.6)); color: #fff; padding: 6px 14px; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; }
+
+    .mk3 { background: #08090A; border-radius: var(--r); padding: 1.5rem; min-height: 170px; display: flex; flex-direction: column; justify-content: flex-start; gap: 0.625rem; box-shadow: rgb(35,37,42) 0px 0px 0px 1px inset; }
+    .mk3-badge { display: inline-block; padding: 2px 8px; border-radius: 9999px; background: rgba(0,255,5,0.07); border: 1px solid rgba(0,255,5,0.14); color: rgba(0,220,5,0.75); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+    .mk3 .mk-title { color: #F7F8F8; font-family: var(--display); font-size: 0.9rem; font-weight: 600; letter-spacing: -0.03em; line-height: 1.15; }
+    .mk3 p { color: #8A8F98; font-size: 0.7rem; line-height: 1.5; }
+    .mk3-btn { align-self: flex-start; background: #F7F8F8; color: #08090A; padding: 5px 13px; border-radius: 9999px; font-size: 0.7rem; font-weight: 600; }
+
+    /* PIPELINE */
+    .pipeline-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(2rem, 3.5vw, 4.5rem); align-items: center; margin: 1.5rem 0 1.75rem; }
+    .pipeline-text { display: flex; flex-direction: column; }
+    .pipeline-text h2 { margin-top: 0; }
+    .pipeline-text .sub { max-width: 46ch; margin-bottom: 1.5rem; }
+    .step-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.4rem; }
+    .step-item { display: grid; grid-template-columns: 38px 1fr; gap: 14px; align-items: start; padding: 14px 0 14px 14px; border-left: 1.5px solid transparent; transition: border-color 320ms ease; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+    .step-item:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 4px; }
+    .step-item:hover .si-num, .step-item:hover .si-name { color: var(--primary); }
+    .step-item.active { border-left-color: var(--primary); }
+    .si-num { font-family: var(--mono); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; color: var(--text-3); padding-top: 4px; transition: color 320ms ease; }
+    .step-item.active .si-num { color: var(--primary); }
+    .si-name { font-family: var(--sans); font-weight: 700; font-size: clamp(0.875rem, 0.75rem + 0.7vw, 1.0625rem); letter-spacing: -0.02em; color: var(--text); margin-bottom: 0.35rem; transition: color 320ms ease; }
+    .step-item.active .si-name { color: var(--primary); }
+    .si-desc { font-size: clamp(0.875rem, 0.75rem + 0.7vw, 1.0625rem); line-height: 1.55; color: var(--text-3); }
+
+    /* Diagram (right column) */
+    .pipeline-diagram { position: relative; width: 100%; max-width: 540px; aspect-ratio: 1; margin-inline: auto; }
+    .pd-svg { width: 100%; height: 100%; display: block; overflow: visible; }
+    .pd-arc { fill: none; stroke: var(--text); stroke-width: 1.2; transition: stroke 480ms ease; }
+    .pd-arc-dotted { stroke-dasharray: 2 4.5; }
+    .pd-arrow { fill: none; stroke: var(--text); stroke-width: 1.2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 480ms ease; }
+    #how[data-state="1"] .pd-arc-1, #how[data-state="1"] .pd-arrow-1,
+    #how[data-state="2"] .pd-arc-2, #how[data-state="2"] .pd-arrow-2,
+    #how[data-state="3"] .pd-arc-3, #how[data-state="3"] .pd-arrow-3,
+    #how[data-state="4"] .pd-arc-4, #how[data-state="4"] .pd-arrow-4 { stroke: var(--primary); }
+
+    .pd-node { position: absolute; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; }
+    .pd-node:focus-visible { outline: 2px solid var(--primary); outline-offset: 8px; border-radius: 6px; }
+    .pd-node:hover .pd-badge { transform: scale(1.1); }
+    .pd-node-1 { top: 0; left: 50%; transform: translateX(-50%); }
+    .pd-node-2 { right: 0; top: 50%; transform: translateY(-50%); }
+    .pd-node-3 { bottom: 0; left: 50%; transform: translateX(-50%); }
+    .pd-node-4 { left: 0; top: 50%; transform: translateY(-50%); }
+    .pd-badge { width: 22px; height: 22px; border: 1.2px solid var(--text); border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 600; color: var(--text); background: var(--bg); transition: background 360ms ease, border-color 360ms ease, color 360ms ease, transform 220ms ease; }
+    .pd-label { font-family: var(--display); font-style: italic; font-weight: 700; font-size: clamp(0.68rem, 2.4vw, 1.05rem); line-height: 1.15; color: var(--text); transition: color 360ms ease; }
+    #how[data-state="1"] .pd-node-1 .pd-badge,
+    #how[data-state="2"] .pd-node-2 .pd-badge,
+    #how[data-state="3"] .pd-node-3 .pd-badge,
+    #how[data-state="4"] .pd-node-4 .pd-badge { background: var(--primary); border-color: var(--primary); color: #fff; }
+    #how[data-state="1"] .pd-node-1 .pd-label,
+    #how[data-state="2"] .pd-node-2 .pd-label,
+    #how[data-state="3"] .pd-node-3 .pd-label,
+    #how[data-state="4"] .pd-node-4 .pd-label { color: var(--primary); }
+
+    .pd-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 50%; min-height: 110px; }
+    .pd-center-text { position: absolute; inset: 0; margin: 0; font-size: clamp(0.68rem, 2vw, 0.95rem); line-height: 1.5; font-weight: 600; color: var(--text); text-align: center; opacity: 0; transition: opacity 380ms ease; display: flex; align-items: center; justify-content: center; }
+    .pd-center-text[data-state="1"],
+    .pd-center-text[data-state="2"],
+    .pd-center-text[data-state="3"],
+    .pd-center-text[data-state="4"] { color: var(--primary); }
+    .pd-center-text strong { font-weight: 700; }
+    .pd-center-text .pd-text-block { display: block; }
+    .pd-center-text .pd-codes-row { display: block; margin-top: 0.55em; }
+    .pd-center-text.is-on { opacity: 1; }
+    .pd-center-text em { font-style: italic; }
+    .pd-center-text code { font-family: var(--mono); font-size: 0.76rem; background: var(--bg-code); padding: 1px 5px; border-radius: 3px; color: var(--text); font-weight: 500; }
+
+    @media (max-width: 1024px) {
+      .pipeline-grid { grid-template-columns: 1fr; gap: 2rem; align-items: start; }
+      .pipeline-text .callout { margin-top: 1rem; }
+      .pipeline-diagram { max-width: 460px; }
+    }
+    @media (max-width: 600px) {
+      .pipeline-diagram { max-width: 380px; }
+      .pd-svg { transform: scale(0.78); transform-origin: center; }
+      .pd-arc { stroke-width: 1.5; }
+      .pd-arrow { stroke-width: 1.5; }
+      .pd-badge { width: 20px; height: 20px; font-size: 0.65rem; }
+      .pd-center { width: 46%; min-height: 130px; }
+      .pd-center-text code { font-size: 0.68rem; }
+    }
+    @media (max-width: 380px) {
+      .pipeline-diagram { max-width: 300px; }
+      .pd-svg { transform: scale(0.65); transform-origin: center; }
+      .pd-badge { width: 18px; height: 18px; font-size: 0.6rem; }
+      .pd-center { width: 54%; min-height: 100px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .pd-arc, .pd-arrow, .pd-badge, .pd-label, .pd-center-text { transition: none; }
+    }
+
+    .callout { margin-top: 1.5rem; padding: 1.125rem 1.5rem; border-radius: var(--r-lg); background: var(--bg-card); font-size: 0.875rem; color: var(--text-2); line-height: 1.6; }
+    .callout strong { color: var(--text); }
+
+    /* PRINCIPLE */
+    .principle { border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; }
+    .p-head { padding: 1.5rem 2rem; border-bottom: 1px solid var(--border); background: var(--bg-card); }
+    .p-tag { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--primary); margin-bottom: 0.4rem; }
+    .p-name { font-family: var(--display); font-weight: 700; font-size: 1.5rem; letter-spacing: -0.03em; }
+    .p-rows { display: grid; grid-template-columns: 130px 1fr; }
+    .p-lbl { padding: 1.125rem 1.5rem; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); display: flex; align-items: flex-start; }
+    .p-val { padding: 1.125rem 1.5rem; border-bottom: 1px solid var(--border); font-size: 0.875rem; line-height: 1.65; color: var(--text-2); }
+    .p-lbl:last-of-type, .p-val:last-of-type { border-bottom: none; }
+    .mono { font-family: var(--mono); font-size: 0.8rem; font-style: normal; background: var(--bg-code); padding: 1px 5px; border-radius: 3px; }
+
+    /* EXPORT GRID */
+    .export-grid { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; }
+    .exp { background: #F1EFE9; padding: 1.125rem 1.5rem; display: flex; align-items: center; gap: 0.875rem; }
+    .exp:not(:nth-child(3n+3)) { border-right: 1px solid var(--border); }
+    .exp:not(:nth-last-child(-n+3)) { border-bottom: 1px solid var(--border); }
+    .exp-icon { flex-shrink: 0; width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; background: var(--bg); border-radius: var(--r); transition: box-shadow var(--dur) var(--ease); }
+    .exp:hover .exp-icon { box-shadow: 0 4px 14px rgba(0,0,0,0.12); }
+    .exp-icon svg { width: 28px; height: 28px; }
+    .exp-body { min-width: 0; }
+    .exp-tool { font-weight: 600; font-size: 0.875rem; margin-bottom: 0.25rem; }
+    .exp-path { font-family: var(--mono); font-size: 0.68rem; color: var(--text-3); word-break: break-all; }
+
+    /* MANIFESTO */
+    .manifesto p { font-size: clamp(1rem,0.9rem + 0.5vw,1.2rem); color: var(--text-2); line-height: 1.75; max-width: 58ch; margin-bottom: 1.5rem; }
+    .manifesto p:last-child { margin-bottom: 0; }
+    .manifesto strong { color: var(--text); }
+
+    /* INSTALL */
+    .install-tabs { display: flex; gap: 0; margin-bottom: 2rem; border-bottom: 1.5px solid var(--border); }
+    .install-tab { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1.25rem 0.75rem; border: none; border-bottom: 2px solid transparent; margin-bottom: -1.5px; background: transparent; font-family: var(--sans); font-size: 0.875rem; font-weight: 600; color: var(--text-3); cursor: pointer; transition: color 150ms ease, border-color 150ms ease; white-space: nowrap; }
+    .install-tab svg { flex-shrink: 0; }
+    .install-tab:hover { color: var(--text); }
+    .install-tab.active { color: var(--text); border-bottom-color: var(--text); }
+    .install-panel { display: none; }
+    .install-panel.active { display: flex; flex-direction: column; gap: 1.25rem; }
+    .install-steps { display: flex; flex-direction: column; gap: 1.25rem; }
+    .ist { display: flex; gap: 1.125rem; }
+    .ist-n { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--bg-card); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: var(--text-3); }
+    .ist-body { flex: 1; }
+    .ist-body label { display: flex; align-items: center; min-height: 28px; font-weight: 600; font-size: 0.875rem; margin-bottom: 0.5rem; }
+    .code-wrap { position: relative; }
+    .code-block { background: #F1EFE9; border: 1px solid var(--border); border-radius: var(--r); padding: 0.875rem 3.5rem 0.875rem 1rem; font-family: var(--mono); font-size: 0.8rem; color: var(--text-2); overflow-x: auto; white-space: pre-wrap; word-break: break-all; }
+    .copy-btn { position: absolute; top: 0.5rem; right: 0.5rem; display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.2rem 0.55rem; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; font-family: var(--sans); font-size: 0.7rem; font-weight: 600; color: var(--text-3); cursor: pointer; transition: color 120ms ease, border-color 120ms ease; }
+    .copy-btn:hover { color: var(--text); border-color: var(--text-3); }
+    .copy-btn.copied { color: var(--primary); border-color: var(--primary); }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 1.75rem 0; }
+    .foot { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.875rem; }
+    .foot-l { font-size: 0.8rem; color: var(--text-3); }
+    .foot-l a { text-decoration: underline; text-decoration-color: var(--border); }
+    .foot-r { display: flex; gap: 1.5rem; font-size: 0.8rem; }
+    .foot-r a { color: var(--text-3); transition: color var(--dur) var(--ease); }
+    .foot-r a:hover { color: var(--text); }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .mac-wrap { max-width: 700px; }
+    }
+    @media (max-width: 900px) {
+      .steps { grid-template-columns: repeat(2,1fr); }
+      .step:nth-child(2) { border-right: none; }
+      .step:nth-child(1), .step:nth-child(2) { border-bottom: 1px solid var(--border); }
+      .compare-grid { grid-template-columns: 1fr; }
+      .compare-col + .compare-col { border-left: none; border-top: 1px solid var(--border); }
+      .export-grid { grid-template-columns: repeat(2,1fr); }
+      .exp:nth-child(2n+2) { border-right: none; }
+      .exp:nth-child(2n+1) { border-right: 1px solid var(--border); }
+      nav { left: 24px; right: 24px; transform: none; width: auto; }
+      .nav-inner { justify-content: space-between; gap: 0; }
+      .nav-logo img { width: 44px; height: 44px; }
+      .nav-logo span { font-size: 20px; }
+      .nav-link span { display: none; }
+      .nav-link svg { width: 32px; height: 32px; }
+      .nav-link .nav-avatar { width: 32px; height: 32px; padding: 2px; }
+      .nav-link .nav-bmc-icon { width: 32px; height: 32px; display: flex; }
+      .nav-link .nav-bmc-icon svg { width: 18px; height: 18px; }
+      .nav-links { gap: 12px; }
+      .nav-install { padding-left: 12px; padding-right: 12px; font-size: 13px; }
+    }
+    @media (max-width: 768px) {
+      .hero-title { font-size: clamp(3rem, 2rem + 4vw, 5rem); }
+      .hero-subtitle { font-size: clamp(1.25rem, 1rem + 1.5vw, 2rem); }
+      .hero-desc { font-size: clamp(0.875rem, 0.8rem + 0.3vw, 1.125rem); }
+    }
+    @media (max-width: 600px) {
+      .steps { grid-template-columns: 1fr; }
+      .step + .step { border-left: none; border-top: 1px solid var(--border); }
+      .export-grid { grid-template-columns: 1fr; }
+      .exp { border-right: none !important; }
+      .p-rows { grid-template-columns: 1fr; }
+      .p-lbl { border-right: none; border-bottom: none; padding-bottom: 0; }
+      .slider-wrap { aspect-ratio: 4/3; }
+      .install-tab { font-size: 0.8rem; padding: 0.5rem 0.75rem 0.75rem; gap: 0.35rem; flex-shrink: 0; }
+      .install-tab svg { width: 15px; height: 15px; }
+    }
+    .hero-title { cursor: pointer; user-select: none; }
+    .hero-title.tasting {
+      background: linear-gradient(16deg, #0d2d33 20%, #16a8bc 55%, #20c8e0 80%);
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: taste-flow 3s ease infinite;
+    }
+    @keyframes taste-flow {
+      0%   { background-position: 0%   50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0%   50%; }
+    }
+    #taste-pill {
+      position: fixed; pointer-events: none; z-index: 200;
+      padding: 11px 22px; border-radius: 100px;
+      background: rgba(60,58,54,0.48);
+      border: 1px solid rgba(255,255,255,0.28);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      box-shadow:
+        0 2px 10px rgba(0,0,0,0.15),
+        0 1px 3px rgba(0,0,0,0.10);
+      font-family: var(--sans); font-style: normal; font-weight: 600;
+      font-size: 15px; line-height: 20px; display: flex; align-items: center;
+      color: rgba(255,255,255,0.92); white-space: nowrap;
+      opacity: 0; transition: opacity 180ms ease;
+    }
+    #taste-pill.visible { opacity: 1; }
+
+    /* TASTE MODAL */
+    #taste-modal-overlay {
+      position: fixed; inset: 0; z-index: 300;
+      background: rgba(0,0,0,0.2);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 200ms ease;
+    }
+    #taste-modal-overlay.visible { opacity: 1; pointer-events: auto; }
+    #taste-modal {
+      width: min(560px, calc(100vw - 48px));
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.32);
+    }
+    .taste-modal-top {
+      padding: 48px 32px;
+      position: relative; overflow: hidden;
+      background: #071c22;
+    }
+    .taste-modal-top::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('taste-title.png') center/cover no-repeat;
+      opacity: 0.55;
+    }
+    .taste-modal-top::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.55) 100%);
+    }
+    .taste-modal-top h3 {
+      position: relative; z-index: 1;
+      font-family: var(--display); font-style: normal; font-weight: 700;
+      font-size: clamp(1.5rem, 1rem + 1.5vw, 2rem); line-height: 1.25;
+      color: #fff; margin: 0; letter-spacing: -0.02em; text-align: center;
+    }
+    .taste-modal-bottom {
+      padding: 36px 40px;
+      background: #fff;
+    }
+    .taste-modal-bottom p {
+      font-family: var(--sans); font-size: clamp(0.9rem, 0.8rem + 0.3vw, 1rem); line-height: 1.6;
+      color: var(--text); margin: 0 0 0.625rem;
+    }
+    .taste-modal-bottom p:last-child { margin-bottom: 0; }
+    .taste-modal-bottom p.w700 { font-weight: 700; }
+    #taste-modal-close {
+      position: absolute; top: 14px; right: 14px; z-index: 10;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(255,255,255,0.15); border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.8);
+      transition: background 150ms ease, color 150ms ease;
+    }
+    #taste-modal-close:hover { background: rgba(255,255,255,0.28); color: #fff; }
+    @media (max-width: 480px) {
+      .taste-modal-top { padding: 32px 24px; }
+      .taste-modal-bottom { padding: 28px 24px; }
+    }
+  </style>
+</head>
+<body>
+<div id="taste-pill">What is taste<svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="display:inline-block;vertical-align:middle;margin-left:6px;flex-shrink:0"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<div id="taste-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="taste-modal-title">
+  <div id="taste-modal" style="position:relative">
+    <button id="taste-modal-close" aria-label="Close">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 1L13 13M13 1L1 13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <div class="taste-modal-top">
+      <h3 id="taste-modal-title">taste = decisions × trade-offs</h3>
+    </div>
+    <div class="taste-modal-bottom">
+      <p>Every extraction tool gives you tokens. Background <code>#08090A</code>. Font Inter. Radius 6px. That's a spec sheet, not taste.</p>
+      <p>Taste is decisions times trade-offs.</p>
+      <p class="w700">A decision is the why: why this specific near-black instead of pure black.</p>
+      <p class="w700">A trade-off is both sides of that call — what was chosen, and what was deliberately left out.</p>
+      <p>When an agent has only tokens, it copies the numbers without understanding them.</p>
+      <p>An agent with taste knows what each decision meant. It can make the right call on a page it's never seen.</p>
+    </div>
+  </div>
+</div>
+
+<nav aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <img src="avatar.png" alt="Taste Lab">
+      <span>taste lab</span>
+    </a>
+    <div class="nav-links">
+      <a href="https://github.com/senlindesign/taste-skill" target="_blank" rel="noopener" class="nav-link">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.008 2.167C6.474 2.167 2 6.674 2 12.249c0 4.457 2.867 8.23 6.843 9.565.497.1.68-.217.68-.484 0-.234-.016-1.035-.016-1.87-2.784.601-3.364-1.202-3.364-1.202-.447-1.169-1.11-1.48-1.11-1.48-.912-.618.066-.618.066-.618 1.011.067 1.541 1.035 1.541 1.035.895 1.536 2.336 1.103 2.916.836.083-.618.348-1.069.63-1.319-2.22-.234-4.557-1.102-4.557-4.975 0-1.102.398-2.003 1.027-2.704-.1-.25-.448-1.286.1-2.676 0 0 .845-.267 2.75 1.035.88-.236 1.82-.354 2.765-.356.845 0 1.706.118 2.502.34 1.905-1.318 2.75-1.035 2.75-1.035.548 1.39.2 2.426.1 2.676.63.7 1.028 1.602 1.028 2.704 0 3.873-2.336 4.724-4.603 4.975.365.317.68.918.68 1.869 0 1.352-.016 2.437-.016 2.771 0 .267.182.6.68.484C19.133 20.479 22 16.706 22 12.249c.016-5.575-4.474-10.082-10.008-10.082z"/></svg>
+        <span>Github</span>
+      </a>
+      <a href="https://www.linkedin.com/in/senlinbebop/" target="_blank" rel="noopener" class="nav-link">
+        <img src="senlin.png" alt="" class="nav-avatar">
+        <span>Made by <span class="rust">Sen Lin</span></span>
+      </a>
+      <a href="https://buymeacoffee.com/senlin" target="_blank" rel="noopener" class="nav-link">
+        <span class="nav-bmc-icon" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M7 10h10l-1.8 9H8.8L7 10z" fill="#1a1a1a"/><path d="M17 12h2a2 2 0 0 1 0 4h-2" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round"/><path d="M10 7.5 Q10 6 10 5M14 7.5 Q14 6 14 5" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/></svg></span>
+        <span>Support</span>
+      </a>
+      <a href="#install" class="nav-install">Install</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<!-- HERO -->
+<section class="hero" aria-labelledby="hero-h">
+  <div class="container">
+    <div class="hero-center">
+      <h1 id="hero-h" class="hero-title">taste</h1>
+      <p class="hero-subtitle">Abductive reasoning for any website's <span id="taste-trigger" role="button" tabindex="0">design taste<svg width="0.7em" height="0.7em" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="display:inline-block;vertical-align:middle;margin-left:0.25em;margin-bottom:0.05em"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span></p>
+      <p class="hero-desc">Reads any site's design decisions — not just the tokens, but the reasoning behind them. Run <code>/taste &lt;url&gt;</code> and get a Design Map + Taste DNA your agents can actually use.</p>
+      <div class="hero-actions">
+        <a href="#install" class="btn-primary" id="hero-install-btn">Install the skill</a>
+        <a href="https://github.com/senlindesign/taste-skill" target="_blank" rel="noopener" class="btn-ghost">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          View on GitHub
+        </a>
+      </div>
+    </div>
+    <div class="hero-showcase" aria-label="Example landing pages">
+      <div class="mac-wrap">
+        <img src="mac.png?v=2" alt="" aria-hidden="true" draggable="false">
+        <div class="showcase-tabs" role="tablist" aria-label="Style examples">
+          <span class="pill-bg" aria-hidden="true"></span>
+          <button class="showcase-tab" role="tab" aria-selected="false" data-frame="sc-generic">Generic</button>
+          <button class="showcase-tab active" role="tab" aria-selected="true" data-frame="sc-linear">Linear</button>
+          <button class="showcase-tab" role="tab" aria-selected="false" data-frame="sc-stripe">Stripe</button>
+          <button class="showcase-tab" role="tab" aria-selected="false" data-frame="sc-anthropic">Anthropic</button>
+        </div>
+        <div class="showcase-frames">
+          <iframe id="sc-generic"                   src="../../../site/Generic.html"    title="Generic style" loading="lazy"></iframe>
+          <iframe id="sc-linear"     class="active" src="../../../site/Linear.html"     title="Linear style"  loading="lazy"></iframe>
+          <iframe id="sc-stripe"                    src="../../../site/Stripe.html"     title="Stripe style"  loading="lazy"></iframe>
+          <iframe id="sc-anthropic"                 src="../../../site/Anthropic.html"  title="Anthropic style" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how" aria-labelledby="how-h" data-state="0">
+  <div class="container">
+    <p class="eyebrow">Pipeline</p>
+    <div class="pipeline-grid">
+      <div class="pipeline-text">
+        <h2 id="how-h">Four steps from URL to taste.</h2>
+        <p class="sub">Four agents, four roles. Each pass reads the same page through a sharper lens — until what's left is a brief any AI tool can build from.</p>
+        <ol class="step-list" role="list">
+          <li class="step-item" data-step="1" role="button" tabindex="0" aria-label="Show step 1: Extract Measurements">
+            <span class="si-num" aria-hidden="true">01</span>
+            <div class="si-body">
+              <div class="si-name">Extract Measurements</div>
+              <div class="si-desc">You are a Senior Design AI. Your job is to extract precise, objective design measurements from a webpage.</div>
+            </div>
+          </li>
+          <li class="step-item" data-step="2" role="button" tabindex="0" aria-label="Show step 2: Detect Patterns">
+            <span class="si-num" aria-hidden="true">02</span>
+            <div class="si-body">
+              <div class="si-name">Detect Patterns</div>
+              <div class="si-desc">You are a Principal Design Engineer detecting SYSTEMATIC RULES in the measurements provided by Step 1.</div>
+            </div>
+          </li>
+          <li class="step-item" data-step="3" role="button" tabindex="0" aria-label="Show step 3: Infer Taste">
+            <span class="si-num" aria-hidden="true">03</span>
+            <div class="si-body">
+              <div class="si-name">Infer Taste</div>
+              <div class="si-desc">You are the Ultimate Design Critic. You will now derive the "Taste" — the deliberate, painful TRADE-OFFS the designer made.</div>
+            </div>
+          </li>
+          <li class="step-item" data-step="4" role="button" tabindex="0" aria-label="Show step 4: Observer">
+            <span class="si-num" aria-hidden="true">04</span>
+            <div class="si-body">
+              <div class="si-name">Observer</div>
+              <div class="si-desc">You are the Lead Critic &amp; Final Editor. Your job is to RUTHLESSLY filter the taste analysis from Step 3. Zero bullshit passes through you.</div>
+            </div>
+          </li>
+        </ol>
+      </div>
+      <div class="pipeline-diagram" id="pipeline-diagram">
+        <svg class="pd-svg" viewBox="0 0 500 500" role="img" aria-hidden="true">
+          <path class="pd-arc pd-arc-1" d="M 250 95 A 155 155 0 0 1 405 250"/>
+          <path class="pd-arc pd-arc-2" d="M 405 250 A 155 155 0 0 1 250 405"/>
+          <path class="pd-arc pd-arc-3" d="M 250 405 A 155 155 0 0 1 95 250"/>
+          <path class="pd-arc pd-arc-4 pd-arc-dotted" d="M 95 250 A 155 155 0 0 1 250 95"/>
+          <polyline class="pd-arrow pd-arrow-1" points="398,243 405,250 412,243"/>
+          <polyline class="pd-arrow pd-arrow-2" points="257,398 250,405 257,412"/>
+          <polyline class="pd-arrow pd-arrow-3" points="88,257 95,250 102,257"/>
+          <polyline class="pd-arrow pd-arrow-4" points="243,88 250,95 243,102"/>
+        </svg>
+        <div class="pd-node pd-node-1" role="button" tabindex="0" aria-label="Show step 1: Extract measurements">
+          <span class="pd-badge">1</span>
+          <span class="pd-label">Extract<br>measurements</span>
+        </div>
+        <div class="pd-node pd-node-2" role="button" tabindex="0" aria-label="Show step 2: Detect patterns">
+          <span class="pd-badge">2</span>
+          <span class="pd-label">Detect<br>patterns</span>
+        </div>
+        <div class="pd-node pd-node-3" role="button" tabindex="0" aria-label="Show step 3: Infer taste">
+          <span class="pd-label">Infer&nbsp;taste</span>
+          <span class="pd-badge">3</span>
+        </div>
+        <div class="pd-node pd-node-4" role="button" tabindex="0" aria-label="Show step 4: Observe output">
+          <span class="pd-badge">4</span>
+          <span class="pd-label">Observe<br>output</span>
+        </div>
+        <div class="pd-center" aria-live="polite">
+          <p class="pd-center-text is-on" data-state="0"><span>How to reverse engineer <strong>design taste</strong></span></p>
+          <p class="pd-center-text" data-state="1">20 measurement categories, every colour, weight, spacing value, radius, and shadow cited with exact px / hex / ratio. No approximations.</p>
+          <p class="pd-center-text" data-state="2">5–8 system-level rules extracted. Each pattern gets an Evidence line and a Design Goal explaining why it exists.</p>
+          <p class="pd-center-text" data-state="3">4 taste principles — each with Trigger, Decision, Reason, Evidence, and Trade-off. At least one Restraint principle is required.</p>
+          <p class="pd-center-text" data-state="4"><span class="pd-text-block">Quality gate. Runs anti-slop grep, validates JSON, then writes the final output.<span class="pd-codes-row"><code>{domain}.md</code> + <code>{domain}.json</code></span></span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXAMPLE OUTPUT -->
+<section id="example" aria-labelledby="example-h">
+  <div class="container">
+    <p class="eyebrow">linear.app</p>
+    <h2 id="example-h">A taste principle has evidence and a trade-off.</h2>
+    <p class="sub">This is what /taste actually produces — not a vibe, a design argument you can act on.</p>
+    <div class="principle">
+      <div class="p-head">
+        <div class="p-tag">Restraint</div>
+        <div class="p-name">Brand lives in white, not in color</div>
+      </div>
+      <div class="p-rows">
+        <div class="p-lbl">Trigger</div>
+        <div class="p-val">Deciding on an accent or brand color.</div>
+        <div class="p-lbl">Decision</div>
+        <div class="p-val">Don't introduce one. Use white (<span class="mono">#F7F8F8</span>) as the accent against near-black.</div>
+        <div class="p-lbl">Reason</div>
+        <div class="p-val">Color-as-brand is a shortcut for products without visual confidence. On a near-black surface, white carries all the emphasis needed — everything else is noise. Adding a purple or blue CTA button would cheapen the effect by making it feel like a template.</div>
+        <div class="p-lbl">Evidence</div>
+        <div class="p-val">Every nav link, button, and CTA on the page is white or near-white. The only colored element is a translucent green badge for functional status. The pink gradient in the hero is a single editorial moment, not a system. DOM <span class="mono">accentCandidates</span> are 100% grays and whites.</div>
+        <div class="p-lbl">Trade-off</div>
+        <div class="p-val">You cannot use color to differentiate feature tiers or calls to action. Linear resolves this with weight and size hierarchy alone — not color weight.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- EXPORT FORMATS -->
+<section aria-labelledby="export-h">
+  <div class="container">
+    <p class="eyebrow">Works with your tools</p>
+    <h2 id="export-h">Your AI agent gets the taste.</h2>
+    <p class="sub">/taste writes a rules file formatted for whichever tool you build with — Cursor, Windsurf, Claude Code, and more. The agent reads it automatically.</p>
+    <div class="export-grid" role="list">
+      <div class="exp" role="listitem">
+        <div class="exp-icon"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_cursor)"><path d="M15.503 4.13082L5.89101 9.67782C5.76353 9.75142 5.65762 9.85723 5.58391 9.98465C5.5102 10.1121 5.47126 10.2566 5.47101 10.4038V21.5918C5.47101 21.8918 5.63301 22.1668 5.89101 22.3158L15.5 27.8658C15.6518 27.9532 15.8239 27.9992 15.999 27.9992C16.1742 27.9992 16.3462 27.9532 16.498 27.8658L26.108 22.3158C26.2352 22.2424 26.3409 22.1369 26.4146 22.0099C26.4883 21.8828 26.5274 21.7387 26.528 21.5918V10.4038C26.5278 10.2566 26.4888 10.1121 26.4151 9.98465C26.3414 9.85723 26.2355 9.75142 26.108 9.67782L16.497 4.13082C16.3451 4.04475 16.1736 3.99951 15.999 3.99951C15.8245 3.99951 15.6529 4.04475 15.501 4.13082M6.65701 10.3378H25.207C25.47 10.3378 25.637 10.6248 25.504 10.8528L16.23 26.9178C16.168 27.0248 16.001 26.9818 16.001 26.8578V16.3348C16.0008 16.2314 15.9735 16.1299 15.9217 16.0404C15.87 15.9509 15.7956 15.8765 15.706 15.8248L6.59601 10.5678C6.48701 10.5048 6.53201 10.3378 6.65701 10.3378Z" fill="black"/></g><defs><clipPath id="clip0_cursor"><rect width="24" height="24" fill="white" transform="translate(4 4)"/></clipPath></defs></svg></div>
+        <div class="exp-body"><div class="exp-tool">Cursor</div><div class="exp-path">.cursor/rules/{domain}-taste.mdc</div></div>
+      </div>
+      <div class="exp" role="listitem">
+        <div class="exp-icon"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_windsurf)"><path d="M27.55 9.06718C26.3462 9.06518 25.3694 10.0402 25.3694 11.2437V16.1113C25.3694 17.0833 24.5659 17.8707 23.6097 17.8707C23.0417 17.8707 22.4745 17.5847 22.1379 17.1048L17.1666 10.0045C16.7541 9.41488 16.0829 9.06348 15.3563 9.06348C14.2229 9.06348 13.203 10.027 13.203 11.2165V16.1122C13.203 17.0842 12.4061 17.8716 11.4434 17.8716C10.8734 17.8716 10.3071 17.5856 9.9706 17.1058L4.4076 9.15998C4.2822 8.97998 4 9.06898 4 9.28838V13.5336C4 13.7483 4.0656 13.9564 4.1884 14.1326L9.6632 21.9509C9.9866 22.4129 10.4638 22.7561 11.0141 22.8807C12.3912 23.1937 13.6587 22.1337 13.6587 20.783V15.89C13.6587 14.918 14.4462 14.1307 15.4183 14.1307H15.4213C15.7101 14.1307 15.9946 14.2004 16.2508 14.3337C16.507 14.467 16.7273 14.66 16.8931 14.8965L21.8654 21.9959C22.2789 22.5864 22.9154 22.9369 23.6747 22.9369C24.8334 22.9369 25.8262 21.9724 25.8262 20.7839V15.8891C25.8262 14.9171 26.6137 14.1297 27.5858 14.1297H27.7798C27.9087 14.1297 28.0002 14.0382 28.0002 13.9095V9.28748C28.0002 9.15878 27.9087 9.06718 27.7799 9.06718H27.55Z" fill="black"/></g><defs><clipPath id="clip0_windsurf"><rect width="24" height="24" fill="white" transform="translate(4 4)"/></clipPath></defs></svg></div>
+        <div class="exp-body"><div class="exp-tool">Windsurf</div><div class="exp-path">.windsurf/rules/{domain}-taste.md</div></div>
+      </div>
+      <div class="exp" role="listitem">
+        <div class="exp-icon"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M24.998 14.949H28V18.051H25V21.079H23.513V24H22V21.079H20.513V24H19V21.079H13V24H11.488V21.079H10V24H8.487V21.079H7V18.05H4V14.95H7V9H24.998V14.949ZM10 14.949H11.488V12.102H10V14.949ZM20.51 14.949H22V12.102H20.51V14.949Z" fill="#D97757"/></svg></div>
+        <div class="exp-body"><div class="exp-tool">Claude Code</div><div class="exp-path">CLAUDE.md (appends Design Taste section)</div></div>
+      </div>
+      <div class="exp" role="listitem">
+        <div class="exp-icon"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M27.922 20.997C27.061 22.492 22.063 26.02 16 26.02C9.937 26.02 4.939 22.492 4.078 20.997C4.03428 20.9181 4.0077 20.8309 4 20.741V17.872C4.00816 17.7967 4.02597 17.7227 4.053 17.652C4.425 16.717 5.4 15.36 6.658 14.996C6.825 14.567 7.072 13.941 7.302 13.479C7.26518 13.1182 7.24782 12.7557 7.25 12.393C7.25 11.062 7.532 9.89398 8.382 9.02498C8.779 8.61898 9.272 8.30798 9.856 8.07298C11.255 6.93698 13.248 5.97998 15.978 5.97998C18.709 5.97998 20.745 6.93698 22.144 8.07298C22.728 8.30798 23.221 8.61898 23.618 9.02498C24.468 9.89398 24.75 11.062 24.75 12.393C24.75 12.761 24.736 13.126 24.698 13.479C24.928 13.941 25.175 14.567 25.342 14.996C26.6 15.36 27.575 16.717 27.947 17.652C27.9745 17.7226 27.9923 17.7966 28 17.872V20.741C27.9923 20.8309 27.9657 20.9181 27.922 20.997ZM16.172 15.005H15.828C15.7219 15.1825 15.6032 15.3523 15.473 15.513C14.703 16.46 13.555 17.005 11.965 17.005C10.24 17.005 8.976 16.646 8.183 15.746C8.15358 15.7122 8.12524 15.6775 8.098 15.642L8 15.746V22.331C9.435 23.11 12.514 24.51 16 24.51C19.486 24.51 22.565 23.11 24 22.331V15.746L23.902 15.642C23.902 15.642 23.869 15.687 23.817 15.746C23.024 16.646 21.76 17.005 20.035 17.005C18.445 17.005 17.297 16.46 16.527 15.513C16.3968 15.3523 16.2781 15.1825 16.172 15.005ZM18.5 18.255C19.049 18.255 19.5 18.706 19.5 19.255V21.255C19.5 21.804 19.049 22.255 18.5 22.255C17.951 22.255 17.5 21.804 17.5 21.255V19.255C17.5 18.706 17.951 18.255 18.5 18.255ZM13.5 18.255C14.049 18.255 14.5 18.706 14.5 19.255V21.255C14.5 21.804 14.049 22.255 13.5 22.255C12.951 22.255 12.5 21.804 12.5 21.255V19.255C12.5 18.706 12.951 18.255 13.5 18.255ZM16.813 12.07C16.949 13.127 17.216 13.983 17.691 14.567C18.133 15.111 18.825 15.505 20.035 15.505C21.608 15.505 22.327 15.168 22.692 14.754C23.076 14.319 23.25 13.604 23.25 12.393C23.25 11.253 23.007 10.546 22.545 10.074C22.068 9.58598 21.226 9.21198 19.721 9.04898C18.234 8.88798 17.529 9.18698 17.188 9.57798C16.919 9.88498 16.751 10.386 16.75 11.156V11.177C16.75 11.442 16.771 11.739 16.813 12.07ZM15.187 12.07C15.229 11.739 15.25 11.442 15.25 11.176V11.156C15.249 10.386 15.081 9.88498 14.812 9.57798C14.471 9.18698 13.766 8.88798 12.279 9.04898C10.774 9.21198 9.932 9.58598 9.455 10.074C8.993 10.546 8.75 11.253 8.75 12.393C8.75 13.604 8.925 14.319 9.308 14.754C9.673 15.168 10.392 15.505 11.965 15.505C13.175 15.505 13.867 15.111 14.309 14.567C14.784 13.983 15.051 13.127 15.187 12.07Z" fill="black"/></svg></div>
+        <div class="exp-body"><div class="exp-tool">GitHub Copilot</div><div class="exp-path">.github/copilot-instructions.md</div></div>
+      </div>
+      <div class="exp" role="listitem">
+        <div class="exp-icon"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_bolt)"><path d="M15.3415 19.8129C13.1295 19.8129 12.0472 18.5803 12.0472 17.0275C12.0472 15.4746 13.5532 13.5112 15.7645 13.5112C17.9764 13.5112 19.0585 14.7441 19.0585 16.2968C19.0585 17.8496 17.5528 19.8129 15.3415 19.8129ZM15.4351 17.8496C16.1881 17.8496 16.7061 17.1645 16.7061 16.4337C16.7061 15.703 16.3293 15.5206 15.6708 15.5206C15.0115 15.5206 14.3998 16.2052 14.3998 16.9359C14.3998 17.6666 14.7766 17.8496 15.4351 17.8496ZM21.4117 19.676H19.1061L20.9881 11.3647H23.2944L21.4119 19.6304L21.4117 19.676Z" fill="black"/><path fill-rule="evenodd" clip-rule="evenodd" d="M8.51755 19.8129C7.8115 19.8129 7.10605 19.585 6.72925 19.0368L6.5881 19.6758L4 21.0004L4.28245 19.6761L6.1645 11.3647H8.47075L7.8115 14.2873C8.32945 13.7393 8.8468 13.5112 9.50605 13.5112C10.9176 13.5112 11.8117 14.3789 11.8117 16.0227C11.8117 17.6665 10.7295 19.8131 8.5177 19.8131L8.51755 19.8129ZM9.4117 16.4793C9.4117 17.256 8.8468 17.8496 8.09395 17.8496C7.34095 17.8496 7.29415 17.7126 7.05865 17.4385L7.4353 15.9317C7.71775 15.6576 8.0002 15.5206 8.3764 15.5206C8.94115 15.5206 9.4117 15.9317 9.4117 16.5253V16.4793Z" fill="black"/><path d="M25.6944 19.8128C24.3767 19.8128 23.3882 19.3563 23.3882 18.3061C23.3882 17.2558 23.3882 17.9864 23.4356 17.8494L23.9531 15.6114H22.9176L23.3882 13.6935H24.4235L24.8003 12.0497L27.3884 10.9995L27.1059 12.0497L26.7297 13.6935H28.0001L27.5295 15.6114H26.2587L25.9293 17.0729V17.3468C25.9293 17.6209 26.1174 17.8494 26.4942 17.8494C26.8704 17.8494 26.7767 17.8494 26.8235 17.8034V19.5848C26.5886 19.7673 26.165 19.8128 25.7412 19.8128H25.6944Z" fill="black"/></g><defs><clipPath id="clip0_bolt"><rect width="24" height="10" fill="white" transform="translate(4 11)"/></clipPath></defs></svg></div>
+        <div class="exp-body"><div class="exp-tool">Bolt</div><div class="exp-path">.bolt/prompt</div></div>
+      </div>
+      <div class="exp" role="listitem">
+        <div class="exp-icon"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><mask id="mask0_antigravity" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="4" y="5" width="24" height="22"><path d="M25.5858 26.4421C26.9157 27.4396 28.9102 26.7746 27.0817 24.9462C21.5965 19.6272 22.7602 5 15.9452 5C9.13021 5 10.2937 19.6272 4.80852 24.9462C2.8139 26.9408 4.97473 27.4396 6.30449 26.4421C11.4573 22.9517 11.1248 16.8015 15.9452 16.8015C20.7655 16.8015 20.433 22.9517 25.5858 26.4421Z" fill="black"/></mask><g mask="url(#mask0_antigravity)"><g filter="url(#f0ag)"><path d="M2.98964 0.046613C2.58519 3.6098 5.65575 6.88407 9.84791 7.35991C14.0401 7.83575 17.7664 5.33295 18.1708 1.76976C18.5753 -1.79343 15.5047 -5.0677 11.3126 -5.54354C7.12039 -6.01936 3.39409 -3.51658 2.98964 0.046613Z" fill="#FFE432"/></g><g filter="url(#f1ag)"><path d="M19.1529 11.6946C20.2032 16.2168 24.8012 19.0126 29.4228 17.9392C34.0444 16.8658 36.9395 12.3297 35.8892 7.80748C34.8388 3.28528 30.2408 0.489506 25.6192 1.56292C20.9976 2.63633 18.1026 7.17246 19.1529 11.6946Z" fill="#FC413D"/></g><g filter="url(#f2ag)"><path d="M-8.34775 14.729C-7.02058 19.3961 -1.04348 21.7857 5.00249 20.0664C11.0485 18.3471 14.8738 13.1699 13.5466 8.50288C12.2194 3.83584 6.24233 1.44623 0.196363 3.16554C-5.8496 4.88485 -9.67493 10.062 -8.34775 14.729Z" fill="#00B95C"/></g><g filter="url(#f3ag)"><path d="M13.8566 31.4137C14.8898 35.8619 19.1997 38.6613 23.4831 37.6665C27.7664 36.6715 30.4013 32.2592 29.3681 27.811C28.3351 23.3628 24.0252 20.5633 19.7417 21.5582C15.4584 22.5532 12.8235 26.9655 13.8566 31.4137Z" fill="#3186FF"/></g><g filter="url(#f4ag)"><path d="M22.0247 13.0149C27.7915 16.9158 34.4322 17.1721 36.8572 13.5873C39.2822 10.0025 36.5731 3.93404 30.8062 0.0331002C25.0393 -3.86784 18.3987 -4.1241 15.9738 -0.539293C13.5488 3.04553 16.2579 9.11393 22.0247 13.0149Z" fill="#FC413D"/></g></g><defs><filter id="f0ag" x="0.736783" y="-7.81864" width="19.6869" height="17.4537" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur stdDeviation="1.10854" result="effect1_foregroundBlur"/></filter><filter id="f1ag" x="8.21922" y="-9.3849" width="38.6036" height="38.2718" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur stdDeviation="5.3592" result="effect1_foregroundBlur"/></filter><filter id="f2ag" x="-17.7224" y="-6.50374" width="40.6437" height="36.2394" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur stdDeviation="4.55582" result="effect1_foregroundBlur"/></filter><filter id="f3ag" x="4.97362" y="12.6987" width="33.2775" height="33.8273" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur stdDeviation="4.32938" result="effect1_foregroundBlur"/></filter><filter id="f4ag" x="9.7887" y="-8.36535" width="33.2535" height="29.7785" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur stdDeviation="2.64825" result="effect1_foregroundBlur"/></filter></defs></svg></div>
+        <div class="exp-body"><div class="exp-tool">Antigravity</div><div class="exp-path">GEMINI.md</div></div>
+      </div>
+      <div class="exp" role="listitem">
+        <div class="exp-icon"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M18.252 12.25H23.876C23.964 12.25 24.052 12.256 24.136 12.268L18.266 18.138C18.2535 18.0502 18.2471 17.9617 18.247 17.873V12.25H15.997V17.873C15.9969 18.4147 16.1035 18.9512 16.3107 19.4517C16.518 19.9523 16.8218 20.407 17.2049 20.7901C17.588 21.1732 18.0427 21.477 18.5433 21.6843C19.0438 21.8915 19.5803 21.9981 20.122 21.998H25.746V19.748H20.122C20.032 19.748 19.943 19.742 19.857 19.73L25.731 13.855C25.7441 13.9444 25.7508 14.0346 25.751 14.125V19.748H28V14.124C28 13.5824 27.8933 13.0462 27.6861 12.5458C27.4788 12.0455 27.1751 11.5908 26.7921 11.2079C26.4092 10.8249 25.9545 10.5212 25.4542 10.3139C24.9538 10.1067 24.4176 10 23.876 10H18.252V12.25ZM4 11.5V11.506L11.686 21.294C12.61 22.47 14.499 21.817 14.499 20.321V11.5H12.25V18.37L6.856 11.5H4Z" fill="black"/></svg></div>
+        <div class="exp-body"><div class="exp-tool">v0 by Vercel</div><div class="exp-path">taste-tokens.css + instructions</div></div>
+      </div>
+      <div class="exp" role="listitem">
+        <div class="exp-icon"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_figma)"><mask id="mask0_figma" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="8" y="4" width="16" height="24"><path d="M23.8025 4H8V28H23.8025V4Z" fill="white"/></mask><g mask="url(#mask0_figma)"><path d="M11.9506 28C14.1313 28 15.9012 26.208 15.9012 24V20H11.9506C9.76988 20 8 21.792 8 24C8 26.208 9.76988 28 11.9506 28Z" fill="#0ACF83"/><path d="M8 16C8 13.792 9.76988 12 11.9506 12H15.9012V20H11.9506C9.76988 20 8 18.208 8 16Z" fill="#A259FF"/><path d="M8 7.99999C8 5.792 9.76988 4 11.9506 4H15.9012V12H11.9506C9.76988 12 8 10.208 8 7.99999Z" fill="#F24E1E"/><path d="M15.9012 4H19.8519C22.0326 4 23.8025 5.792 23.8025 7.99999C23.8025 10.208 22.0326 12 19.8519 12H15.9012V4Z" fill="#FF7262"/><path d="M23.8025 16C23.8025 18.208 22.0326 20 19.8519 20C17.6711 20 15.9012 18.208 15.9012 16C15.9012 13.792 17.6711 12 19.8519 12C22.0326 12 23.8025 13.792 23.8025 16Z" fill="#1ABCFE"/></g></g><defs><clipPath id="clip0_figma"><rect width="16" height="24" fill="white" transform="translate(8 4)"/></clipPath></defs></svg></div>
+        <div class="exp-body"><div class="exp-tool">Figma Make</div><div class="exp-path">taste-figma.css + instructions</div></div>
+      </div>
+      <div class="exp" role="listitem">
+        <div class="exp-icon"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_lovable)"><mask id="mask0_lovable" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="5" y="5" width="22" height="22"><path fill-rule="evenodd" clip-rule="evenodd" d="M11.7548 5.3999C15.2147 5.3999 18.0194 8.20585 18.0194 11.6673V14.0491H20.1044C23.5643 14.0491 26.3692 16.8552 26.3692 20.3165C26.3692 23.7778 23.5643 26.5837 20.1044 26.5837H5.48999V11.6673C5.48999 8.20585 8.29472 5.3999 11.7548 5.3999Z" fill="url(#paint0_lovable)"/></mask><g mask="url(#mask0_lovable)"><g filter="url(#f0lov)"><path d="M14.6501 30.8093C22.4559 30.8093 28.7837 24.4956 28.7837 16.7072C28.7837 8.91874 22.4559 2.60498 14.6501 2.60498C6.84431 2.60498 0.516479 8.91874 0.516479 16.7072C0.516479 24.4956 6.84431 30.8093 14.6501 30.8093Z" fill="#4B73FF"/></g><g filter="url(#f1lov)"><path d="M16.2019 23.071C26.1989 23.071 34.3031 16.7573 34.3031 8.96887C34.3031 1.18046 26.1989 -5.1333 16.2019 -5.1333C6.20489 -5.1333 -1.89929 1.18046 -1.89929 8.96887C-1.89929 16.7573 6.20489 23.071 16.2019 23.071Z" fill="#FF66F4"/></g><g filter="url(#f2lov)"><path d="M19.1535 18.6996C26.9593 18.6996 33.2871 13.1548 33.2871 6.31491C33.2871 -0.52499 26.9593 -6.06982 19.1535 -6.06982C11.3477 -6.06982 5.0199 -0.52499 5.0199 6.31491C5.0199 13.1548 11.3477 18.6996 19.1535 18.6996Z" fill="#FF0105"/></g><g filter="url(#f3lov)"><path d="M16.4534 17.446C21.1478 17.446 24.9533 13.6489 24.9533 8.96496C24.9533 4.28099 21.1478 0.483887 16.4534 0.483887C11.7591 0.483887 7.95361 4.28099 7.95361 8.96496C7.95361 13.6489 11.7591 17.446 16.4534 17.446Z" fill="#FE7B02"/></g></g></g><defs><filter id="f0lov" x="-5.80372" y="-3.71522" width="40.9076" height="40.845" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur stdDeviation="3.1601" result="effect1_foregroundBlur"/></filter><filter id="f1lov" x="-8.21949" y="-11.4535" width="48.8428" height="40.845" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur stdDeviation="3.1601" result="effect1_foregroundBlur"/></filter><filter id="f2lov" x="-1.30031" y="-12.39" width="40.9076" height="37.4099" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur stdDeviation="3.1601" result="effect1_foregroundBlur"/></filter><filter id="f3lov" x="1.63341" y="-5.83632" width="29.64" height="29.6023" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur stdDeviation="3.1601" result="effect1_foregroundBlur"/></filter><linearGradient id="paint0_lovable" x1="12.5162" y1="9.12258" x2="18.8524" y2="26.5849" gradientUnits="userSpaceOnUse"><stop offset="0.025" stop-color="#FF8E63"/><stop offset="0.56" stop-color="#FF7EB0"/><stop offset="0.95" stop-color="#4B73FF"/></linearGradient><clipPath id="clip0_lovable"><rect width="21.0164" height="21.1901" fill="white" transform="translate(5.48999 5.3999)"/></clipPath></defs></svg></div>
+        <div class="exp-body"><div class="exp-tool">Lovable</div><div class="exp-path">Printed to paste in Project Knowledge</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- INSTALLATION -->
+<section id="install" aria-labelledby="install-h">
+  <div class="container">
+    <p class="eyebrow">Get started</p>
+    <h2 id="install-h">Three steps. Then run it anywhere.</h2>
+    <p class="sub">Works in Claude Code and Gemini CLI.</p>
+    <div class="install-tabs" role="tablist">
+      <button class="install-tab active" data-target="claude" role="tab" aria-selected="true"><svg width="18" height="18" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M24.998 14.949H28V18.051H25V21.079H23.513V24H22V21.079H20.513V24H19V21.079H13V24H11.488V21.079H10V24H8.487V21.079H7V18.05H4V14.95H7V9H24.998V14.949ZM10 14.949H11.488V12.102H10V14.949ZM20.51 14.949H22V12.102H20.51V14.949Z" fill="#D97757"/></svg>Claude Code</button>
+      <button class="install-tab" data-target="gemini" role="tab" aria-selected="false"><svg width="18" height="18" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M25.5858 26.4421C26.9157 27.4396 28.9102 26.7746 27.0817 24.9462C21.5965 19.6272 22.7602 5 15.9452 5C9.13021 5 10.2937 19.6272 4.80852 24.9462C2.8139 26.9408 4.97473 27.4396 6.30449 26.4421C11.4573 22.9517 11.1248 16.8015 15.9452 16.8015C20.7655 16.8015 20.433 22.9517 25.5858 26.4421Z" fill="currentColor"/></svg>Gemini CLI</button>
+    </div>
+    <div class="install-panel active" data-panel="claude" role="tabpanel">
+      <div class="ist">
+        <div class="ist-n" aria-hidden="true">1</div>
+        <div class="ist-body">
+          <label>Clone into your Claude skills directory</label>
+          <div class="code-wrap"><div class="code-block">git clone https://github.com/senlindesign/taste-skill ~/.claude/skills/taste</div><button class="copy-btn" aria-label="Copy"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button></div>
+        </div>
+      </div>
+      <div class="ist">
+        <div class="ist-n" aria-hidden="true">2</div>
+        <div class="ist-body">
+          <label>Install Playwright MCP (one-time — downloads Chromium ~100MB)</label>
+          <div class="code-wrap"><div class="code-block">claude mcp add playwright -s user -- npx -y @playwright/mcp@latest --isolated</div><button class="copy-btn" aria-label="Copy"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button></div>
+        </div>
+      </div>
+      <div class="ist">
+        <div class="ist-n" aria-hidden="true">3</div>
+        <div class="ist-body">
+          <label>Restart Claude Code, then run it on any URL</label>
+          <div class="code-wrap"><div class="code-block">/taste https://linear.app</div><button class="copy-btn" aria-label="Copy"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button></div>
+        </div>
+      </div>
+    </div>
+    <div class="install-panel" data-panel="gemini" role="tabpanel">
+      <div class="ist">
+        <div class="ist-n" aria-hidden="true">1</div>
+        <div class="ist-body">
+          <label>Clone into your Gemini skills directory</label>
+          <div class="code-wrap"><div class="code-block">git clone https://github.com/senlindesign/taste-skill ~/.gemini/skills/taste</div><button class="copy-btn" aria-label="Copy"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button></div>
+        </div>
+      </div>
+      <div class="ist">
+        <div class="ist-n" aria-hidden="true">2</div>
+        <div class="ist-body">
+          <label>Add Playwright MCP to ~/.gemini/settings.json</label>
+          <div class="code-wrap"><div class="code-block">{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest", "--isolated"]
+    }
+  }
+}</div><button class="copy-btn" aria-label="Copy"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button></div>
+        </div>
+      </div>
+      <div class="ist">
+        <div class="ist-n" aria-hidden="true">3</div>
+        <div class="ist-body">
+          <label>Restart Gemini CLI, then run it on any URL</label>
+          <div class="code-wrap"><div class="code-block">/taste https://linear.app</div><button class="copy-btn" aria-label="Copy"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copy</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="foot">
+      <div class="foot-l">A side project by <a href="https://www.linkedin.com/in/senlinbebop/" target="_blank" rel="noopener">Sen Lin</a></div>
+      <div class="foot-r">
+        <a href="https://github.com/senlindesign/taste-skill" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://aiinterface.substack.com/" target="_blank" rel="noopener">Substack</a>
+        <a href="https://medium.com/@sunless77" target="_blank" rel="noopener">Medium</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function initShowcase() {
+    const tabs   = document.querySelectorAll('.showcase-tab');
+    const frames = document.querySelectorAll('.showcase-frames iframe');
+    let current  = 1;
+    let timer;
+    let audioCtx;
+
+    function playClick() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const t = audioCtx.currentTime;
+      const len = 0.04;
+      const buf = audioCtx.createBuffer(1, audioCtx.sampleRate * len, audioCtx.sampleRate);
+      const data = buf.getChannelData(0);
+      for (let i = 0; i < data.length; i++) {
+        const env = Math.exp(-i / (data.length * 0.15));
+        data[i] = (Math.random() * 2 - 1) * env;
+      }
+      const src = audioCtx.createBufferSource();
+      src.buffer = buf;
+      const hp = audioCtx.createBiquadFilter();
+      hp.type = 'highpass'; hp.frequency.value = 800;
+      const lp = audioCtx.createBiquadFilter();
+      lp.type = 'lowpass'; lp.frequency.value = 4000;
+      const gain = audioCtx.createGain();
+      gain.gain.value = 0.4;
+      src.connect(hp).connect(lp).connect(gain).connect(audioCtx.destination);
+      src.start(t);
+    }
+
+    function activate(i, withSound) {
+      current = i;
+      tabs.forEach((t, idx) => {
+        t.classList.toggle('active', idx === i);
+        t.setAttribute('aria-selected', idx === i);
+      });
+      frames.forEach((f, idx) => f.classList.toggle('active', idx === i));
+      if (withSound) playClick();
+    }
+
+    function startAuto() {
+      clearInterval(timer);
+      timer = setInterval(() => activate((current + 1) % tabs.length, false), 5000);
+    }
+    function stopAuto() { clearInterval(timer); timer = null; }
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => {
+        stopAuto(); activate(i, true); startAuto();
+      });
+    });
+
+    const panel = document.querySelector('.hero-showcase');
+    const FRAME_SCALE = 0.55;
+    let hovering  = false;
+    let scrolling = false;
+    let scrollResume;
+
+    function setHover(state) {
+      if (state === hovering) return;
+      hovering = state;
+      if (state) stopAuto();
+      else if (!scrolling) startAuto();
+    }
+
+    function onIframeScroll() {
+      if (!scrolling) { scrolling = true; stopAuto(); }
+      clearTimeout(scrollResume);
+      scrollResume = setTimeout(function() {
+        scrolling = false;
+        if (!hovering) startAuto();
+      }, 1500);
+    }
+
+    function check(x, y) {
+      const r = panel.getBoundingClientRect();
+      setHover(x >= r.left && x <= r.right && y >= r.top && y <= r.bottom);
+    }
+
+    // Tracks cursor across the parent document (outside iframes)
+    document.addEventListener('mousemove', (e) => check(e.clientX, e.clientY));
+
+    // Same-origin iframes: listen for mousemove + scroll inside each iframe
+    function attach(frame) {
+      try {
+        const doc = frame.contentDocument;
+        if (!doc) return;
+        if (doc.__showcaseHover) return;
+        doc.__showcaseHover = true;
+        doc.addEventListener('mousemove', (e) => {
+          const ir = frame.getBoundingClientRect();
+          check(ir.left + e.clientX * FRAME_SCALE,
+                ir.top  + e.clientY * FRAME_SCALE);
+        });
+        doc.addEventListener('scroll', onIframeScroll, true);
+      } catch (_) { /* cross-origin — silently skip */ }
+    }
+
+    frames.forEach(frame => {
+      frame.addEventListener('load', () => attach(frame));
+      if (frame.contentDocument && frame.contentDocument.readyState === 'complete') {
+        attach(frame);
+      }
+    });
+
+    startAuto();
+  })();
+
+  (function initSlider() {
+    const wrap = document.getElementById('slider');
+    const after = document.getElementById('s-after');
+    const line  = document.getElementById('s-line');
+    const knob  = document.getElementById('s-knob');
+    if (!wrap || !knob) return;
+    let active = false;
+
+    function move(x) {
+      const r = wrap.getBoundingClientRect();
+      const pct = Math.max(5, Math.min(95, (x - r.left) / r.width * 100));
+      const right = 100 - pct;
+      after.style.clipPath = `inset(0 ${right}% 0 0)`;
+      line.style.left  = pct + '%';
+      knob.style.left  = pct + '%';
+    }
+
+    wrap.addEventListener('mousedown',  (e) => { active = true; move(e.clientX); });
+    window.addEventListener('mousemove', (e) => { if (active) move(e.clientX); });
+    window.addEventListener('mouseup',   ()  => { active = false; });
+
+    wrap.addEventListener('touchstart', (e) => { active = true; move(e.touches[0].clientX); }, { passive: true });
+    window.addEventListener('touchmove', (e) => { if (active) move(e.touches[0].clientX); }, { passive: true });
+    window.addEventListener('touchend',  ()  => { active = false; });
+
+    move(wrap.getBoundingClientRect().left + wrap.getBoundingClientRect().width * 0.5);
+  })();
+
+  (function initPipeline() {
+    const section = document.getElementById('how');
+    const diagram = document.getElementById('pipeline-diagram');
+    if (!section || !diagram) return;
+    const items   = section.querySelectorAll('.step-item');
+    const texts   = section.querySelectorAll('.pd-center-text');
+    const STATES  = 5; // 0 default, 1-4 step
+    let cur = 0, timer = null, hovering = false;
+
+    function render(n) {
+      cur = n;
+      section.dataset.state = String(n);
+      items.forEach(it => it.classList.toggle('active', it.dataset.step === String(n)));
+      texts.forEach(t  => t.classList.toggle('is-on',  t.dataset.state === String(n)));
+    }
+
+    function startAuto() {
+      if (timer) return;
+      timer = setInterval(() => render((cur + 1) % STATES), 3500);
+    }
+    function stopAuto()  { clearInterval(timer); timer = null; }
+
+    // Pause auto-cycle whenever the cursor is over the whole pipeline area
+    // (left list OR right diagram), so users can read either side undisturbed.
+    const grid = section.querySelector('.pipeline-grid');
+    grid.addEventListener('mouseenter', () => { hovering = true; stopAuto(); });
+    grid.addEventListener('mouseleave', () => { hovering = false; startAuto(); });
+
+    // Right-side nodes are clickable — switch to that step on click / Enter / Space
+    section.querySelectorAll('.pd-node').forEach((node, idx) => {
+      const step = idx + 1;
+      const select = () => render(step);
+      node.addEventListener('click', select);
+      node.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(); }
+      });
+    });
+
+    // Left-side step items are clickable too — same render() target so both
+    // sides stay in sync regardless of where the user interacts.
+    items.forEach(it => {
+      const step = Number(it.dataset.step);
+      const select = () => render(step);
+      it.addEventListener('click', select);
+      it.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(); }
+      });
+    });
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (reduceMotion.matches) { render(0); return; }
+
+    render(0);
+    startAuto();
+  })();
+
+  // Show nav Install button only after hero CTA scrolls out of view
+  (function initNavInstall() {
+    const heroBtn = document.getElementById('hero-install-btn');
+    const navBtn  = document.querySelector('.nav-install');
+    if (!heroBtn || !navBtn) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => navBtn.classList.toggle('visible', !entry.isIntersecting),
+      { threshold: 0 }
+    );
+    observer.observe(heroBtn);
+  })();
+
+  (function initTastePill() {
+    const pill    = document.getElementById('taste-pill');
+    const title   = document.getElementById('hero-h');
+    const trigger = document.getElementById('taste-trigger');
+    const overlay = document.getElementById('taste-modal-overlay');
+    const modal   = document.getElementById('taste-modal');
+    if (!pill || !title || !overlay) return;
+
+    let modalOpen = false;
+
+    function move(e) {
+      pill.style.left = (e.clientX - pill.offsetWidth / 2) + 'px';
+      pill.style.top  = (e.clientY - pill.offsetHeight - 14) + 'px';
+    }
+    function openModal() {
+      modalOpen = true;
+      title.classList.remove('tasting');
+      pill.classList.remove('visible');
+      overlay.classList.add('visible');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      modalOpen = false;
+      overlay.classList.remove('visible');
+      document.body.style.overflow = '';
+    }
+
+    // Title hover — pill follows cursor
+    title.addEventListener('mouseenter', function(e) {
+      if (modalOpen) return;
+      title.classList.add('tasting');
+      move(e); pill.classList.add('visible');
+    });
+    title.addEventListener('mousemove', function(e) {
+      if (!modalOpen) move(e);
+    });
+    title.addEventListener('mouseleave', function() {
+      if (modalOpen) return;
+      title.classList.remove('tasting');
+      pill.classList.remove('visible');
+    });
+    title.addEventListener('click', openModal);
+
+    // Subtitle "design taste" trigger
+    if (trigger) {
+      trigger.addEventListener('click', openModal);
+      trigger.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(); }
+      });
+    }
+
+    document.getElementById('taste-modal-close').addEventListener('click', closeModal);
+    overlay.addEventListener('click', function(e) {
+      if (!modal.contains(e.target)) closeModal();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modalOpen) closeModal();
+    });
+  })();
+
+  (function initCopyButtons() {
+    document.querySelectorAll('.copy-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var text = btn.previousElementSibling.textContent;
+        navigator.clipboard.writeText(text).then(function() {
+          btn.textContent = 'Copied!';
+          btn.classList.add('copied');
+          setTimeout(function() { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
+        });
+      });
+    });
+  })();
+
+  (function initInstallTabs() {
+    const tabs = document.querySelectorAll('.install-tab');
+    const panels = document.querySelectorAll('.install-panel');
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        const target = tab.dataset.target;
+        tabs.forEach(function(t) { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+        panels.forEach(function(p) { p.classList.remove('active'); });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        document.querySelector('.install-panel[data-panel="' + target + '"]').classList.add('active');
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
