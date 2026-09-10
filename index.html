@@ -38,6 +38,8 @@
   "@type": "InsuranceAgency",
   "name": "Rennradkasko – Ludwig Siebenbürgen",
   "url": "https://rennradkasko.de/",
+  "logo": "https://rennradkasko.de/assets/apple-touch-icon.png",
+  "image": "https://rennradkasko.de/assets/og-image.jpg",
   "description": "Rennrad Vollkasko Versicherung ohne Selbstbeteiligung: Fahrradkasko mit Neuwert-Erstattung und Fahrradschutzbrief für Rennrad, Gravel Bike, Zeitfahrrad und E-Bike.",
   "telephone": "+4915224827997",
   "email": "ludwig.siebenbuergen@ergo.de",
@@ -49,11 +51,20 @@
     "addressCountry": "DE"
   },
   "areaServed": "DE",
-  "parentOrganization": { "@type": "Organization", "name": "ERGO Versicherung AG" },
+  "parentOrganization": {
+    "@type": "Organization",
+    "name": "ERGO Versicherung AG",
+    "url": "https://www.ergo.de/"
+  },
   "employee": {
     "@type": "Person",
     "name": "Ludwig Siebenbürgen",
-    "jobTitle": "Juniorpartner ERGO-Agentur Hannes Kaselow – Spezialist für Fahrradversicherungen"
+    "jobTitle": "Juniorpartner ERGO-Agentur Hannes Kaselow – Spezialist für Fahrradversicherungen",
+    "worksFor": {
+      "@type": "InsuranceAgency",
+      "name": "ERGO-Agentur Hannes Kaselow",
+      "url": "https://hannes-kaselow.ergo.de"
+    }
   }
 }
 </script>
@@ -1063,6 +1074,8 @@ img.ls-foto,img.berater-foto{object-fit:cover}
   .nav-links a{white-space:nowrap}
 }
 @media(max-width:1099px){ .brand-sub{display:none} }
+/* Ab 1100 px steht "Ein Produkt der ERGO" im Header; die Hero-Pille waere dann doppelt */
+@media(min-width:1100px){ .ergo-sub{display:none} }
 
 /* ---------- Ganze Sektionen (Schutzbrief, FAQ) einklappen ---------- */
 .section-head .sektion-toggle{margin-top:30px}
