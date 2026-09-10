@@ -2270,8 +2270,8 @@ ${name || ''}`
 <script>
 (function(){
   var KEY='cb-consent-v1';
-  var GA4_ID='G-XXXXXXXXXX';      // <- GA4 Mess-ID eintragen
-  var ADS_ID='AW-XXXXXXXXX';      // <- Google Ads Conversion-ID eintragen
+  var GA4_ID='G-V3BQ7S3CNE';      // GA4 Mess-ID (Datenstream rennradkasko.de)
+  var ADS_ID='';                  // <- Google Ads Conversion-ID (AW-...) eintragen, sobald vorhanden
 
   window.dataLayer=window.dataLayer||[];
   function gtag(){dataLayer.push(arguments);}
@@ -2294,7 +2294,7 @@ ${name || ''}`
     document.head.appendChild(s);
     gtag('js',new Date());
     gtag('config',GA4_ID);
-    gtag('config',ADS_ID);
+    if(ADS_ID){ gtag('config',ADS_ID); }
     bindConversionClicks();
   }
 
