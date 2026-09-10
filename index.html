@@ -2234,10 +2234,9 @@ ${name || ''}`
 });
 </script>
 <!-- ===================== CONSENT + TRACKING (DSGVO / Consent Mode v2) =====================
-     WICHTIG vor dem Livegang:
-     1. GA4-Property anlegen  -> Mess-ID unten bei G-XXXXXXXXXX eintragen
-     2. Google-Ads-Konto      -> Conversion-ID bei AW-XXXXXXXXX eintragen
-     3. datenschutz.html um den Abschnitt "Google Analytics / Google Ads" ergaenzen
+     Erledigt: GA4-Mess-ID unten eingetragen; datenschutz.html deckt Analytics + Ads ab.
+     Offen:    Google-Ads-Conversion-ID bei ADS_ID eintragen und in bindConversionClicks()
+               die auskommentierte Conversion-Zeile mit dem Conversion-Label aktivieren.
      Kein Tracking-Script laedt, bevor der Besucher aktiv zustimmt.
 ============================================================================================ -->
 <style>
