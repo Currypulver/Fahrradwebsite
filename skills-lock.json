@@ -109,6 +109,12 @@
       "skillPath": "skills/customer-research/SKILL.md",
       "computedHash": "cc68018a343c1a75ef9aed44b7037928795f654bdde0b28372176f686c1982be"
     },
+    "design-taste-frontend": {
+      "source": "Leonxlnx/taste-skill",
+      "sourceType": "github",
+      "skillPath": "skills/taste-skill/SKILL.md",
+      "computedHash": "6d838b246d0e35d0b53f4f23f98ba7a1dd561937e64f7d0c7553b0928e376c3e"
+    },
     "directory-submissions": {
       "source": "coreyhaines31/marketingskills",
       "sourceType": "github",
@@ -120,6 +126,12 @@
       "sourceType": "github",
       "skillPath": "skills/emails/SKILL.md",
       "computedHash": "261d986c2a1f1f5f823f8c889e16db723edb8a9d0fa5ede8412f981594715c49"
+    },
+    "emil-design-eng": {
+      "source": "emilkowalski/skills",
+      "sourceType": "github",
+      "skillPath": "skills/emil-design-eng/SKILL.md",
+      "computedHash": "41b0a4dc1a27164fe297845a6c6850a39e9242c42c9be999967fcee9df2c5974"
     },
     "find-skills": {
       "source": "vercel-labs/skills",
@@ -138,6 +150,12 @@
       "sourceType": "github",
       "skillPath": "skills/image/SKILL.md",
       "computedHash": "e4b5511566d08a79f6f5fd26319eaaac0e18e1e238848c5a3fb2e9839e306ebe"
+    },
+    "impeccable": {
+      "source": "pbakaus/impeccable",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/impeccable/SKILL.md",
+      "computedHash": "0c186575780acff90578f7ee166651165d663bab718e8df5875f21d4fcffa708"
     },
     "launch": {
       "source": "coreyhaines31/marketingskills",
@@ -288,6 +306,12 @@
       "sourceType": "github",
       "skillPath": "skills/social/SKILL.md",
       "computedHash": "8c8e87a941d4cb53827e929ee457d9710bb81c5fb1ac80f19cd2aa034aeaa40d"
+    },
+    "taste": {
+      "source": "senlindesign/taste-skill",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "609c397d5834ad0aeb146bc27b3d3600536eb8dc6e92ede0bb5707de3a1d2600"
     },
     "video": {
       "source": "coreyhaines31/marketingskills",
