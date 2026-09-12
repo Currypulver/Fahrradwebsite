@@ -27,6 +27,31 @@ https://rennradkasko.de erreichbar.
 - `assets/favicon*` / `assets/og-image.jpg` – Icons und Social-Media-Vorschaubild
 - `src/motion-entry.js` – Einstiegsdatei für das Motion-Bundle
 
+## Berater-Fotos (Look & Export)
+
+`tools/foto-look.py` macht aus einem Originalfoto (Handy oder Kamera) die Bild-Assets
+der Berater-Karte und des runden Avatars – mit einem festen Editorial-Look, wie er bei
+Sport-Shootings üblich ist (Lichter zurücknehmen, Schatten öffnen, weiche Kontrastkurve,
+gedämpftes Grün, warme Lichter / kühle Schatten, Klarheit, Vignette, feines Korn,
+Schärfung nach dem Verkleinern). EXIF-Daten inklusive GPS-Position werden dabei entfernt.
+
+```bash
+python3 -m pip install pillow numpy
+python3 tools/foto-look.py fotos-original/ludwig-rennen.jpg --fokus 0.5,0.3 --avatar-fokus 0.35,0.2 --vergleich
+```
+
+Erzeugt in `assets/`:
+
+- `berater-ludwig-gross.jpg` + `.webp` – Berater-Karte, 3:2, 1600 × 1067 px
+- `berater-ludwig.jpg` + `.webp` – rundes Avatar, 512 × 512 px
+- mit `--vergleich` zusätzlich ein Vorher/Nachher-Bild zum Gegenchecken (nicht einchecken)
+
+`--fokus x,y` legt den Bildschwerpunkt für den 3:2-Ausschnitt fest, `--avatar-fokus x,y`
+die Gesichtsmitte (Werte 0–1, x von links, y von oben). Looks: `--look editorial`
+(Standard), `film` (weicher, mehr Korn) oder `clean` (neutral, ohne Tönung). Einzelne
+Werte lassen sich mit `--set vignette=0.4` überschreiben; `--help` listet alle.
+Originalfotos nicht dauerhaft im Repository lassen – alles im Repo wird mit deployt.
+
 ## Framer Motion
 
 Die Seite nutzt [Framer Motion](https://motion.dev) (Vanilla-Einstieg `framer-motion/dom`) für:
