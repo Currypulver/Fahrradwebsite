@@ -4,7 +4,8 @@ foto-look.py – Editorial-Look und Web-Export für die Berater-Fotos auf rennra
 
 Macht aus einem Originalfoto (Handy oder Kamera) die fertigen Bild-Assets der Seite:
 
-  * Berater-Karte   assets/berater-ludwig-gross.jpg + .webp   (3:2, 1600 × 1067 px)
+  * Berater-Karte   assets/berater-ludwig-gross.jpg + .webp   (3:2, 1600 × 1067 px;
+                    anderes Seitenverhältnis mit --ausschnitt 4:3 oder 1:1)
   * rundes Avatar   assets/berater-ludwig.jpg + .webp         (1:1, 512 × 512 px)
   * optional        Vorher/Nachher-Vergleich zum Gegenchecken (--vergleich)
 
@@ -37,7 +38,7 @@ import sys
 import numpy as np
 from PIL import Image, ImageFilter, ImageOps
 
-KARTE_GROESSE = (1600, 1067)   # passt zu width/height der <img class="berater-portraet">
+KARTE_BREITE = 1600            # Höhe folgt aus --ausschnitt; 3:2 ergibt 1600 × 1067 wie im <img>
 AVATAR_GROESSE = (512, 512)    # wird auf 46 px rund angezeigt, 512 reicht für jedes Display
 
 # ---------------------------------------------------------------------------
@@ -301,12 +302,24 @@ def punkt(text: str) -> tuple[float, float]:
     return x, y
 
 
+def verhaeltnis(text: str) -> tuple[int, int]:
+    try:
+        b, h = (int(t) for t in text.split(":"))
+    except ValueError:
+        raise argparse.ArgumentTypeError(f"erwartet Breite:Höhe wie 3:2, bekommen: {text!r}")
+    if b <= 0 or h <= 0:
+        raise argparse.ArgumentTypeError(f"Seitenverhältnis muss positiv sein: {text!r}")
+    return b, h
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("quelle", help="Originalfoto (JPEG/PNG/HEIC-Export)")
     ap.add_argument("--look", choices=sorted(LOOKS), default="editorial")
     ap.add_argument("--fokus", type=punkt, default=(0.5, 0.35),
                     help="Bildschwerpunkt für die 3:2-Karte als x,y (0–1), Standard 0.5,0.35")
+    ap.add_argument("--ausschnitt", type=verhaeltnis, default=(3, 2),
+                    help="Seitenverhältnis der Karte als B:H, Standard 3:2 (Hochkant-Fotos: 4:3 oder 1:1)")
     ap.add_argument("--zoom", type=float, default=1.0, help="Karte enger beschneiden (z. B. 0.9)")
     ap.add_argument("--avatar-fokus", type=punkt, default=None,
                     help="Gesichtsmitte für das runde Avatar als x,y (0–1), Standard wie --fokus")
@@ -336,9 +349,10 @@ def main(argv: list[str] | None = None) -> int:
     os.makedirs(args.out, exist_ok=True)
     print(f"Quelle: {args.quelle} ({im.width}×{im.height}), Look: {args.look}")
 
-    # Berater-Karte, 3:2
-    karte_crop = ausschnitt(im, (3, 2), args.fokus, args.zoom)
-    karte = bearbeiten(karte_crop, p, KARTE_GROESSE)
+    # Berater-Karte
+    rb, rh = args.ausschnitt
+    karte_crop = ausschnitt(im, (rb, rh), args.fokus, args.zoom)
+    karte = bearbeiten(karte_crop, p, (KARTE_BREITE, int(round(KARTE_BREITE * rh / rb))))
     for pfad in speichern(karte, os.path.join(args.out, args.basis + "-gross")):
         print(f"  Karte   {pfad}  {karte.width}×{karte.height}  {os.path.getsize(pfad) // 1024} KB")
 

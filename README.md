@@ -42,7 +42,7 @@ python3 tools/foto-look.py fotos-original/ludwig-rennen.jpg --fokus 0.5,0.3 --av
 
 Erzeugt in `assets/`:
 
-- `berater-ludwig-gross.jpg` + `.webp` – Berater-Karte, 3:2, 1600 × 1067 px
+- `berater-ludwig-gross.jpg` + `.webp` – Berater-Karte, 3:2, 1600 × 1067 px (Hochkant-Fotos: `--ausschnitt 4:3` oder `1:1`, dann `aspect-ratio` und `width`/`height` der `berater-portraet` in `index.html` anpassen)
 - `berater-ludwig.jpg` + `.webp` – rundes Avatar, 512 × 512 px
 - mit `--vergleich` zusätzlich ein Vorher/Nachher-Bild zum Gegenchecken (nicht einchecken)
 
