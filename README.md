@@ -37,12 +37,12 @@ Schärfung nach dem Verkleinern). EXIF-Daten inklusive GPS-Position werden dabei
 
 ```bash
 python3 -m pip install pillow numpy
-python3 tools/foto-look.py fotos-original/ludwig-rennen.jpg --fokus 0.5,0.3 --avatar-fokus 0.35,0.2 --vergleich
+python3 tools/foto-look.py fotos-original/ludwig-rennen.jpg --fokus 0.5,0.33 --avatar-fokus 0.33,0.2 --avatar-groesse 0.31 --vergleich
 ```
 
 Erzeugt in `assets/`:
 
-- `berater-ludwig-gross.jpg` + `.webp` – Berater-Karte, 3:2, 1600 × 1067 px (Hochkant-Fotos: `--ausschnitt 4:3` oder `1:1`, dann `aspect-ratio` und `width`/`height` der `berater-portraet` in `index.html` anpassen)
+- `berater-ludwig-gross.jpg` + `.webp` – Berater-Karte, 4:3, 1600 × 1200 px (anderes Verhältnis mit `--ausschnitt 3:2` oder `1:1`, dann `aspect-ratio` und `width`/`height` der `berater-portraet` in `index.html` mit anpassen)
 - `berater-ludwig.jpg` + `.webp` – rundes Avatar, 512 × 512 px
 - mit `--vergleich` zusätzlich ein Vorher/Nachher-Bild zum Gegenchecken (nicht einchecken)
 

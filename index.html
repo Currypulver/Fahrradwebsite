@@ -752,8 +752,9 @@ h2.display{font-size:clamp(40px,6vw,84px)}
   transition:border-color .3s ease,transform .35s var(--ease),box-shadow .35s var(--ease);
 }
 .berater-card:hover{border-color:var(--line-2);transform:translateY(-3px);box-shadow:var(--shadow)}
+.berater-card>picture{display:block}
 .berater-portraet{
-  width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;object-position:center 30%;display:block;
+  width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:center;display:block;
   transition:transform .6s var(--ease);
 }
 .berater-card:hover .berater-portraet{transform:scale(1.03)}
@@ -1892,7 +1893,10 @@ img.ls-foto,img.berater-foto{object-fit:cover}
         <p class="lead" style="margin-top:22px">Ich berate dich persönlich – kostenlos, unverbindlich und auf Augenhöhe. Als Radsportler weiß ich, was ein Rad wert ist. Schreib mir einfach, wie es dir am liebsten ist.</p>
 
         <div class="berater-card">
-          <img class="berater-portraet" src="assets/berater-ludwig-gross.jpg" alt="Ludwig Siebenbürgen mit seinem Cannondale-Rennrad" width="1600" height="1067" loading="lazy">
+          <picture>
+            <source type="image/webp" srcset="assets/berater-ludwig-gross.webp">
+            <img class="berater-portraet" src="assets/berater-ludwig-gross.jpg" alt="Ludwig Siebenbürgen beim Rennen in den Unterlenkern auf seinem Cannondale-Rennrad" width="1600" height="1200" loading="lazy">
+          </picture>
           <div class="berater-body">
             <p class="berater-name">Ludwig Siebenbürgen</p>
             <p class="berater-rolle">Juniorpartner der <a class="agentur-link" href="https://hannes-kaselow.ergo.de" target="_blank" rel="noopener">ERGO-Agentur Hannes Kaselow</a> · Spezialist für Fahrradversicherungen</p>

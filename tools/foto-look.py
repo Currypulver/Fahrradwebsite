@@ -4,8 +4,8 @@ foto-look.py – Editorial-Look und Web-Export für die Berater-Fotos auf rennra
 
 Macht aus einem Originalfoto (Handy oder Kamera) die fertigen Bild-Assets der Seite:
 
-  * Berater-Karte   assets/berater-ludwig-gross.jpg + .webp   (3:2, 1600 × 1067 px;
-                    anderes Seitenverhältnis mit --ausschnitt 4:3 oder 1:1)
+  * Berater-Karte   assets/berater-ludwig-gross.jpg + .webp   (4:3, 1600 × 1200 px;
+                    anderes Seitenverhältnis mit --ausschnitt 3:2 oder 1:1)
   * rundes Avatar   assets/berater-ludwig.jpg + .webp         (1:1, 512 × 512 px)
   * optional        Vorher/Nachher-Vergleich zum Gegenchecken (--vergleich)
 
@@ -38,7 +38,7 @@ import sys
 import numpy as np
 from PIL import Image, ImageFilter, ImageOps
 
-KARTE_BREITE = 1600            # Höhe folgt aus --ausschnitt; 3:2 ergibt 1600 × 1067 wie im <img>
+KARTE_BREITE = 1600            # Höhe folgt aus --ausschnitt; 4:3 ergibt 1600 × 1200 wie im <img>
 AVATAR_GROESSE = (512, 512)    # wird auf 46 px rund angezeigt, 512 reicht für jedes Display
 
 # ---------------------------------------------------------------------------
@@ -318,8 +318,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--look", choices=sorted(LOOKS), default="editorial")
     ap.add_argument("--fokus", type=punkt, default=(0.5, 0.35),
                     help="Bildschwerpunkt für die 3:2-Karte als x,y (0–1), Standard 0.5,0.35")
-    ap.add_argument("--ausschnitt", type=verhaeltnis, default=(3, 2),
-                    help="Seitenverhältnis der Karte als B:H, Standard 3:2 (Hochkant-Fotos: 4:3 oder 1:1)")
+    ap.add_argument("--ausschnitt", type=verhaeltnis, default=(4, 3),
+                    help="Seitenverhältnis der Karte als B:H, Standard 4:3 wie die Karte in index.html")
     ap.add_argument("--zoom", type=float, default=1.0, help="Karte enger beschneiden (z. B. 0.9)")
     ap.add_argument("--avatar-fokus", type=punkt, default=None,
                     help="Gesichtsmitte für das runde Avatar als x,y (0–1), Standard wie --fokus")
