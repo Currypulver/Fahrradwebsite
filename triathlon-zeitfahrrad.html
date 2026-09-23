@@ -317,7 +317,13 @@ h2.display{font-size:clamp(40px,6vw,84px)}
   content:"";position:absolute;top:-1px;left:0;width:22px;height:2px;background:var(--ergo-rot);
 }
 .telemetrie b{display:block;color:var(--ink);font-weight:500;font-size:12.5px;margin-top:2px}
-@media(max-width:700px){.telemetrie{grid-template-columns:1fr 1fr}}
+/* Trennstelle in „Selbst&shy;beteiligung" nur auf dem Handy nutzen */
+.telemetrie span{hyphens:none}
+@media(max-width:700px){
+  /* minmax(0,1fr) + engere Abstaende: sonst ist die Leiste auf 320–360px breiter als der Screen */
+  .telemetrie{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .telemetrie span{padding-right:12px;margin-right:12px;hyphens:manual}
+}
 @media(max-width:920px){
   .hero-unten{grid-template-columns:1fr}
 }
@@ -635,7 +641,7 @@ footer a:hover{color:#fff}
           <span>Geltung <b>weltweit</b></span>
           <span>Erstattung <b>Neuwert</b></span>
           <span>Räder <b>alle</b></span>
-          <span>Selbstbeteiligung <b>0 €</b></span>
+          <span>Selbst&shy;beteiligung <b>0 €</b></span>
         </div>
       </div>
 
@@ -777,7 +783,7 @@ footer a:hover{color:#fff}
         <div class="card reveal" style="--i:1">
           <span class="kicker">Berufsunfähigkeit</span>
           <h3>Wenn der Job nicht mehr geht</h3>
-          <p>Kannst du deinen Beruf länger nicht mehr ausüben, sichert die Berufsunfähigkeitsversicherung dein Einkommen – ob nach einem Unfall oder durch Krankheit. Die meisten Berufsunfähigkeiten haben übrigens gesundheitliche Ursachen, keine Unfälle.</p>
+          <p>Kannst du deinen Beruf länger nicht mehr ausüben, sichert die Berufs&shy;unfähigkeits&shy;versicherung dein Einkommen – ob nach einem Unfall oder durch Krankheit. Die meisten Berufsunfähigkeiten haben übrigens gesundheitliche Ursachen, keine Unfälle.</p>
         </div>
         <div class="card reveal" style="--i:2">
           <span class="kicker">Gut zu wissen</span>

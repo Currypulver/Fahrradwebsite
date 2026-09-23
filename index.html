@@ -84,8 +84,7 @@
     {"@type":"Question","name":"Was ist nicht versichert?","acceptedAnswer":{"@type":"Answer","text":"Unter anderem vorsätzlich verursachte Schäden, Schäden durch Verlieren, Stehen- oder Liegenlassen sowie Garantiefälle des Herstellers."}},
     {"@type":"Question","name":"Was passiert bei grober Fahrlässigkeit?","acceptedAnswer":{"@type":"Answer","text":"In der Hausratversicherung Best wird die Entschädigung bei grob fahrlässig herbeigeführten Schäden nicht gekürzt – auf dieses Kürzungsrecht verzichtet der Versicherer ausdrücklich."}},
     {"@type":"Question","name":"Wie läuft der Schadensfall ab?","acceptedAnswer":{"@type":"Answer","text":"Der Schaden wird direkt beim persönlichen Ansprechpartner gemeldet – per WhatsApp, Telefon oder E-Mail. Kaufbeleg oder aussagekräftige Fotos des Rads genügen; Rechnungen oder Screenshots benötigter Ersatzteile lassen sich per WhatsApp oder E-Mail einreichen. Schäden bis 5.000 € sind bei vollständigen Unterlagen in der Regel innerhalb weniger Tage reguliert und bezahlt – ohne Vorkasse. Höhere Schäden werden genauer geprüft."}},
-    {"@type":"Question","name":"Ist ein gebrauchtes Rad versicherbar?","acceptedAnswer":{"@type":"Answer","text":"Ja – das Alter des Rads spielt keine Rolle. Entschädigt wird zum Neuwert: Bei Totalschaden oder Diebstahl wird der Betrag erstattet, den ein gleichwertiges neues Rad heute kostet."}},
-    {"@type":"Question","name":"Ist mein S-Pedelec versicherbar?","acceptedAnswer":{"@type":"Answer","text":"Nein. S-Pedelecs mit Unterstützung bis 45 km/h gelten als Kleinkrafträder, sind versicherungspflichtig und daher nicht über die Fahrradkasko versicherbar. Versicherbar sind Pedelecs mit Tretunterstützung bis 25 km/h. Für S-Pedelecs gibt es eigene Policen – der Berater hilft weiter."}}
+    {"@type":"Question","name":"Ist ein gebrauchtes Rad versicherbar?","acceptedAnswer":{"@type":"Answer","text":"Ja – das Alter des Rads spielt keine Rolle. Entschädigt wird zum Neuwert: Bei Totalschaden oder Diebstahl wird der Betrag erstattet, den ein gleichwertiges neues Rad heute kostet."}}
   ]
 }
 </script>
@@ -374,7 +373,13 @@ h2.display{font-size:clamp(40px,6vw,84px)}
   content:"";position:absolute;top:-1px;left:0;width:22px;height:2px;background:var(--ergo-rot);
 }
 .telemetrie b{display:block;color:var(--ink);font-weight:500;font-size:12.5px;margin-top:2px}
-@media(max-width:700px){.telemetrie{grid-template-columns:1fr 1fr}}
+/* Trennstelle in „Selbst&shy;beteiligung" nur auf dem Handy nutzen */
+.telemetrie span{hyphens:none}
+@media(max-width:700px){
+  /* minmax(0,1fr) + engere Abstaende: sonst ist die Leiste auf 320–360px breiter als der Screen */
+  .telemetrie{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .telemetrie span{padding-right:12px;margin-right:12px;hyphens:manual}
+}
 
 .hero-rechts{position:relative}
 .hero-art{position:relative;opacity:0;animation:einblenden .8s ease .4s forwards}
@@ -513,7 +518,7 @@ h2.display{font-size:clamp(40px,6vw,84px)}
 .beleg-fazit .rot{color:var(--rot-text-hell)}
 .beleg-hinweis{margin-top:14px;text-align:center;font-family:var(--body);font-size:12px;color:var(--beleg-ink-hell);text-transform:none;letter-spacing:0}
 .beleg-stempel{
-  position:absolute;top:20px;right:-14px;transform:rotate(9deg);
+  position:absolute;top:-10px;right:-14px;transform:rotate(9deg);
   border:2.5px solid var(--ergo-rot);color:var(--ergo-rot);
   font-weight:900;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
   padding:7px 13px;border-radius:4px;background:rgba(255,255,255,.9);
@@ -523,6 +528,8 @@ h2.display{font-size:clamp(40px,6vw,84px)}
   .warum-sticky{position:static}
   .beleg{transform:rotate(0);margin:0 auto}
 }
+/* Schmale Screens: Stempel nicht über den Beleg hinausragen lassen */
+@media(max-width:560px){.beleg-stempel{top:-18px;right:10px}}
 
 /* ---------- Leistungen (heller Papier-Akt, Bento) ---------- */
 .bento{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
@@ -714,9 +721,10 @@ h2.display{font-size:clamp(40px,6vw,84px)}
 @media(max-width:920px){.paket-grid{grid-template-columns:1fr}}
 
 /* ---------- FAQ (hell, editorial) ---------- */
-.faq-liste{max-width:860px}
+.faq-liste{max-width:860px;display:flex;flex-direction:column;border-bottom:1px solid var(--line)}
 .faq-item{border-top:1px solid var(--line)}
-.faq-item:last-child{border-bottom:1px solid var(--line)}
+/* Anfangs nur die wichtigsten Fragen – der Rest per Suche oder „Alle Fragen anzeigen" */
+.faq-liste:not(.alle):not(.sucht) .faq-extra{display:none}
 .faq-q{
   width:100%;text-align:left;background:none;border:none;cursor:pointer;
   display:grid;grid-template-columns:52px 1fr 34px;align-items:center;gap:18px;
@@ -743,6 +751,49 @@ h2.display{font-size:clamp(40px,6vw,84px)}
   .faq-q .nr{display:none}
   .faq-a p{padding-left:4px}
 }
+
+/* ---------- FAQ-Suche ---------- */
+.faq-suche{max-width:860px;margin-bottom:30px}
+.faq-suche label{display:block;margin-bottom:12px}
+.faq-suchfeld{position:relative}
+.faq-suchfeld svg{position:absolute;left:18px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:var(--ink-2);pointer-events:none}
+.faq-suchfeld input{
+  width:100%;min-height:60px;padding:16px 18px 16px 52px;
+  border:1.5px solid var(--line-2);border-radius:var(--radius-s);background:var(--card);color:var(--ink);
+  font-family:var(--body);font-size:17px; /* >= 16px, sonst zoomt iOS beim Tippen */
+  transition:border-color .2s ease,box-shadow .2s ease;
+}
+.faq-suchfeld input::placeholder{color:var(--ink-2);opacity:.8}
+.faq-suchfeld input:focus{outline:none;border-color:var(--ergo-rot);box-shadow:0 0 0 3px rgba(238,1,56,.15)}
+.faq-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.faq-chips button{
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-2);padding:10px 14px;min-height:40px;border:1px solid var(--line-2);border-radius:999px;
+  background:transparent;cursor:pointer;transition:color .2s ease,background-color .2s ease,border-color .2s ease;
+}
+.faq-chips button:hover,.faq-chips button[aria-pressed="true"]{color:#fff;background:var(--ergo-rot);border-color:var(--ergo-rot)}
+/* Handy: Themen als wischbare Zeile statt drei Umbruchzeilen */
+@media(max-width:560px){
+  .faq-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-right:-28px;padding-right:28px}
+  .faq-chips::-webkit-scrollbar{display:none}
+  .faq-chips button{flex:none}
+}
+.faq-status{margin-top:12px;font-size:14px;color:var(--ink-2);min-height:1.5em}
+.faq-status:empty{display:none}
+.faq-tipps{max-width:860px;display:grid;gap:10px}
+.faq-tipps:has(.faq-tipp:not([hidden])){margin-bottom:22px}
+.faq-tipp{
+  display:grid;gap:3px;text-decoration:none;padding:16px 20px 16px 22px;border-radius:var(--radius-s);
+  background:rgba(238,1,56,.07);border:1px solid rgba(238,1,56,.25);border-left:3px solid var(--ergo-rot);
+  transition:background-color .2s ease;
+}
+.faq-tipp:hover{background:rgba(238,1,56,.12)}
+.faq-tipp strong{font-family:var(--display);font-stretch:70%;font-weight:830;text-transform:uppercase;font-size:15px;letter-spacing:.03em}
+.faq-tipp span{font-size:14.5px;color:var(--ink-2)}
+.faq-fuss{max-width:860px;margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px}
+.faq-frag{font-size:14.5px;color:var(--ink-2);text-decoration:underline;text-underline-offset:3px;transition:color .2s ease}
+.faq-frag:hover{color:var(--ergo-rot)}
+.faq-frag.betont{color:var(--ink);font-weight:600}
 
 /* ---------- Kontakt (dunkles Finale) ---------- */
 .kontakt-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(36px,5vw,72px);align-items:start}
@@ -1223,7 +1274,7 @@ img.ls-foto,img.berater-foto{object-fit:cover}
         <div class="telemetrie" aria-label="Die wichtigsten Leistungen im Überblick">
           <span>Geltung<b>24/7 · weltweit</b></span>
           <span>Erstattung<b>zum Neuwert</b></span>
-          <span>Selbstbeteiligung<b>0 €</b></span>
+          <span>Selbst&shy;beteiligung<b>0 €</b></span>
           <span>Schutzbrief<b>inklusive</b></span>
         </div>
       </div>
@@ -1781,103 +1832,121 @@ img.ls-foto,img.berater-foto{object-fit:cover}
     <div class="etappe-mark reveal"><span class="etikett">Etappe 06 — Häufige Fragen</span></div>
     <div class="section-head reveal">
       <h2 class="display">Kurz &amp; klar<br><span class="kursiv rot">beantwortet.</span></h2>
-      <button type="button" class="btn btn-ghost sektion-toggle" data-ziel="faq-inhalt" aria-expanded="false"><span class="btn-label">Häufige Fragen anzeigen</span></button>
     </div>
 
-    <div class="sektion-inhalt" id="faq-inhalt">
-    <div class="faq-liste">
-      <div class="faq-item reveal" style="--i:0">
+    <!-- FAQ-Suche: Frage eintippen, passende Antworten erscheinen sofort (Logik unten im Script „FAQ-Suche") -->
+    <div class="faq-suche reveal" role="search">
+      <label class="mono-label" for="faq-suche">Frag einfach – die passende Antwort erscheint sofort</label>
+      <div class="faq-suchfeld">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <input id="faq-suche" type="search" placeholder="z. B. Rad im Urlaub geklaut?" autocomplete="off" enterkeyhint="search" aria-describedby="faq-status" aria-controls="faq-liste">
+      </div>
+      <div class="faq-chips" aria-label="Häufige Themen">
+        <button type="button" data-suche="Diebstahl">Diebstahl</button>
+        <button type="button" data-suche="Urlaub">Urlaub</button>
+        <button type="button" data-suche="Schloss">Schloss</button>
+        <button type="button" data-suche="Schadensfall">Schadensfall</button>
+        <button type="button" data-suche="Akku">E-Bike-Akku</button>
+        <button type="button" data-suche="Selbstbeteiligung">Selbstbeteiligung</button>
+      </div>
+      <p class="faq-status" id="faq-status" aria-live="polite"></p>
+    </div>
+
+    <div class="faq-tipps" id="faq-tipps">
+      <a class="faq-tipp" data-muster="wettkampf rennen triathlon triathlet zeitfahr zeitfahrrad ironman wechselzone tt langdistanz" href="triathlon-zeitfahrrad.html" hidden><strong>Triathlon &amp; Zeitfahren</strong><span>Was im Wettkampf und in der Wechselzone gilt, steht auf der Triathlon-Seite.</span></a>
+      <a class="faq-tipp" data-muster="kosten kostet preis preise teuer beitrag beitraege euro guenstig monat jahr" href="#paket" hidden><strong>Was kostet das?</strong><span>Der Beitrags-Schätzer zeigt dir die Spanne für dein Rad.</span></a>
+      <a class="faq-tipp" data-muster="s-pedelec spedelec speed 45 kmh kennzeichen" href="#kontakt" hidden><strong>S-Pedelec (bis 45&nbsp;km/h)</strong><span>Nicht über die Fahrradkasko versicherbar – dafür gibt es eigene Policen. Sprich mich an.</span></a>
+    </div>
+
+    <div class="faq-liste" id="faq-liste">
+      <div class="faq-item reveal" style="--i:0" data-stichworte="rennrad gravel mtb mountainbike city trekking zeitfahrrad tt triathlon lastenrad kinderrad ebike e-bike pedelec leasing jobrad dienstrad gemietet miete zubehör anhänger radtyp welche räder">
         <button class="faq-q" aria-expanded="false"><span class="nr">01</span>Welche Räder sind versichert?
-          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
         <div class="faq-a"><div><p>Die Rennrad-Vollkasko-Versicherung gilt für jedes Fahrrad deines Haushalts – Rennrad, Gravel, MTB, City, Zeitfahrrad (TT Bike), Lastenrad – und E-Bikes (Pedelecs)², jeweils zum Neuwert bis zur gewählten Versicherungssumme. Auch geleaste oder gemietete Räder (z.&nbsp;B. Dienstrad-Leasing) sowie Zubehör und Fahrradanhänger sind mitversichert. Der Radtyp spielt für den Beitrag keine Rolle – ob Rennrad oder Lastenrad, der Preis ist derselbe. Du fährst Triathlon? Alles zu Zeitfahrrad, Wettkampf und Wechselzone findest du auf der Seite <a href="triathlon-zeitfahrrad.html">Zeitfahrrad &amp; Triathlonrad versichern</a>.</p></div></div>
       </div>
 
-      <div class="faq-item reveal" style="--i:1">
+      <div class="faq-item reveal" style="--i:1" data-stichworte="wert summe mehrere räder zwei drei teuerste versicherungssumme zusammenrechnen addieren">
         <button class="faq-q" aria-expanded="false"><span class="nr">02</span>Muss ich den Wert aller meiner Räder zusammenrechnen?
-          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
         <div class="faq-a"><div><p>Nein. Maßgeblich für die Versicherungssumme ist der Wert deines teuersten Rads – nicht die Summe aller Räder im Haushalt. Besitzt du zum Beispiel drei Räder und das teuerste kostet 8.000&nbsp;€, ist das deine Versicherungsgrundlage; die anderen beiden sind automatisch mitversichert.</p></div></div>
       </div>
 
-      <div class="faq-item reveal" style="--i:2">
+      <div class="faq-item reveal" style="--i:2" data-stichworte="urlaub ausland reise weltweit trainingslager mallorca unterwegs zug zelt camping transport hotel diebstahl geklaut gestohlen">
         <button class="faq-q" aria-expanded="false"><span class="nr">03</span>Gilt der Schutz auch unterwegs und im Urlaub?
-          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
         <div class="faq-a"><div><p>Ja. Die Allgefahrendeckung gilt weltweit und rund um die Uhr – beim Training, auf Tour, im Zug, am Zeltplatz und am Trailhead.</p></div></div>
       </div>
 
-      <div class="faq-item reveal" style="--i:3">
+      <div class="faq-item reveal" style="--i:3" data-stichworte="schloss abschließen anschließen keller garage fahrradraum abstellen gesichert auto anhänger wohnwagen nacht diebstahl geklaut gestohlen">
         <button class="faq-q" aria-expanded="false"><span class="nr">04</span>Brauche ich ein bestimmtes Schloss?
-          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
         <div class="faq-a"><div><p>Unterwegs abgestellte Räder müssen mit einem Schloss gesichert sein – eine bestimmte Marke oder Preisklasse ist nicht vorgeschrieben. Die Schlosspflicht entfällt nur in ausschließlich selbst genutzten, verschlossenen Räumen (z.&nbsp;B. deinem eigenen Kellerabteil), im verschlossenen Auto sowie im angehängten, verschlossenen Anhänger oder Wohnwagen. Wichtig: Im gemeinschaftlich genutzten Keller oder Fahrradraum brauchst du weiterhin ein Schloss.</p></div></div>
       </div>
 
-      <div class="faq-item reveal" style="--i:4">
-        <button class="faq-q" aria-expanded="false"><span class="nr">05</span>Was ist mit dem Akku meines E-Bikes?
-          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
-        </button>
-        <div class="faq-a"><div><p>Der Akkuschutz sichert dich in den ersten drei Jahren gegen Leistungsverlust ab. Zusätzlich greift der Elektronikschutz bei Schäden durch Kurzschluss, Induktion, Überspannung oder Feuchtigkeit.</p></div></div>
-      </div>
-
-      <div class="faq-item reveal" style="--i:5">
-        <button class="faq-q" aria-expanded="false"><span class="nr">06</span>Gibt es eine Selbstbeteiligung?
-          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
-        </button>
-        <div class="faq-a"><div><p>Grundsätzlich nein. Du kannst optional eine Selbstbeteiligung vereinbaren, um deinen Beitrag zu senken – beim Schutzbrief (Mobilitätsschutz) wird sie aber in keinem Fall abgezogen.</p></div></div>
-      </div>
-
-      <div class="faq-item reveal" style="--i:6">
-        <button class="faq-q" aria-expanded="false"><span class="nr">07</span>Ich habe schon eine Hausratversicherung – lohnt sich der Wechsel?
-          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
-        </button>
-        <div class="faq-a"><div><p>Oft ja – viele Hausratverträge sichern hochwertige Räder gar nicht oder nur eingeschränkt ab. Hast du bei einem anderen Versicherer eine Hausratversicherung ohne zusätzlichen Schutz für deine Fahrräder oder E-Bikes abgeschlossen und möchtest zu ERGO wechseln, sichert die Differenzdeckung in der Zwischenzeit ab, was dein bestehender Vertrag im Verhältnis zum ERGO-Schutz nicht leistet – maximal ein Jahr lang und ohne Mehrbeitrag. So wechselst du ohne Versicherungslücke.</p></div></div>
-      </div>
-
-      <div class="faq-item reveal" style="--i:7">
-        <button class="faq-q" aria-expanded="false"><span class="nr">08</span>Warum sind Hausrat und Fahrradkasko ein gemeinsamer Vertrag?
-          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
-        </button>
-        <div class="faq-a"><div><p>Weil du damit nur einen Vertrag verwaltest: Wohnung und alle Räder sind zusammen abgesichert – mit einem Ansprechpartner für alles. Dazu kommt der Preis: Das Kombi-Paket kostet meist weniger als eine reine Fahrradversicherung beim Spezial-Versicherer – dort zahlst du oft mehr, und deine Wohnung ist gar nicht mitversichert.</p></div></div>
-      </div>
-
-      <div class="faq-item reveal" style="--i:8">
-        <button class="faq-q" aria-expanded="false"><span class="nr">09</span>Was ist nicht versichert?
-          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
-        </button>
-        <div class="faq-a"><div><p>Nicht versichert sind unter anderem vorsätzlich verursachte Schäden, Schäden durch Verlieren, Stehen- oder Liegenlassen sowie Schäden, für die der Hersteller oder Lieferant haftet (Garantiefälle). Alle Details regeln die Versicherungsbedingungen.</p></div></div>
-      </div>
-
-      <div class="faq-item reveal" style="--i:9">
-        <button class="faq-q" aria-expanded="false"><span class="nr">10</span>Was passiert bei grober Fahrlässigkeit?
-          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
-        </button>
-        <div class="faq-a"><div><p>Gute Nachricht: In der Hausratversicherung Best wird die Entschädigung nicht gekürzt, wenn du einen Schaden grob fahrlässig herbeigeführt hast – auf dieses Kürzungsrecht verzichtet der Versicherer ausdrücklich. Vorsätzlich verursachte Schäden bleiben ausgeschlossen, und deine Mitwirkungspflichten (z.&nbsp;B. Sicherheitsvorschriften wie die Schlosspflicht) gelten weiterhin.</p></div></div>
-      </div>
-
-      <div class="faq-item reveal" style="--i:10">
-        <button class="faq-q" aria-expanded="false"><span class="nr">11</span>Wie läuft der Schadensfall ab?
-          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+      <div class="faq-item reveal" style="--i:4" data-stichworte="schaden schadensfall melden meldung abwicklung ablauf regulierung erstattung auszahlung geld schnell dauer unterlagen rechnung foto kaufbeleg sturz unfall kaputt diebstahl geklaut gestohlen">
+        <button class="faq-q" aria-expanded="false"><span class="nr">05</span>Wie läuft der Schadensfall ab?
+          <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
         <div class="faq-a"><div><p>Du meldest den Schaden direkt bei mir – per WhatsApp, Telefon oder E-Mail. Am besten hast du den Kaufbeleg deines Rads zur Hand; alternativ genügen aussagekräftige Fotos, auf denen Marke und Komponenten erkennbar sind. Rechnungen oder Screenshots der benötigten Ersatzteile schickst du mir einfach per WhatsApp oder E-Mail. Sind die Unterlagen vollständig, sind Schäden bis 5.000&nbsp;€ in der Regel innerhalb weniger Tage reguliert und bezahlt – ohne dass du in Vorkasse gehen musst. Höhere Schäden gehen in eine genauere Prüfung und können etwas länger dauern.</p></div></div>
       </div>
 
-      <div class="faq-item reveal" style="--i:11">
-        <button class="faq-q" aria-expanded="false"><span class="nr">12</span>Ist mein gebrauchtes Rad versicherbar?
-          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+      <div class="faq-item reveal" style="--i:5" data-stichworte="wechsel wechseln kündigen kündigung hausrat bestehende bisherige altvertrag vorversicherung anbieter versicherer differenzdeckung lücke umstieg">
+        <button class="faq-q" aria-expanded="false"><span class="nr">06</span>Ich habe schon eine Hausratversicherung – lohnt sich der Wechsel?
+          <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-a"><div><p>Oft ja – viele Hausratverträge sichern hochwertige Räder gar nicht oder nur eingeschränkt ab. Hast du bei einem anderen Versicherer eine Hausratversicherung ohne zusätzlichen Schutz für deine Fahrräder oder E-Bikes abgeschlossen und möchtest zu ERGO wechseln, sichert die Differenzdeckung in der Zwischenzeit ab, was dein bestehender Vertrag im Verhältnis zum ERGO-Schutz nicht leistet – maximal ein Jahr lang und ohne Mehrbeitrag. So wechselst du ohne Versicherungslücke.</p></div></div>
+      </div>
+
+      <div class="faq-item reveal faq-extra" style="--i:0" data-stichworte="nicht versichert ausschluss ausschlüsse ausgeschlossen vorsatz verlieren liegenlassen stehenlassen garantie">
+        <button class="faq-q" aria-expanded="false"><span class="nr">07</span>Was ist nicht versichert?
+          <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-a"><div><p>Nicht versichert sind unter anderem vorsätzlich verursachte Schäden, Schäden durch Verlieren, Stehen- oder Liegenlassen sowie Schäden, für die der Hersteller oder Lieferant haftet (Garantiefälle). Alle Details regeln die Versicherungsbedingungen.</p></div></div>
+      </div>
+
+      <div class="faq-item reveal faq-extra" style="--i:1" data-stichworte="selbstbeteiligung sb eigenanteil zuzahlung dazuzahlen beitrag senken günstiger">
+        <button class="faq-q" aria-expanded="false"><span class="nr">08</span>Gibt es eine Selbstbeteiligung?
+          <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-a"><div><p>Grundsätzlich nein. Du kannst optional eine Selbstbeteiligung vereinbaren, um deinen Beitrag zu senken – beim Schutzbrief (Mobilitätsschutz) wird sie aber in keinem Fall abgezogen.</p></div></div>
+      </div>
+
+      <div class="faq-item reveal faq-extra" style="--i:2" data-stichworte="grob fahrlässig fahrlässigkeit leichtsinn unachtsam kürzung kürzen">
+        <button class="faq-q" aria-expanded="false"><span class="nr">09</span>Was passiert bei grober Fahrlässigkeit?
+          <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-a"><div><p>Gute Nachricht: In der Hausratversicherung Best wird die Entschädigung nicht gekürzt, wenn du einen Schaden grob fahrlässig herbeigeführt hast – auf dieses Kürzungsrecht verzichtet der Versicherer ausdrücklich. Vorsätzlich verursachte Schäden bleiben ausgeschlossen, und deine Mitwirkungspflichten (z.&nbsp;B. Sicherheitsvorschriften wie die Schlosspflicht) gelten weiterhin.</p></div></div>
+      </div>
+
+      <div class="faq-item reveal faq-extra" style="--i:3" data-stichworte="gebraucht alt älter jahre secondhand kleinanzeigen neuwert zeitwert">
+        <button class="faq-q" aria-expanded="false"><span class="nr">10</span>Ist mein gebrauchtes Rad versicherbar?
+          <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
         <div class="faq-a"><div><p>Ja – wie alt dein Rad ist, spielt keine Rolle. Entschädigt wird zum Neuwert: Bei Totalschaden oder Diebstahl bekommst du den Betrag, den ein gleichwertiges neues Rad heute kostet.</p></div></div>
       </div>
 
-      <div class="faq-item reveal" style="--i:12">
-        <button class="faq-q" aria-expanded="false"><span class="nr">13</span>Ist mein S-Pedelec versicherbar?
-          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+      <div class="faq-item reveal faq-extra" style="--i:4" data-stichworte="akku batterie ebike e-bike pedelec elektronik motor kurzschluss feuchtigkeit wasser überspannung leistungsverlust">
+        <button class="faq-q" aria-expanded="false"><span class="nr">11</span>Was ist mit dem Akku meines E-Bikes?
+          <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
-        <div class="faq-a"><div><p>Nein. S-Pedelecs mit Unterstützung bis 45&nbsp;km/h gelten als Kleinkrafträder, sind versicherungspflichtig und deshalb nicht über die Fahrradkasko versicherbar. Versichert sind Pedelecs mit Tretunterstützung bis 25&nbsp;km/h². Für dein S-Pedelec gibt es eigene Policen – sprich mich einfach an.</p></div></div>
+        <div class="faq-a"><div><p>Der Akkuschutz sichert dich in den ersten drei Jahren gegen Leistungsverlust ab. Zusätzlich greift der Elektronikschutz bei Schäden durch Kurzschluss, Induktion, Überspannung oder Feuchtigkeit.</p></div></div>
       </div>
 
+      <div class="faq-item reveal faq-extra" style="--i:5" data-stichworte="hausrat kombi paket vertrag gemeinsam warum wohnung preis kosten günstiger spezialversicherer">
+        <button class="faq-q" aria-expanded="false"><span class="nr">12</span>Warum sind Hausrat und Fahrradkasko ein gemeinsamer Vertrag?
+          <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-a"><div><p>Weil du damit nur einen Vertrag verwaltest: Wohnung und alle Räder sind zusammen abgesichert – mit einem Ansprechpartner für alles. Dazu kommt der Preis: Das Kombi-Paket kostet meist weniger als eine reine Fahrradversicherung beim Spezial-Versicherer – dort zahlst du oft mehr, und deine Wohnung ist gar nicht mitversichert.</p></div></div>
+      </div>
     </div>
+
+    <div class="faq-fuss">
+      <button type="button" class="btn btn-ghost" id="faq-alle"><span class="btn-label">Alle 12 Fragen anzeigen</span></button>
+      <a class="faq-frag" id="faq-frag" href="https://wa.me/4915224827997?text=Hi%20Ludwig%2C%20ich%20habe%20eine%20Frage%20zur%20Fahrradkasko%3A%20" target="_blank" rel="noopener">Deine Frage ist nicht dabei? Schreib sie mir direkt per WhatsApp.</a>
     </div>
   </div>
 </section>
@@ -2227,6 +2296,93 @@ document.querySelectorAll('.faq-item').forEach(item => {
     }
   });
 });
+
+/* FAQ-Suche: Frage eintippen -> passende Antworten einblenden, beste Antwort aufklappen.
+   Treffer über Frage (stark), Stichworte (data-stichworte) und Antworttext (schwach).
+   Keine Antwort gefunden -> Frage vorformuliert per WhatsApp an Ludwig. */
+(() => {
+  const feld = document.getElementById('faq-suche');
+  const liste = document.getElementById('faq-liste');
+  if (!feld || !liste) return;
+  const status = document.getElementById('faq-status');
+  const alleBtn = document.getElementById('faq-alle');
+  const frag = document.getElementById('faq-frag');
+  const chips = [...document.querySelectorAll('.faq-chips button')];
+  const tipps = [...document.querySelectorAll('.faq-tipp')];
+  const WA_BASIS = 'https://wa.me/4915224827997?text=';
+  const norm = t => t.toLowerCase().replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss').replace(/[^a-z0-9]+/g,' ').trim();
+  // Füllwörter und Wörter, die in fast jeder Antwort stehen, zählen nicht
+  const STOPP = new Set(('ich mein meine meinen meinem meiner mir mich du dein deine ist sind bin wird werden war der die das den dem des ein eine einen einem einer ' +
+    'und oder wie was wer wo wann wenn ob bei im in mit auch es zu zum zur fuer habe hab hat haben kann koennen muss man auf von an ab so noch schon denn dann aber mal ' +
+    'bitte gibt gilt da hier sich mehr rad raeder fahrrad fahrraeder versichert versicherung versichern kasko fahrradkasko bike').split(' '));
+  const woerter = t => norm(t).split(' ').filter(w => w.length >= 2 && !STOPP.has(w));
+  const passt = (w, liste) => liste.some(x => x === w || (w.length >= 3 && x.startsWith(w)) || (x.length >= 4 && w.startsWith(x)));
+
+  const eintraege = [...liste.querySelectorAll('.faq-item')].map((el, i) => ({
+    el, i,
+    frage: woerter(el.querySelector('.faq-q').textContent),
+    stich: woerter(el.dataset.stichworte || ''),
+    antwort: woerter(el.querySelector('.faq-a').textContent)
+  }));
+
+  const schliessenAlle = () => liste.querySelectorAll('.faq-item.open').forEach(o => {
+    o.classList.remove('open'); o.querySelector('.faq-q').setAttribute('aria-expanded','false');
+  });
+  const oeffne = el => { schliessenAlle(); el.classList.add('open'); el.querySelector('.faq-q').setAttribute('aria-expanded','true'); };
+
+  function suchen(){
+    const roh = feld.value.trim();
+    const q = woerter(roh);
+    chips.forEach(c => c.setAttribute('aria-pressed', norm(c.dataset.suche) === norm(roh) ? 'true' : 'false'));
+    frag.href = WA_BASIS + encodeURIComponent('Hi Ludwig, ich habe eine Frage zur Fahrradkasko: ' + roh);
+    frag.classList.remove('betont');
+    tipps.forEach(t => { t.hidden = !q.length || !q.some(w => passt(w, woerter(t.dataset.muster))); });
+
+    if (!roh){ // Grundzustand
+      liste.classList.remove('sucht');
+      eintraege.forEach(e => { e.el.hidden = false; e.el.style.order = ''; });
+      status.textContent = '';
+      if (alleBtn && !liste.classList.contains('alle')) alleBtn.hidden = false;
+      return;
+    }
+    liste.classList.add('sucht');
+    if (alleBtn) alleBtn.hidden = true;
+    const bewertet = eintraege.map(e => {
+      let p = 0;
+      q.forEach(w => { if (passt(w, e.frage)) p += 4; if (passt(w, e.stich)) p += 3; if (passt(w, e.antwort)) p += 1; });
+      return { e, p };
+    }).sort((a, b) => b.p - a.p || a.e.i - b.e.i);
+    const best = bewertet[0].p;
+    const tippSichtbar = tipps.some(t => !t.hidden);
+    // nur starke Treffer zeigen; beantwortet ein Hinweis die Frage schon, keine schwachen Textfunde dazu
+    const treffer = (tippSichtbar && best < 3) ? [] : bewertet.filter(x => x.p > 0 && x.p >= best / 2);
+    eintraege.forEach(e => { e.el.hidden = true; e.el.style.order = ''; });
+    treffer.forEach((x, rang) => { x.e.el.hidden = false; x.e.el.style.order = rang; x.e.el.classList.add('in'); });
+
+    if (treffer.length){
+      status.textContent = treffer.length === 1 ? '1 passende Antwort' : treffer.length + ' passende Antworten';
+      // klarer Favorit -> direkt aufklappen
+      const zweiter = treffer[1] ? treffer[1].p : 0;
+      if (!tippSichtbar && (treffer.length === 1 || (best >= 4 && best > zweiter))) oeffne(treffer[0].e.el); else schliessenAlle();
+    } else {
+      schliessenAlle();
+      status.textContent = tippSichtbar ? '' : 'Dazu habe ich keine fertige Antwort – schreib mir deine Frage einfach direkt:';
+      frag.classList.add('betont');
+    }
+  }
+
+  let t;
+  feld.addEventListener('input', () => { clearTimeout(t); t = setTimeout(suchen, 120); });
+  feld.addEventListener('keydown', e => { if (e.key === 'Enter'){ e.preventDefault(); clearTimeout(t); suchen(); feld.blur(); } });
+  chips.forEach(c => c.addEventListener('click', () => {
+    feld.value = c.getAttribute('aria-pressed') === 'true' ? '' : c.dataset.suche;
+    suchen();
+  }));
+  if (alleBtn) alleBtn.addEventListener('click', () => {
+    liste.classList.add('alle'); alleBtn.hidden = true;
+    liste.querySelectorAll('.faq-extra').forEach(el => el.classList.add('in'));
+  });
+})();
 
 /* Beitrags-Schätzer: grobe Jahresspanne aus dem Radwert (Logik analog Fußnote ¹) */
 (() => {
