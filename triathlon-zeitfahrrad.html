@@ -583,6 +583,16 @@ footer a:hover{color:#fff}
 }
 .js .reveal.in{opacity:1;transform:none}
 
+/* ---------- Handy: Vorteils-Karten als kompakte Zeilen (nur bis 640 px) ---------- */
+@media(max-width:640px){
+  .bento{gap:10px}
+  .bento .card{display:grid;grid-template-columns:40px minmax(0,1fr);column-gap:14px;align-items:start;padding:18px 18px 18px 16px}
+  .bento .card .icon{width:40px;height:40px;border-radius:8px;grid-row:span 2}
+  .bento .card .icon svg{width:20px;height:20px}
+  .bento .card h3{margin:1px 0 4px;font-size:17px}
+  .bento .card p{grid-column:2;font-size:14px;line-height:1.55}
+}
+
 /* ---------- Reduced Motion & Fokus ---------- */
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
