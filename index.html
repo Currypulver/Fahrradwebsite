@@ -1118,6 +1118,43 @@ img.ls-foto,img.berater-foto{object-fit:cover}
   .sektion-toggle{display:none}
 }
 
+/* ---------- Handy: kompaktere Seite (nur bis 640 px – Desktop und Tablet unverändert) ---------- */
+@media(max-width:640px){
+  /* Einstieg: Etikett-Zeile weg, Einleitung kürzer */
+  .hero .eyebrow-row{display:none}
+  .hero .lead .lead-lang{display:none}
+  /* Leistungen: Globus-Grafik und Hotline-Karte weg (kein Callcenter steht schon im Einstieg und im Kontakt) */
+  .globus{display:none}
+  #leistungen .card-rot{display:none}
+  .card-weit{padding:30px 24px}
+  /* Symbol-Karten als kompakte Zeilen: Symbol links, Titel und Text rechts */
+  .bento{gap:10px}
+  .bento .card:not(.card-weit):not(.card-rot){
+    display:grid;grid-template-columns:40px minmax(0,1fr);column-gap:14px;align-items:start;padding:18px 18px 18px 16px;
+  }
+  .bento .card:not(.card-weit):not(.card-rot) .icon{width:40px;height:40px;border-radius:8px;grid-row:span 2}
+  .bento .card:not(.card-weit):not(.card-rot) .icon svg{width:20px;height:20px}
+  .bento .card:not(.card-weit):not(.card-rot) h3{margin:1px 0 4px;font-size:17px}
+  .bento .card:not(.card-weit):not(.card-rot) p{grid-column:2;font-size:14px;line-height:1.55}
+  /* Paket: Schritte nur mit Titel; der Wechsel-Hinweis steht auch in den FAQ */
+  .steps li{grid-template-columns:44px minmax(0,1fr);gap:12px;padding:14px 0;align-items:center}
+  .steps li::before{font-size:32px}
+  .steps h4{margin:0;font-size:16px}
+  .steps p{display:none}
+  .diff-banner{display:none}
+  /* E-Bike: Stichwort-Pillen in der dunklen Box weg */
+  #ebike .card-weit .globe-badges{display:none}
+  /* Kontakt: kleines Rundbild statt großem Porträt – das große Foto steht schon im Einstieg */
+  .berater-card{display:grid;grid-template-columns:76px minmax(0,1fr);align-items:center}
+  .berater-portraet{width:60px;height:60px;aspect-ratio:1;border-radius:50%;margin:18px 0 18px 16px;object-position:26% 32%}
+  .berater-card:hover .berater-portraet{transform:none}
+  .berater-body{padding:18px 18px 18px 4px}
+  .berater-zitat{display:none}
+  /* Footer: großer Schriftzug und Seitenliste weg – die Sprungleiste oben erledigt das */
+  .foot-mark,.foot-seite{display:none}
+  footer{padding-top:44px}
+}
+
 /* ---------- Reduced Motion & Fokus ---------- */
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -1226,7 +1263,7 @@ img.ls-foto,img.berater-foto{object-fit:cover}
           <a class="btn btn-primary magnetic" href="#kontakt"><span class="btn-label">Kostenlose Beratung</span></a>
           <a class="btn btn-ghost magnetic" href="#paket"><span class="btn-label">Angebot ansehen</span></a>
         </div>
-        <p class="lead">Weltweit. Rund um die Uhr. Zum Neuwert. Die Fahrradkasko schützt jedes Rad deines Haushalts gegen Diebstahl, Sturz und Beschädigung – mit Schutzbrief für unterwegs, fest inklusive. Das Beste: nur ein Vertrag für alle deine Räder!</p>
+        <p class="lead">Weltweit. Rund um die Uhr. Zum Neuwert. <span class="lead-lang">Die Fahrradkasko schützt jedes Rad deines Haushalts gegen Diebstahl, Sturz und Beschädigung – mit Schutzbrief für unterwegs, fest inklusive. </span>Das Beste: nur ein Vertrag für alle deine Räder!</p>
         <a class="google-bewertungen hero-proof" href="https://www.google.com/maps/search/?api=1&amp;query=ERGO+Versicherung+Hannes+Kaselow+Stephanstr.+2+Rostock" target="_blank" rel="noopener" aria-label="Über 120 Google-Bewertungen der ERGO-Agentur Hannes Kaselow ansehen">
           <span class="gb-sterne" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.5L21 9.3l-5 4.6L17.4 21 12 17.6 6.6 21 8 13.9l-5-4.6 6.1-.8z"/></svg>
@@ -1858,7 +1895,7 @@ img.ls-foto,img.berater-foto{object-fit:cover}
           <a href="mailto:ludwig.siebenbuergen@ergo.de">ludwig.siebenbuergen@ergo.de</a>
         </p>
       </div>
-      <div>
+      <div class="foot-seite">
         <h4>Auf dieser Seite</h4>
         <ul>
           <li><a href="#warum">Warum Fahrradkasko?</a></li>
