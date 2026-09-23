@@ -391,7 +391,7 @@ h2.display{font-size:clamp(40px,6vw,84px)}
   background:linear-gradient(135deg,var(--ergo-rot),var(--rot-tief));
   font-family:var(--display);font-stretch:70%;font-style:italic;font-weight:900;font-size:16px;
 }
-/* Hauptbild: Ludwig im Rennen (Zuschnitt 2:3 am Desktop, 4:5 am Handy – siehe <picture>) */
+/* Hauptbild: Ludwig auf dem Rennrad (Zuschnitt 2:3 am Desktop, 4:5 am Handy – siehe <picture>) */
 .hero-foto{
   position:relative;margin:0;width:100%;max-width:520px;justify-self:end;
   border-radius:var(--radius);overflow:hidden;background:var(--asphalt-3);
@@ -404,6 +404,13 @@ h2.display{font-size:clamp(40px,6vw,84px)}
   transform:scale(1.06);animation:foto-zoom 1.8s var(--ease) .3s forwards;
 }
 @keyframes foto-zoom{to{transform:none}}
+/* Fotografen-Nennung: dezent oben rechts, auf dunklem Glas, damit sie auch auf hellem Himmel lesbar bleibt */
+.hero-foto .foto-credit{
+  position:absolute;top:12px;right:12px;z-index:1;
+  font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(244,242,237,.85);background:rgba(11,10,15,.55);border-radius:3px;padding:5px 8px;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
 /* Bildunterschrift als dunkle Glas-Karte – bleibt in beiden Themes dunkel, weil sie auf dem Foto liegt */
 .hero-foto figcaption{
   position:absolute;left:16px;right:16px;bottom:16px;
@@ -1238,14 +1245,15 @@ img.ls-foto,img.berater-foto{object-fit:cover}
       </div>
     </div>
 
-    <!-- Hauptbild: Ludwig im Rennen – Desktop 2:3 rechts, Handy 4:5 nach den Buttons -->
+    <!-- Hauptbild: Ludwig auf dem Rennrad (Foto: All Out Visuals) – Desktop 2:3 rechts, Handy 4:5 nach den Buttons -->
     <figure class="hero-foto">
       <picture>
-        <source media="(max-width: 920px)" type="image/webp" srcset="assets/ludwig-rennen-4x5-600.webp 600w, assets/ludwig-rennen-4x5-1000.webp 1000w" sizes="(max-width: 596px) calc(100vw - 56px), 540px">
-        <source media="(max-width: 920px)" srcset="assets/ludwig-rennen-4x5-1000.jpg">
-        <source type="image/webp" srcset="assets/ludwig-rennen-2x3-640.webp 640w, assets/ludwig-rennen-2x3-1000.webp 1000w" sizes="(max-width: 1240px) 40vw, 500px">
-        <img src="assets/ludwig-rennen-2x3-1000.jpg" width="1000" height="1500" alt="Ludwig Siebenbürgen bei einem Radrennen auf seinem Rennrad" fetchpriority="high">
+        <source media="(max-width: 920px)" type="image/webp" srcset="assets/ludwig-hero-4x5-600.webp 600w, assets/ludwig-hero-4x5-910.webp 910w" sizes="(max-width: 596px) calc(100vw - 56px), 540px">
+        <source media="(max-width: 920px)" srcset="assets/ludwig-hero-4x5-910.jpg">
+        <source type="image/webp" srcset="assets/ludwig-hero-2x3-640.webp 640w, assets/ludwig-hero-2x3-910.webp 910w" sizes="(max-width: 1240px) 40vw, 500px">
+        <img src="assets/ludwig-hero-2x3-910.jpg" width="910" height="1365" alt="Ludwig Siebenbürgen auf seinem Rennrad" fetchpriority="high">
       </picture>
+      <small class="foto-credit">Foto: All Out Visuals</small>
       <figcaption>
         <strong>Ludwig Siebenbürgen</strong>
         <span>Radsportler &amp; Versicherungsexperte<span class="hf-lang"> – dein direkter Ansprechpartner ohne Warteschleife</span>.</span>
