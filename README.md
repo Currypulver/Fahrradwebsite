@@ -20,6 +20,7 @@ https://rennradkasko.de erreichbar.
 ## Aufbau
 
 - `index.html` – die komplette Startseite (HTML, CSS und JS in einer Datei)
+- `triathlon-zeitfahrrad.html` – Landingpage für Triathleten und Zeitfahrer (eigenständig, gleiche Tokens wie die Startseite)
 - `impressum.html`, `datenschutz.html`, `erstinformation.html` – Rechtsseiten
 - `dokumente/` – Versicherungsbedingungen und Produkt-Infoblatt (PDF)
 - `assets/motion.js` – Framer Motion als Vanilla-JS-Bundle (eingecheckt, wird von `index.html` geladen)
