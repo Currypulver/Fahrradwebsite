@@ -84,8 +84,7 @@
     {"@type":"Question","name":"Was ist nicht versichert?","acceptedAnswer":{"@type":"Answer","text":"Unter anderem vorsätzlich verursachte Schäden, Schäden durch Verlieren, Stehen- oder Liegenlassen sowie Garantiefälle des Herstellers."}},
     {"@type":"Question","name":"Was passiert bei grober Fahrlässigkeit?","acceptedAnswer":{"@type":"Answer","text":"In der Hausratversicherung Best wird die Entschädigung bei grob fahrlässig herbeigeführten Schäden nicht gekürzt – auf dieses Kürzungsrecht verzichtet der Versicherer ausdrücklich."}},
     {"@type":"Question","name":"Wie läuft der Schadensfall ab?","acceptedAnswer":{"@type":"Answer","text":"Der Schaden wird direkt beim persönlichen Ansprechpartner gemeldet – per WhatsApp, Telefon oder E-Mail. Kaufbeleg oder aussagekräftige Fotos des Rads genügen; Rechnungen oder Screenshots benötigter Ersatzteile lassen sich per WhatsApp oder E-Mail einreichen. Schäden bis 5.000 € sind bei vollständigen Unterlagen in der Regel innerhalb weniger Tage reguliert und bezahlt – ohne Vorkasse. Höhere Schäden werden genauer geprüft."}},
-    {"@type":"Question","name":"Ist ein gebrauchtes Rad versicherbar?","acceptedAnswer":{"@type":"Answer","text":"Ja – das Alter des Rads spielt keine Rolle. Entschädigt wird zum Neuwert: Bei Totalschaden oder Diebstahl wird der Betrag erstattet, den ein gleichwertiges neues Rad heute kostet."}},
-    {"@type":"Question","name":"Ist mein S-Pedelec versicherbar?","acceptedAnswer":{"@type":"Answer","text":"Nein. S-Pedelecs mit Unterstützung bis 45 km/h gelten als Kleinkrafträder, sind versicherungspflichtig und daher nicht über die Fahrradkasko versicherbar. Versicherbar sind Pedelecs mit Tretunterstützung bis 25 km/h. Für S-Pedelecs gibt es eigene Policen – der Berater hilft weiter."}}
+    {"@type":"Question","name":"Ist ein gebrauchtes Rad versicherbar?","acceptedAnswer":{"@type":"Answer","text":"Ja – das Alter des Rads spielt keine Rolle. Entschädigt wird zum Neuwert: Bei Totalschaden oder Diebstahl wird der Betrag erstattet, den ein gleichwertiges neues Rad heute kostet."}}
   ]
 }
 </script>
@@ -337,7 +336,7 @@ h2.display{font-size:clamp(40px,6vw,84px)}
 .hero .eyebrow-row{display:flex;align-items:center;gap:14px;margin-bottom:clamp(18px,2.4vw,28px)}
 .hero .eyebrow-row::before{content:"";width:34px;height:1.5px;background:var(--ergo-rot)}
 .hero h1{
-  font-size:clamp(56px,9.5vw,148px);
+  font-size:clamp(56px,8.2vw,124px); /* steht links neben dem Foto */
   margin-bottom:clamp(22px,2.8vw,36px);
 }
 .hero h1 .mask{display:block;overflow:hidden;padding:.14em 0 .03em;margin-top:-.14em}
@@ -346,9 +345,9 @@ h2.display{font-size:clamp(40px,6vw,84px)}
 .hero h1 .mask:nth-child(3) .line{animation-delay:.24s}
 @keyframes rise{to{transform:none}}
 
-.hero-unten{
-  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.94fr);
-  gap:clamp(30px,5vw,80px);align-items:end;
+.hero-grid{
+  display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
+  gap:clamp(40px,5vw,80px);align-items:center;
 }
 .hero-links{opacity:0;animation:einblenden .9s ease .55s forwards}
 @keyframes einblenden{to{opacity:1}}
@@ -374,32 +373,60 @@ h2.display{font-size:clamp(40px,6vw,84px)}
   content:"";position:absolute;top:-1px;left:0;width:22px;height:2px;background:var(--ergo-rot);
 }
 .telemetrie b{display:block;color:var(--ink);font-weight:500;font-size:12.5px;margin-top:2px}
-@media(max-width:700px){.telemetrie{grid-template-columns:1fr 1fr}}
-
-.hero-rechts{position:relative}
-.hero-art{position:relative;opacity:0;animation:einblenden .8s ease .4s forwards}
-.hero-art .bike{width:100%;height:auto;filter:drop-shadow(0 0 70px rgba(238,1,56,.10))}
-.hero-note{
-  margin-top:10px;text-align:right;
-  font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);
+/* Trennstelle in „Selbst&shy;beteiligung" nur auf dem Handy nutzen */
+.telemetrie span{hyphens:none}
+/* Breite Screens: Werte einzeilig („24/7 · weltweit"), dafür etwas engere Spalten */
+@media(min-width:1240px){
+  .telemetrie span{padding-right:16px;margin-right:14px}
+  .telemetrie b{white-space:nowrap}
 }
+@media(max-width:700px){
+  /* minmax(0,1fr) + engere Abstaende: sonst ist die Leiste auf 320–360px breiter als der Screen */
+  .telemetrie{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .telemetrie span{padding-right:12px;margin-right:12px;hyphens:manual}
+}
+
 .ls-foto{
   width:46px;height:46px;border-radius:50%;flex:none;display:grid;place-items:center;color:#fff;
   background:linear-gradient(135deg,var(--ergo-rot),var(--rot-tief));
   font-family:var(--display);font-stretch:70%;font-style:italic;font-weight:900;font-size:16px;
 }
-.hero-berater{
-  margin-top:20px;display:flex;align-items:center;gap:16px;text-decoration:none;
-  border:1px solid var(--line);border-radius:var(--radius-s);padding:16px 18px;
-  opacity:0;animation:einblenden .9s ease .85s forwards;
-  transition:border-color .25s ease,transform .3s var(--ease);
+/* Hauptbild: Ludwig auf dem Rennrad (Zuschnitt 2:3 am Desktop, 4:5 am Handy – siehe <picture>) */
+.hero-foto{
+  position:relative;margin:0;width:100%;max-width:520px;justify-self:end;
+  border-radius:var(--radius);overflow:hidden;background:var(--asphalt-3);
+  box-shadow:0 40px 90px -30px rgba(0,0,0,.7),0 0 90px -40px var(--rot-glow);
+  opacity:0;animation:einblenden .8s ease .4s forwards;
 }
-.hero-berater:hover{border-color:var(--ergo-rot);transform:translateY(-2px)}
-.hero-berater .hb-text strong{
-  display:block;font-family:var(--display);font-stretch:68%;font-weight:850;
-  font-size:15.5px;letter-spacing:.02em;text-transform:uppercase;
+[data-theme="light"] .hero-foto{box-shadow:0 40px 90px -34px rgba(11,10,15,.35)}
+.hero-foto img{
+  display:block;width:100%;height:auto;aspect-ratio:2/3;object-fit:cover;object-position:40% 30%;
+  transform:scale(1.06);animation:foto-zoom 1.8s var(--ease) .3s forwards;
 }
-.hero-berater .hb-text span{display:block;font-size:12.5px;color:var(--ink-2);line-height:1.5;margin-top:3px}
+@keyframes foto-zoom{to{transform:none}}
+/* Fotografen-Nennung: dezent oben rechts, auf dunklem Glas, damit sie auch auf hellem Himmel lesbar bleibt */
+.hero-foto .foto-credit{
+  position:absolute;top:12px;right:12px;z-index:1;
+  font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(244,242,237,.85);background:rgba(11,10,15,.55);border-radius:3px;padding:5px 8px;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+/* Bildunterschrift als dunkle Glas-Karte – bleibt in beiden Themes dunkel, weil sie auf dem Foto liegt */
+.hero-foto figcaption{
+  position:absolute;left:16px;right:16px;bottom:16px;
+  display:grid;grid-template-columns:8px minmax(0,1fr);column-gap:12px;align-items:center;
+  padding:14px 16px;border-radius:var(--radius-s);color:var(--kreide);
+  background:rgba(11,10,15,.74);border:1px solid rgba(255,255,255,.14);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+}
+.hero-foto figcaption::before{content:"";width:8px;height:8px;background:var(--ergo-rot)}
+.hero-foto figcaption strong{
+  font-family:var(--display);font-stretch:68%;font-weight:850;font-size:15.5px;
+  letter-spacing:.02em;text-transform:uppercase;
+}
+.hero-foto figcaption span{grid-column:2;font-size:12.5px;line-height:1.5;color:var(--kreide-2);margin-top:2px}
+.hero-foto figcaption .hf-lang{display:inline;margin:0}
+@media(max-width:560px){.hero-foto figcaption .hf-lang{display:none}} /* Handy: kurze Unterschrift, mehr Foto */
 .scroll-cue{
   position:absolute;left:28px;bottom:26px;display:flex;align-items:center;gap:12px;
   font-family:var(--mono);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-2);
@@ -417,35 +444,17 @@ h2.display{font-size:clamp(40px,6vw,84px)}
 }
 @keyframes cue{0%{transform:translateX(-100%)}55%{transform:translateX(0)}100%{transform:translateX(102%)}}
 @media(max-width:920px){
-  .hero-unten{grid-template-columns:1fr;row-gap:28px}
-  .hero-rechts{max-width:540px;margin:0 auto;width:100%}
-  /* Mobil: erst Claim und Buttons, dann das Fahrrad, dann Lead, Bewertungen und Kennzahlen */
-  .hero-links{display:contents}
-  .hero-links .lead,.google-bewertungen.hero-proof,.telemetrie{order:1}
-  .hero-claim,.hero-links .lead,.google-bewertungen.hero-proof{margin-bottom:0}
   .hero{min-height:auto}
+  .hero h1{font-size:clamp(56px,11vw,110px)}
+  /* Mobil: erst Claim und Buttons, dann das Foto, dann Lead, Bewertungen und Kennzahlen */
+  .hero-grid{display:flex;flex-direction:column;align-items:flex-start}
+  .hero-text,.hero-links{display:contents}
+  .hero-foto{order:1;align-self:center;max-width:540px;margin-bottom:30px}
+  .hero-foto img{aspect-ratio:4/5}
+  .hero-links .lead,.google-bewertungen.hero-proof,.telemetrie{order:2}
+  .hero-links .lead{margin-bottom:24px}
+  .google-bewertungen.hero-proof{margin-bottom:30px}
 }
-
-/* ---------- Bike-Zeichnung ---------- */
-.bike .draw{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.6s ease .35s forwards}
-.bike .draw.d2{animation-delay:.7s}
-.bike .draw.d3{animation-delay:1.05s}
-.bike .fade{opacity:0;animation:einblenden .8s ease 1.85s forwards}
-@keyframes draw{to{stroke-dashoffset:0}}
-.speedlines line{stroke:rgba(255,255,255,.16);stroke-width:3;stroke-linecap:round;opacity:0;animation:speed 1.4s ease 1.25s forwards}
-@keyframes speed{0%{opacity:0;transform:translateX(30px)}60%{opacity:1}100%{opacity:.9;transform:translateX(0)}}
-.wheel-spin{transform-origin:0px 0px;animation:spin 3s linear infinite;animation-delay:2.6s}
-@keyframes spin{to{transform:rotate(360deg)}}
-.chain{animation:chainlauf .9s linear infinite;animation-delay:2.6s}
-@keyframes chainlauf{to{stroke-dashoffset:-24}}
-
-/* Bike-Zeichnung im hellen Modus umfärben (schlägt hartkodierte SVG-Attribute) */
-[data-theme="light"] .bike [stroke="#F4F2ED"]{stroke:#19181D}
-[data-theme="light"] .bike [fill="#F4F2ED"]{fill:#19181D}
-[data-theme="light"] .bike [stroke="#6E6B78"]{stroke:#B8B6C2}
-[data-theme="light"] .bike [stroke="#2A2833"]{stroke:#E3E0D8}
-[data-theme="light"] .speedlines line{stroke:rgba(11,10,15,.16)}
-[data-theme="light"] .hero-art .bike{filter:drop-shadow(0 0 70px rgba(238,1,56,.08))}
 
 /* ---------- Marquee (geneigtes Band) ---------- */
 .band-clip{overflow-x:clip}
@@ -464,6 +473,7 @@ h2.display{font-size:clamp(40px,6vw,84px)}
 .warum-sticky{position:sticky;top:120px}
 .warum-sticky h2{margin-top:0}
 .warum-sticky .lead{margin-top:22px}
+.warum-sticky .btn{margin-top:30px}
 
 .risk-liste{list-style:none;display:grid;gap:16px;margin-bottom:56px}
 .risk{
@@ -513,7 +523,7 @@ h2.display{font-size:clamp(40px,6vw,84px)}
 .beleg-fazit .rot{color:var(--rot-text-hell)}
 .beleg-hinweis{margin-top:14px;text-align:center;font-family:var(--body);font-size:12px;color:var(--beleg-ink-hell);text-transform:none;letter-spacing:0}
 .beleg-stempel{
-  position:absolute;top:20px;right:-14px;transform:rotate(9deg);
+  position:absolute;top:-10px;right:-14px;transform:rotate(9deg);
   border:2.5px solid var(--ergo-rot);color:var(--ergo-rot);
   font-weight:900;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
   padding:7px 13px;border-radius:4px;background:rgba(255,255,255,.9);
@@ -523,6 +533,8 @@ h2.display{font-size:clamp(40px,6vw,84px)}
   .warum-sticky{position:static}
   .beleg{transform:rotate(0);margin:0 auto}
 }
+/* Schmale Screens: Stempel nicht über den Beleg hinausragen lassen */
+@media(max-width:560px){.beleg-stempel{top:-18px;right:10px}}
 
 /* ---------- Leistungen (heller Papier-Akt, Bento) ---------- */
 .bento{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
@@ -714,9 +726,10 @@ h2.display{font-size:clamp(40px,6vw,84px)}
 @media(max-width:920px){.paket-grid{grid-template-columns:1fr}}
 
 /* ---------- FAQ (hell, editorial) ---------- */
-.faq-liste{max-width:860px}
+.faq-liste{max-width:860px;display:flex;flex-direction:column;border-bottom:1px solid var(--line)}
 .faq-item{border-top:1px solid var(--line)}
-.faq-item:last-child{border-bottom:1px solid var(--line)}
+/* Anfangs nur die wichtigsten Fragen – der Rest per Suche oder „Alle Fragen anzeigen" */
+.faq-liste:not(.alle):not(.sucht) .faq-extra{display:none}
 .faq-q{
   width:100%;text-align:left;background:none;border:none;cursor:pointer;
   display:grid;grid-template-columns:52px 1fr 34px;align-items:center;gap:18px;
@@ -743,6 +756,49 @@ h2.display{font-size:clamp(40px,6vw,84px)}
   .faq-q .nr{display:none}
   .faq-a p{padding-left:4px}
 }
+
+/* ---------- FAQ-Suche ---------- */
+.faq-suche{max-width:860px;margin-bottom:30px}
+.faq-suche label{display:block;margin-bottom:12px}
+.faq-suchfeld{position:relative}
+.faq-suchfeld svg{position:absolute;left:18px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:var(--ink-2);pointer-events:none}
+.faq-suchfeld input{
+  width:100%;min-height:60px;padding:16px 18px 16px 52px;
+  border:1.5px solid var(--line-2);border-radius:var(--radius-s);background:var(--card);color:var(--ink);
+  font-family:var(--body);font-size:17px; /* >= 16px, sonst zoomt iOS beim Tippen */
+  transition:border-color .2s ease,box-shadow .2s ease;
+}
+.faq-suchfeld input::placeholder{color:var(--ink-2);opacity:.8}
+.faq-suchfeld input:focus{outline:none;border-color:var(--ergo-rot);box-shadow:0 0 0 3px rgba(238,1,56,.15)}
+.faq-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.faq-chips button{
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-2);padding:10px 14px;min-height:40px;border:1px solid var(--line-2);border-radius:999px;
+  background:transparent;cursor:pointer;transition:color .2s ease,background-color .2s ease,border-color .2s ease;
+}
+.faq-chips button:hover,.faq-chips button[aria-pressed="true"]{color:#fff;background:var(--ergo-rot);border-color:var(--ergo-rot)}
+/* Handy: Themen als wischbare Zeile statt drei Umbruchzeilen */
+@media(max-width:560px){
+  .faq-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-right:-28px;padding-right:28px}
+  .faq-chips::-webkit-scrollbar{display:none}
+  .faq-chips button{flex:none}
+}
+.faq-status{margin-top:12px;font-size:14px;color:var(--ink-2);min-height:1.5em}
+.faq-status:empty{display:none}
+.faq-tipps{max-width:860px;display:grid;gap:10px}
+.faq-tipps:has(.faq-tipp:not([hidden])){margin-bottom:22px}
+.faq-tipp{
+  display:grid;gap:3px;text-decoration:none;padding:16px 20px 16px 22px;border-radius:var(--radius-s);
+  background:rgba(238,1,56,.07);border:1px solid rgba(238,1,56,.25);border-left:3px solid var(--ergo-rot);
+  transition:background-color .2s ease;
+}
+.faq-tipp:hover{background:rgba(238,1,56,.12)}
+.faq-tipp strong{font-family:var(--display);font-stretch:70%;font-weight:830;text-transform:uppercase;font-size:15px;letter-spacing:.03em}
+.faq-tipp span{font-size:14.5px;color:var(--ink-2)}
+.faq-fuss{max-width:860px;margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px}
+.faq-frag{font-size:14.5px;color:var(--ink-2);text-decoration:underline;text-underline-offset:3px;transition:color .2s ease}
+.faq-frag:hover{color:var(--ergo-rot)}
+.faq-frag.betont{color:var(--ink);font-weight:600}
 
 /* ---------- Kontakt (dunkles Finale) ---------- */
 .kontakt-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(36px,5vw,72px);align-items:start}
@@ -796,51 +852,12 @@ h2.display{font-size:clamp(40px,6vw,84px)}
 .kanal .pfeil svg{width:22px;height:22px}
 .kanal a:hover .pfeil{transform:translateX(8px);color:var(--ergo-rot)}
 
-.formular{
-  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-  box-shadow:var(--shadow);padding:38px 34px;
-}
-.formular h3{font-family:var(--display);font-stretch:68%;font-weight:860;font-size:21px;text-transform:uppercase;margin-bottom:8px}
-.formular>p{font-size:14.5px;color:var(--ink-2);margin-bottom:30px}
-.feld{margin-bottom:24px}
-.feld label{
-  display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;
-  margin-bottom:8px;color:var(--ink-2);text-transform:uppercase;
-}
-.feld input,.feld select,.feld textarea{
-  width:100%;border:none;border-bottom:1.5px solid var(--line-2);border-radius:0;
-  padding:12px 2px;font-family:var(--body);font-size:16px;color:var(--ink);
-  background:transparent;min-height:44px;
-  transition:border-color .25s ease,box-shadow .25s ease;
-}
-.feld select{
-  appearance:none;-webkit-appearance:none;cursor:pointer;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%239A97A3' stroke-width='2.4' stroke-linecap='round'><path d='M6 9l6 6 6-6'/></svg>");
-  background-repeat:no-repeat;background-position:right 4px center;padding-right:28px;
-}
-.feld select option{background:var(--card);color:var(--ink)}
-.feld textarea{resize:vertical;min-height:96px}
-.feld input::placeholder,.feld textarea::placeholder{color:rgba(154,151,163,.55)}
-.feld input:focus,.feld select:focus,.feld textarea:focus{
-  outline:none;border-color:var(--ergo-rot);box-shadow:0 1.5px 0 0 var(--ergo-rot);
-}
-.formular .btn{width:100%;margin-top:8px}
-.formular small{display:block;margin-top:16px;font-size:12.5px;color:var(--ink-2);text-align:center;opacity:.8}
-.formular small a{color:var(--ink);text-decoration:underline;text-underline-offset:2px}
-.f-hinweis{color:var(--rot-text);font-size:13.5px;margin:-6px 0 14px}
-.f-status{font-size:13.5px;color:var(--ink-2);margin:-6px 0 14px}
 /* hidden-Attribut hat Vorrang vor display-Regeln von Klassen wie .btn */
 [hidden]{display:none!important}
-.f-wege{display:grid;gap:10px;margin-top:8px}
-.formular .f-wege .btn{margin-top:0}
-.f-link{display:block;width:100%;margin-top:14px;background:none;border:0;padding:6px 0;cursor:pointer;
-  font-family:var(--body);font-size:13px;color:var(--ink-2);text-decoration:underline;text-underline-offset:3px;
-  transition:color .2s ease}
-.f-link:hover,.f-link:focus-visible{color:var(--ink)}
-.f-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
-.f-danke{border:1px solid var(--line);border-radius:var(--radius-s);padding:22px 24px}
-.f-danke strong{display:block;font-family:var(--display);font-stretch:68%;font-weight:860;font-size:20px;text-transform:uppercase;margin-bottom:8px}
-.f-danke p{font-size:14.5px;color:var(--ink-2);margin-bottom:16px}
+.kontakt-rechts .berater-card{margin-top:0}
+.kanal p{overflow-wrap:anywhere}
+.kanal-hinweis{margin-top:18px;font-size:13.5px;color:var(--ink-2)}
+.kanal-hinweis a{color:var(--ink);text-decoration:underline;text-underline-offset:2px}
 .skip-link{
   position:fixed;top:14px;left:14px;z-index:200;
   background:var(--ergo-rot);color:#fff;padding:12px 20px;border-radius:var(--radius-s);
@@ -906,7 +923,7 @@ footer a:hover{color:#fff}
 }
 .hud .hud-etappe{color:var(--kreide)}
 .hud::before{content:"";width:7px;height:7px;background:var(--ergo-rot);align-self:center;flex:none}
-@media(max-width:720px){.hud{display:none}}
+@media(max-width:1439px){.hud{display:none}} /* erst ab 1440px ist links genug Rand neben dem Inhalt */
 [data-theme="light"] .fahrt-linie{background:rgba(11,10,15,.10)}
 
 /* ---------- Scroll-Reveal ---------- */
@@ -1011,11 +1028,12 @@ footer a:hover{color:#fff}
 .rechner-ergebnis .re-label{font-size:13.5px;color:var(--ink-2)}
 .rechner-ergebnis .re-preis{font-size:clamp(26px,3vw,36px);font-style:italic;color:var(--ergo-rot);line-height:1}
 .rechner-ergebnis .re-jahr{font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+.rechner-monat{margin-top:12px;font-size:15px;color:var(--ink)}
+.rechner-monat strong{font-family:var(--display);font-stretch:66%;font-weight:880;font-style:italic;font-size:22px;letter-spacing:.01em;white-space:nowrap}
 .rechner-hinweis{margin-top:14px;font-size:12px;color:var(--ink-2);opacity:.85;line-height:1.55}
 
 
-/* ---------- Kanal-Icon Online-Termin + echte Fotos ---------- */
-.kanal .k-icon.cal{background:var(--asphalt-3);border:1px solid rgba(255,255,255,.25)}
+/* ---------- Echte Fotos ---------- */
 img.ls-foto,img.berater-foto{object-fit:cover}
 
 /* ---------- Ebenen-Leiste: fixierte Sprungnavigation (mobil) ---------- */
@@ -1104,11 +1122,9 @@ img.ls-foto,img.berater-foto{object-fit:cover}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
   html{scroll-behavior:auto}
-  .reveal,.hero-links,.hero-art,.hero-berater,.scroll-cue{opacity:1;transform:none}
+  .reveal,.hero-links,.hero-foto,.scroll-cue{opacity:1;transform:none}
+  .hero-foto img{transform:none}
   .hero h1 .line{transform:none}
-  .bike .draw{stroke-dashoffset:0}
-  .bike .fade{opacity:1}
-  .speedlines line{opacity:.9}
 }
 :focus-visible{outline:3px solid var(--ergo-rot);outline-offset:3px;border-radius:4px}
 </style>
@@ -1179,11 +1195,11 @@ img.ls-foto,img.berater-foto{object-fit:cover}
 <!-- Ebenen-Leiste: fixierte Sprungnavigation für Mobil (bleibt beim Scrollen sichtbar) -->
 <nav class="ebenen-nav" id="ebenen-nav" aria-label="Ebenen der Seite">
   <div class="ebenen-track" id="ebenen-track">
+    <a href="#warum">Warum?</a>
     <a href="#paket">Angebot</a>
     <a href="#leistungen">Leistungen</a>
     <a href="#schutzbrief">Schutzbrief</a>
     <a href="#ebike">E-Bike</a>
-    <a href="#warum">Warum?</a>
     <a href="#faq">FAQ</a>
     <a href="#kontakt">Kontakt</a>
   </div>
@@ -1192,17 +1208,17 @@ img.ls-foto,img.berater-foto{object-fit:cover}
 <main id="top">
 <!-- ===================== HERO · KM 0 ===================== -->
 <section class="hero" data-etappe="Start">
-  <div class="wrap">
-    <div class="ergo-sub">Ein Produkt der <b>ERGO</b></div>
-    <div class="eyebrow-row">
-      <span class="mono-label">Rennradkasko <b>///</b> Rennrad · Gravel · E-Bike · Zeitfahrrad</span>
-    </div>
-    <h1 class="display" id="hero-h1">
-      <span class="mask"><span class="line">Vollkasko</span></span>
-      <span class="mask"><span class="line kontur">für dein</span></span>
-      <span class="mask"><span class="line kursiv rot">Rennrad.</span></span>
-    </h1>
-    <div class="hero-unten">
+  <div class="wrap hero-grid">
+    <div class="hero-text">
+      <div class="ergo-sub">Ein Produkt der <b>ERGO</b></div>
+      <div class="eyebrow-row">
+        <span class="mono-label">Rennradkasko <b>///</b> Rennrad · Gravel · E-Bike · Zeitfahrrad</span>
+      </div>
+      <h1 class="display" id="hero-h1">
+        <span class="mask"><span class="line">Vollkasko</span></span>
+        <span class="mask"><span class="line kontur">für dein</span></span>
+        <span class="mask"><span class="line kursiv rot">Rennrad.</span></span>
+      </h1>
       <div class="hero-links">
         <p class="hero-claim">Beraten von <b>Ludwig</b> – Radsportler, kein Callcenter. Ein direkter Draht, keine Warteschleife.</p>
         <div class="hero-cta">
@@ -1223,170 +1239,26 @@ img.ls-foto,img.berater-foto{object-fit:cover}
         <div class="telemetrie" aria-label="Die wichtigsten Leistungen im Überblick">
           <span>Geltung<b>24/7 · weltweit</b></span>
           <span>Erstattung<b>zum Neuwert</b></span>
-          <span>Selbstbeteiligung<b>0 €</b></span>
+          <span>Selbst&shy;beteiligung<b>0 €</b></span>
           <span>Schutzbrief<b>inklusive</b></span>
         </div>
       </div>
-
-      <div class="hero-rechts">
-      <div class="hero-art" aria-hidden="true">
-        <!-- Rennrad-Zeichnung: Kreide auf Asphalt -->
-        <svg class="bike" viewBox="0 0 680 430" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <line id="speiche" x1="0" y1="-78" x2="0" y2="-14"/>
-            <line id="profil" x1="0" y1="-92" x2="0" y2="-85"/>
-            <line id="zahn" x1="0" y1="-30" x2="0" y2="-36"/>
-          </defs>
-          <g class="speedlines">
-            <line x1="20" y1="140" x2="120" y2="140"/>
-            <line x1="0"  y1="185" x2="90"  y2="185"/>
-            <line x1="35" y1="230" x2="115" y2="230"/>
-          </g>
-          <!-- Boden -->
-          <path class="draw d3" d="M40 392 H640" stroke="#2A2833" stroke-width="4" stroke-linecap="round" pathLength="1"/>
-
-          <!-- Hinterrad -->
-          <g transform="translate(175,300)">
-            <circle class="draw" r="92" stroke="#F4F2ED" stroke-width="10" pathLength="1"/>
-            <circle class="draw d2" r="79" stroke="#6E6B78" stroke-width="2" pathLength="1"/>
-            <g class="wheel-spin">
-              <g class="fade" stroke="#6E6B78" stroke-width="2.2">
-                <use href="#speiche" transform="rotate(0)"/><use href="#speiche" transform="rotate(22.5)"/>
-                <use href="#speiche" transform="rotate(45)"/><use href="#speiche" transform="rotate(67.5)"/>
-                <use href="#speiche" transform="rotate(90)"/><use href="#speiche" transform="rotate(112.5)"/>
-                <use href="#speiche" transform="rotate(135)"/><use href="#speiche" transform="rotate(157.5)"/>
-                <use href="#speiche" transform="rotate(180)"/><use href="#speiche" transform="rotate(202.5)"/>
-                <use href="#speiche" transform="rotate(225)"/><use href="#speiche" transform="rotate(247.5)"/>
-                <use href="#speiche" transform="rotate(270)"/><use href="#speiche" transform="rotate(292.5)"/>
-                <use href="#speiche" transform="rotate(315)"/><use href="#speiche" transform="rotate(337.5)"/>
-              </g>
-              <g class="fade" stroke="#F4F2ED" stroke-width="2.4">
-                <use href="#profil" transform="rotate(0)"/><use href="#profil" transform="rotate(20)"/>
-                <use href="#profil" transform="rotate(40)"/><use href="#profil" transform="rotate(60)"/>
-                <use href="#profil" transform="rotate(80)"/><use href="#profil" transform="rotate(100)"/>
-                <use href="#profil" transform="rotate(120)"/><use href="#profil" transform="rotate(140)"/>
-                <use href="#profil" transform="rotate(160)"/><use href="#profil" transform="rotate(180)"/>
-                <use href="#profil" transform="rotate(200)"/><use href="#profil" transform="rotate(220)"/>
-                <use href="#profil" transform="rotate(240)"/><use href="#profil" transform="rotate(260)"/>
-                <use href="#profil" transform="rotate(280)"/><use href="#profil" transform="rotate(300)"/>
-                <use href="#profil" transform="rotate(320)"/><use href="#profil" transform="rotate(340)"/>
-              </g>
-            </g>
-            <circle class="fade" r="9" fill="#F4F2ED"/>
-            <circle class="fade" r="4" fill="none" stroke="#EE0138" stroke-width="2"/>
-          </g>
-          <!-- Kassette (hinten) -->
-          <g class="fade" transform="translate(175,300)" stroke="#F4F2ED">
-            <circle r="13" stroke-width="1.6"/><circle r="16.5" stroke-width="1.4"/><circle r="20" stroke-width="1.2"/>
-          </g>
-
-          <!-- Vorderrad -->
-          <g transform="translate(530,300)">
-            <circle class="draw" r="92" stroke="#F4F2ED" stroke-width="10" pathLength="1"/>
-            <circle class="draw d2" r="79" stroke="#6E6B78" stroke-width="2" pathLength="1"/>
-            <g class="wheel-spin">
-              <g class="fade" stroke="#6E6B78" stroke-width="2.2">
-                <use href="#speiche" transform="rotate(0)"/><use href="#speiche" transform="rotate(22.5)"/>
-                <use href="#speiche" transform="rotate(45)"/><use href="#speiche" transform="rotate(67.5)"/>
-                <use href="#speiche" transform="rotate(90)"/><use href="#speiche" transform="rotate(112.5)"/>
-                <use href="#speiche" transform="rotate(135)"/><use href="#speiche" transform="rotate(157.5)"/>
-                <use href="#speiche" transform="rotate(180)"/><use href="#speiche" transform="rotate(202.5)"/>
-                <use href="#speiche" transform="rotate(225)"/><use href="#speiche" transform="rotate(247.5)"/>
-                <use href="#speiche" transform="rotate(270)"/><use href="#speiche" transform="rotate(292.5)"/>
-                <use href="#speiche" transform="rotate(315)"/><use href="#speiche" transform="rotate(337.5)"/>
-              </g>
-              <g class="fade" stroke="#F4F2ED" stroke-width="2.4">
-                <use href="#profil" transform="rotate(0)"/><use href="#profil" transform="rotate(20)"/>
-                <use href="#profil" transform="rotate(40)"/><use href="#profil" transform="rotate(60)"/>
-                <use href="#profil" transform="rotate(80)"/><use href="#profil" transform="rotate(100)"/>
-                <use href="#profil" transform="rotate(120)"/><use href="#profil" transform="rotate(140)"/>
-                <use href="#profil" transform="rotate(160)"/><use href="#profil" transform="rotate(180)"/>
-                <use href="#profil" transform="rotate(200)"/><use href="#profil" transform="rotate(220)"/>
-                <use href="#profil" transform="rotate(240)"/><use href="#profil" transform="rotate(260)"/>
-                <use href="#profil" transform="rotate(280)"/><use href="#profil" transform="rotate(300)"/>
-                <use href="#profil" transform="rotate(320)"/><use href="#profil" transform="rotate(340)"/>
-              </g>
-            </g>
-            <circle class="fade" r="9" fill="#F4F2ED"/>
-            <circle class="fade" r="4" fill="none" stroke="#EE0138" stroke-width="2"/>
-          </g>
-
-          <!-- Rahmen -->
-          <g stroke="#F4F2ED" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
-            <path class="draw d2" pathLength="1" d="M318 305 L288 172"/>
-            <path class="draw d2" pathLength="1" d="M288 172 L462 158"/>
-            <path class="draw d2" pathLength="1" d="M462 158 L472 200"/>
-            <path class="draw d2" pathLength="1" d="M318 305 L175 300"/>
-            <path class="draw d2" pathLength="1" d="M288 172 L175 300"/>
-            <path class="draw d2" pathLength="1" d="M472 200 Q500 250 530 300" stroke-width="12"/>
-          </g>
-          <!-- Unterrohr in ERGO-Rot -->
-          <path class="draw d2" d="M318 305 L466 178" stroke="#EE0138" stroke-width="12" stroke-linecap="round" pathLength="1"/>
-
-          <!-- Rear-Derailleur -->
-          <g class="fade" stroke="#F4F2ED" stroke-linecap="round" fill="none">
-            <path d="M197 300 L207 330 L201 356" stroke-width="3.5"/>
-            <circle cx="205" cy="332" r="5" stroke-width="2.4"/>
-            <circle cx="200" cy="357" r="5" stroke-width="2.4"/>
-          </g>
-          <!-- Kette -->
-          <g class="chain" stroke="#F4F2ED" stroke-width="3" stroke-linecap="round" stroke-dasharray="7 5">
-            <line x1="317" y1="277" x2="181" y2="284"/>
-            <line x1="317" y1="333" x2="203" y2="329"/>
-          </g>
-
-          <!-- Sattelstütze + Sattel -->
-          <g stroke="#F4F2ED" stroke-linecap="round">
-            <path class="draw d3" pathLength="1" d="M288 172 L278 128" stroke-width="7"/>
-            <path class="draw d3" pathLength="1" d="M242 121 Q278 108 316 119 Q300 126 278 127 Q258 127 242 121 Z" stroke-width="4" fill="#F4F2ED"/>
-          </g>
-          <!-- Vorbau + Lenker (Drop Bar) -->
-          <g stroke="#F4F2ED" stroke-linecap="round" fill="none">
-            <path class="draw d3" pathLength="1" d="M462 158 L502 148" stroke-width="7"/>
-            <path class="draw d3" pathLength="1" d="M502 148 C532 148 546 162 546 184 C546 205 532 214 514 211" stroke-width="8"/>
-            <path class="fade" d="M528 152 Q542 154 542 166 Q542 174 534 176" stroke-width="9" stroke-linecap="round"/>
-            <g class="fade" stroke="#6E6B78" stroke-width="1.6">
-              <line x1="503" y1="180" x2="512" y2="186"/>
-              <line x1="507" y1="188" x2="516" y2="194"/>
-              <line x1="511" y1="196" x2="520" y2="202"/>
-              <line x1="516" y1="203" x2="525" y2="208"/>
-            </g>
-          </g>
-          <!-- Kurbel + Kettenblatt -->
-          <g class="fade">
-            <circle cx="318" cy="305" r="30" stroke="#EE0138" stroke-width="5"/>
-            <g stroke="#EE0138" stroke-width="2.6" transform="translate(318,305)">
-              <use href="#zahn" transform="rotate(0)"/><use href="#zahn" transform="rotate(18)"/>
-              <use href="#zahn" transform="rotate(36)"/><use href="#zahn" transform="rotate(54)"/>
-              <use href="#zahn" transform="rotate(72)"/><use href="#zahn" transform="rotate(90)"/>
-              <use href="#zahn" transform="rotate(108)"/><use href="#zahn" transform="rotate(126)"/>
-              <use href="#zahn" transform="rotate(144)"/><use href="#zahn" transform="rotate(162)"/>
-              <use href="#zahn" transform="rotate(180)"/><use href="#zahn" transform="rotate(198)"/>
-              <use href="#zahn" transform="rotate(216)"/><use href="#zahn" transform="rotate(234)"/>
-              <use href="#zahn" transform="rotate(252)"/><use href="#zahn" transform="rotate(270)"/>
-              <use href="#zahn" transform="rotate(288)"/><use href="#zahn" transform="rotate(306)"/>
-              <use href="#zahn" transform="rotate(324)"/><use href="#zahn" transform="rotate(342)"/>
-            </g>
-            <circle cx="318" cy="305" r="7" fill="#F4F2ED"/>
-            <line x1="318" y1="305" x2="348" y2="345" stroke="#F4F2ED" stroke-width="8" stroke-linecap="round"/>
-            <rect x="338" y="340" width="26" height="9" rx="4.5" fill="#F4F2ED"/>
-          </g>
-          <!-- Rahmen-Dekal -->
-          <text class="fade" x="352" y="270" transform="rotate(-40 352 270)"
-            font-family="Archivo, sans-serif" font-weight="900" font-size="13"
-            letter-spacing="2.5" fill="#F4F2ED">KASKO</text>
-        </svg>
-      </div>
-      <p class="hero-note">Jedes Rad des Haushalts mitversichert</p>
-      <a class="hero-berater" href="#kontakt">
-        <img class="ls-foto" src="assets/berater-ludwig.jpg" alt="" width="46" height="46" loading="lazy">
-        <span class="hb-text">
-          <strong>Ludwig Siebenbürgen</strong>
-          <span>Radsportler &amp; Versicherungsexperte – dein direkter Ansprechpartner ohne Warteschleife, für Angebote &amp; Schadensfälle.</span>
-        </span>
-      </a>
-      </div>
     </div>
+
+    <!-- Hauptbild: Ludwig auf dem Rennrad (Foto: All Out Visuals) – Desktop 2:3 rechts, Handy 4:5 nach den Buttons -->
+    <figure class="hero-foto">
+      <picture>
+        <source media="(max-width: 920px)" type="image/webp" srcset="assets/ludwig-hero-4x5-600.webp 600w, assets/ludwig-hero-4x5-910.webp 910w" sizes="(max-width: 596px) calc(100vw - 56px), 540px">
+        <source media="(max-width: 920px)" srcset="assets/ludwig-hero-4x5-910.jpg">
+        <source type="image/webp" srcset="assets/ludwig-hero-2x3-640.webp 640w, assets/ludwig-hero-2x3-910.webp 910w" sizes="(max-width: 1240px) 40vw, 500px">
+        <img src="assets/ludwig-hero-2x3-910.jpg" width="910" height="1365" alt="Ludwig Siebenbürgen auf seinem Rennrad" fetchpriority="high">
+      </picture>
+      <small class="foto-credit">Foto: All Out Visuals</small>
+      <figcaption>
+        <strong>Ludwig Siebenbürgen</strong>
+        <span>Radsportler &amp; Versicherungsexperte<span class="hf-lang"> – dein direkter Ansprechpartner ohne Warteschleife</span>.</span>
+      </figcaption>
+    </figure>
   </div>
   <div class="scroll-cue">Scroll<i></i></div>
 </section>
@@ -1403,10 +1275,71 @@ img.ls-foto,img.berater-foto{object-fit:cover}
   </div>
 </div>
 
-<!-- ===================== PAKET & PREIS (Angebot zuerst) ===================== -->
+<!-- ===================== WARUM FAHRRADKASKO · KM 6 (erst das Risiko, dann das Paket) ===================== -->
+<section class="section" id="warum" data-etappe="Die Risiken">
+  <div class="wrap">
+    <div class="etappe-mark reveal"><span class="etikett">Etappe 01 — Warum Fahrradkasko?</span></div>
+    <div class="warum-grid">
+      <div class="warum-sticky reveal">
+        <h2 class="display">Ein kleiner <span class="kursiv">Moment.</span><br>Eine große <span class="kursiv rot">Rechnung.</span></h2>
+        <p class="lead">Moderne Rennräder und Gravel Bikes sind Hightech: Carbonrahmen, Elektronik, Aero-Laufräder. Ein Unfall passiert schnell – ein Schlagloch, eine zu schnelle Kurve oder ein anderer Fahrradfahrer, der stürzt und dich mitreißt – und schon kann es vierstellig kosten. Außerdem gehören Fahrräder zu den am häufigsten gestohlenen Gegenständen – aufgeklärt werden nur wenige Fälle.</p>
+        <a class="btn btn-ghost" href="#paket"><span class="btn-label">Paket &amp; Preis ansehen</span></a>
+      </div>
+
+      <div>
+        <ul class="risk-liste">
+          <li class="risk reveal" style="--i:0">
+            <span class="idx">R–01</span>
+            <span class="r-name">Diebstahl vorm Café<small>Rad angeschlossen – und nach dem Espresso trotzdem weg</small></span>
+            <span class="r-cost">Totalverlust</span>
+          </li>
+          <li class="risk reveal" style="--i:1">
+            <span class="idx">R–02</span>
+            <span class="r-name">Riss im Carbonrahmen<small>Umfaller im Stand reicht – Rahmen muss getauscht werden</small></span>
+            <span class="r-cost">2.500–5.000&nbsp;€</span>
+          </li>
+          <li class="risk reveal" style="--i:2">
+            <span class="idx">R–03</span>
+            <span class="r-name">Lenker &amp; Carbongabel nach Sturz<small>Nach einem Sturz wird Carbon fast immer getauscht – bei einem Riss sowieso</small></span>
+            <span class="r-cost">300–900&nbsp;€</span>
+          </li>
+          <li class="risk reveal" style="--i:3">
+            <span class="idx">R–04</span>
+            <span class="r-name">Laufradsatz nach Schlagloch<small>Carbon-Felge delaminiert, Speichen verzogen</small></span>
+            <span class="r-cost">1.000–3.000&nbsp;€</span>
+          </li>
+        </ul>
+
+        <!-- Signature-Setpiece: der Schadensbeleg -->
+        <div class="reveal">
+          <div class="beleg" role="img" aria-label="Beispielrechnung: Sturz im Kreisverkehr mit Gesamtkosten von 1.599 Euro – mit Fahrradkasko zum Neuwert erstattet">
+            <div class="beleg-stempel">Ohne Kasko: dein Problem</div>
+            <div class="beleg-head">
+              <div class="b-title">Schadensbeleg</div>
+              <div class="b-sub">Sturz im Kreisverkehr · 28 km/h · Sonntag, 7:40 Uhr</div>
+            </div>
+            <table>
+              <tr><td>Schalt-/Bremshebel rechts (elektronisch)</td><td>429&nbsp;€</td></tr>
+              <tr><td>Carbon-Lenker</td><td>289&nbsp;€</td></tr>
+              <tr><td>Schaltwerk + Schaltauge</td><td>612&nbsp;€</td></tr>
+              <tr><td>Sattel</td><td>149&nbsp;€</td></tr>
+              <tr><td>Check, Einstellung &amp; Montage</td><td>120&nbsp;€</td></tr>
+              <tr class="sep"><td colspan="2"></td></tr>
+              <tr class="summe"><td>Summe</td><td>1.599&nbsp;€</td></tr>
+            </table>
+            <div class="beleg-fazit">Mit Fahrradkasko: <span class="rot">erstattet zum Neuwert.</span></div>
+            <div class="beleg-hinweis">Beispielrechnung – tatsächliche Marktpreise variieren.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PAKET & PREIS ===================== -->
 <section class="section hell" id="paket" data-etappe="Paket &amp; Preis">
   <div class="wrap">
-    <div class="etappe-mark reveal"><span class="etikett">Etappe 01 — Angebot &amp; Preis</span></div>
+    <div class="etappe-mark reveal"><span class="etikett">Etappe 02 — Angebot &amp; Preis</span></div>
     <div class="section-head reveal">
       <h2 class="display">Ein Paket.<br><span class="kursiv rot">Alles</span> drin.</h2>
       <p class="lead">Die Fahrradversicherung ohne Selbstbeteiligung – zum Neuwert, kombiniert mit Hausrat Best. Ein Vertrag für alle Räder deines Haushalts.</p>
@@ -1452,6 +1385,7 @@ img.ls-foto,img.berater-foto{object-fit:cover}
             <span class="re-preis display" id="rechner-preis">170–270&nbsp;€</span>
             <span class="re-jahr">pro Jahr¹</span>
           </div>
+          <p class="rechner-monat">Das sind umgerechnet ca. <strong id="rechner-monat">14–23&nbsp;€</strong> im Monat.</p>
           <p class="rechner-hinweis">Unverbindliche Orientierung (Beispiel: Wohnfläche 50–75&nbsp;m²) – der genaue Beitrag hängt von Wohnfläche, Wohnort und optionaler Selbstbeteiligung ab. Dein persönliches Angebot gibt's kostenlos.</p>
         </div>
 
@@ -1460,7 +1394,7 @@ img.ls-foto,img.berater-foto{object-fit:cover}
           <li>
             <div>
               <h4>Kurz anfragen</h4>
-              <p>Per WhatsApp, E-Mail oder Formular – dauert keine Minute. Sag mir kurz, was du fährst und wie viel dein Rad wert ist.</p>
+              <p>Per WhatsApp, E-Mail oder Telefon – dauert keine Minute. Sag mir kurz, was du fährst und wie viel dein Rad wert ist.</p>
             </div>
           </li>
           <li>
@@ -1492,7 +1426,7 @@ img.ls-foto,img.berater-foto{object-fit:cover}
 <!-- ===================== LEISTUNGEN · KM 15 (heller Akt) ===================== -->
 <section class="section hell" id="leistungen" data-etappe="Der Schutz">
   <div class="wrap">
-    <div class="etappe-mark reveal"><span class="etikett">Etappe 02 — Was ist versichert?</span></div>
+    <div class="etappe-mark reveal"><span class="etikett">Etappe 03 — Was ist versichert?</span></div>
     <div class="section-head reveal">
       <h2 class="display">Alles, was deinem<br>Rad <span class="kursiv rot">passieren</span> kann.</h2>
       <p class="lead">Die Fahrradkasko ist eine Allgefahrendeckung: versichert ist jede Art von Beschädigung, Zerstörung, Diebstahl, Einbruchdiebstahl und Raub – nicht nur eine Liste einzelner Gefahren.</p>
@@ -1591,7 +1525,7 @@ img.ls-foto,img.berater-foto{object-fit:cover}
 <!-- ===================== SCHUTZBRIEF · KM 24 ===================== -->
 <section class="section" id="schutzbrief" data-etappe="Pannenhilfe">
   <div class="wrap">
-    <div class="etappe-mark reveal"><span class="etikett">Etappe 03 — Fest im Paket · Für unterwegs</span></div>
+    <div class="etappe-mark reveal"><span class="etikett">Etappe 04 — Fest im Paket · Für unterwegs</span></div>
     <div class="section-head reveal">
       <h2 class="display">Panne? <span class="kursiv rot">Schutzbrief</span><br>an Bord.</h2>
       <p class="lead">Mehrtagestour durch die Alpen, Gravel-Wochenende oder Pendeln bei jedem Wetter: Ist eine Fahrt mit deinem versicherten Rad wegen einer Panne nicht möglich, organisierst du dir selbst Hilfe – die Kosten werden erstattet. Dein Fahrradschutzbrief gilt weltweit: Pannenhilfe fürs Fahrrad, auch im Ausland.</p>
@@ -1667,7 +1601,7 @@ img.ls-foto,img.berater-foto{object-fit:cover}
 <!-- ===================== E-BIKE · KM 30 (heller Akt) ===================== -->
 <section class="section hell" id="ebike" data-etappe="E-Bike">
   <div class="wrap">
-    <div class="etappe-mark reveal"><span class="etikett">Etappe 04 — Fürs E-Bike</span></div>
+    <div class="etappe-mark reveal"><span class="etikett">Etappe 05 — Fürs E-Bike</span></div>
     <div class="section-head reveal">
       <h2 class="display">E-Bike-Versicherung<br>zum <span class="kursiv rot">Neuwert.</span></h2>
       <p class="lead">E-Rennrad, E-Gravel, Trekking-E-Bike oder E-MTB – jedes Pedelec² deines Haushalts ist automatisch mitversichert: zum Neuwert, weltweit und rund um die Uhr. Akku- und Elektronikschutz sind fest im Paket, und der Beitrag richtet sich nur nach dem Wert deines Rads – nicht nach dem Radtyp.</p>
@@ -1715,169 +1649,127 @@ img.ls-foto,img.berater-foto{object-fit:cover}
   </div>
 </section>
 
-<!-- ===================== WARUM FAHRRADKASKO ===================== -->
-<section class="section" id="warum" data-etappe="Die Risiken">
-  <div class="wrap">
-    <div class="etappe-mark reveal"><span class="etikett">Etappe 05 — Warum Fahrradkasko?</span></div>
-    <div class="warum-grid">
-      <div class="warum-sticky reveal">
-        <h2 class="display">Ein kleiner <span class="kursiv">Moment.</span><br>Eine große <span class="kursiv rot">Rechnung.</span></h2>
-        <p class="lead">Moderne Rennräder und Gravel Bikes sind Hightech: Carbonrahmen, Elektronik, Aero-Laufräder. Ein Unfall passiert schnell – ein Schlagloch, eine zu schnelle Kurve oder ein anderer Fahrradfahrer, der stürzt und dich mitreißt – und schon kann es vierstellig kosten. Außerdem gehören Fahrräder zu den am häufigsten gestohlenen Gegenständen – aufgeklärt werden nur wenige Fälle.</p>
-      </div>
-
-      <div>
-        <ul class="risk-liste">
-          <li class="risk reveal" style="--i:0">
-            <span class="idx">R–01</span>
-            <span class="r-name">Diebstahl vorm Café<small>Rad angeschlossen – und nach dem Espresso trotzdem weg</small></span>
-            <span class="r-cost">Totalverlust</span>
-          </li>
-          <li class="risk reveal" style="--i:1">
-            <span class="idx">R–02</span>
-            <span class="r-name">Riss im Carbonrahmen<small>Umfaller im Stand reicht – Rahmen muss getauscht werden</small></span>
-            <span class="r-cost">2.500–5.000&nbsp;€</span>
-          </li>
-          <li class="risk reveal" style="--i:2">
-            <span class="idx">R–03</span>
-            <span class="r-name">Lenker &amp; Carbongabel nach Sturz<small>Nach einem Sturz wird Carbon fast immer getauscht – bei einem Riss sowieso</small></span>
-            <span class="r-cost">300–900&nbsp;€</span>
-          </li>
-          <li class="risk reveal" style="--i:3">
-            <span class="idx">R–04</span>
-            <span class="r-name">Laufradsatz nach Schlagloch<small>Carbon-Felge delaminiert, Speichen verzogen</small></span>
-            <span class="r-cost">1.000–3.000&nbsp;€</span>
-          </li>
-        </ul>
-
-        <!-- Signature-Setpiece: der Schadensbeleg -->
-        <div class="reveal">
-          <div class="beleg" role="img" aria-label="Beispielrechnung: Sturz im Kreisverkehr mit Gesamtkosten von 1.599 Euro – mit Fahrradkasko zum Neuwert erstattet">
-            <div class="beleg-stempel">Ohne Kasko: dein Problem</div>
-            <div class="beleg-head">
-              <div class="b-title">Schadensbeleg</div>
-              <div class="b-sub">Sturz im Kreisverkehr · 28 km/h · Sonntag, 7:40 Uhr</div>
-            </div>
-            <table>
-              <tr><td>Schalt-/Bremshebel rechts (elektronisch)</td><td>429&nbsp;€</td></tr>
-              <tr><td>Carbon-Lenker</td><td>289&nbsp;€</td></tr>
-              <tr><td>Schaltwerk + Schaltauge</td><td>612&nbsp;€</td></tr>
-              <tr><td>Sattel</td><td>149&nbsp;€</td></tr>
-              <tr><td>Check, Einstellung &amp; Montage</td><td>120&nbsp;€</td></tr>
-              <tr class="sep"><td colspan="2"></td></tr>
-              <tr class="summe"><td>Summe</td><td>1.599&nbsp;€</td></tr>
-            </table>
-            <div class="beleg-fazit">Mit Fahrradkasko: <span class="rot">erstattet zum Neuwert.</span></div>
-            <div class="beleg-hinweis">Beispielrechnung – tatsächliche Marktpreise variieren.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ===================== FAQ · KM 36 (hell) ===================== -->
 <section class="section hell" id="faq" data-etappe="Fragen">
   <div class="wrap">
     <div class="etappe-mark reveal"><span class="etikett">Etappe 06 — Häufige Fragen</span></div>
     <div class="section-head reveal">
       <h2 class="display">Kurz &amp; klar<br><span class="kursiv rot">beantwortet.</span></h2>
-      <button type="button" class="btn btn-ghost sektion-toggle" data-ziel="faq-inhalt" aria-expanded="false"><span class="btn-label">Häufige Fragen anzeigen</span></button>
     </div>
 
-    <div class="sektion-inhalt" id="faq-inhalt">
-    <div class="faq-liste">
-      <div class="faq-item reveal" style="--i:0">
+    <!-- FAQ-Suche: Frage eintippen, passende Antworten erscheinen sofort (Logik unten im Script „FAQ-Suche") -->
+    <div class="faq-suche reveal" role="search">
+      <label class="mono-label" for="faq-suche">Frag einfach – die passende Antwort erscheint sofort</label>
+      <div class="faq-suchfeld">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <input id="faq-suche" type="search" placeholder="z. B. Rad im Urlaub geklaut?" autocomplete="off" enterkeyhint="search" aria-describedby="faq-status" aria-controls="faq-liste">
+      </div>
+      <div class="faq-chips" aria-label="Häufige Themen">
+        <button type="button" data-suche="Diebstahl">Diebstahl</button>
+        <button type="button" data-suche="Urlaub">Urlaub</button>
+        <button type="button" data-suche="Schloss">Schloss</button>
+        <button type="button" data-suche="Schadensfall">Schadensfall</button>
+        <button type="button" data-suche="Akku">E-Bike-Akku</button>
+        <button type="button" data-suche="Selbstbeteiligung">Selbstbeteiligung</button>
+      </div>
+      <p class="faq-status" id="faq-status" aria-live="polite"></p>
+    </div>
+
+    <div class="faq-tipps" id="faq-tipps">
+      <a class="faq-tipp" data-muster="wettkampf rennen triathlon triathlet zeitfahr zeitfahrrad ironman wechselzone tt langdistanz" href="triathlon-zeitfahrrad.html" hidden><strong>Triathlon &amp; Zeitfahren</strong><span>Was im Wettkampf und in der Wechselzone gilt, steht auf der Triathlon-Seite.</span></a>
+      <a class="faq-tipp" data-muster="kosten kostet preis preise teuer beitrag beitraege euro guenstig monat jahr" href="#paket" hidden><strong>Was kostet das?</strong><span>Der Beitrags-Schätzer zeigt dir die Spanne für dein Rad.</span></a>
+      <a class="faq-tipp" data-muster="s-pedelec spedelec speed 45 kmh kennzeichen" href="#kontakt" hidden><strong>S-Pedelec (bis 45&nbsp;km/h)</strong><span>Nicht über die Fahrradkasko versicherbar – dafür gibt es eigene Policen. Sprich mich an.</span></a>
+    </div>
+
+    <div class="faq-liste" id="faq-liste">
+      <div class="faq-item reveal" style="--i:0" data-stichworte="rennrad gravel mtb mountainbike city trekking zeitfahrrad tt triathlon lastenrad kinderrad ebike e-bike pedelec leasing jobrad dienstrad gemietet miete zubehör anhänger radtyp welche räder">
         <button class="faq-q" aria-expanded="false"><span class="nr">01</span>Welche Räder sind versichert?
-          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
-        <div class="faq-a"><div><p>Die Rennrad-Vollkasko-Versicherung gilt für jedes Fahrrad deines Haushalts – Rennrad, Gravel, MTB, City, Zeitfahrrad (TT Bike), Lastenrad – und E-Bikes (Pedelecs)², jeweils zum Neuwert bis zur gewählten Versicherungssumme. Auch geleaste oder gemietete Räder (z.&nbsp;B. Dienstrad-Leasing) sowie Zubehör und Fahrradanhänger sind mitversichert. Der Radtyp spielt für den Beitrag keine Rolle – ob Rennrad oder Lastenrad, der Preis ist derselbe.</p></div></div>
+        <div class="faq-a"><div><p>Die Rennrad-Vollkasko-Versicherung gilt für jedes Fahrrad deines Haushalts – Rennrad, Gravel, MTB, City, Zeitfahrrad (TT Bike), Lastenrad – und E-Bikes (Pedelecs)², jeweils zum Neuwert bis zur gewählten Versicherungssumme. Auch geleaste oder gemietete Räder (z.&nbsp;B. Dienstrad-Leasing) sowie Zubehör und Fahrradanhänger sind mitversichert. Der Radtyp spielt für den Beitrag keine Rolle – ob Rennrad oder Lastenrad, der Preis ist derselbe. Du fährst Triathlon? Alles zu Zeitfahrrad, Wettkampf und Wechselzone findest du auf der Seite <a href="triathlon-zeitfahrrad.html">Zeitfahrrad &amp; Triathlonrad versichern</a>.</p></div></div>
       </div>
 
-      <div class="faq-item reveal" style="--i:1">
+      <div class="faq-item reveal" style="--i:1" data-stichworte="wert summe mehrere räder zwei drei teuerste versicherungssumme zusammenrechnen addieren">
         <button class="faq-q" aria-expanded="false"><span class="nr">02</span>Muss ich den Wert aller meiner Räder zusammenrechnen?
-          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
         <div class="faq-a"><div><p>Nein. Maßgeblich für die Versicherungssumme ist der Wert deines teuersten Rads – nicht die Summe aller Räder im Haushalt. Besitzt du zum Beispiel drei Räder und das teuerste kostet 8.000&nbsp;€, ist das deine Versicherungsgrundlage; die anderen beiden sind automatisch mitversichert.</p></div></div>
       </div>
 
-      <div class="faq-item reveal" style="--i:2">
+      <div class="faq-item reveal" style="--i:2" data-stichworte="urlaub ausland reise weltweit trainingslager mallorca unterwegs zug zelt camping transport hotel diebstahl geklaut gestohlen">
         <button class="faq-q" aria-expanded="false"><span class="nr">03</span>Gilt der Schutz auch unterwegs und im Urlaub?
-          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
         <div class="faq-a"><div><p>Ja. Die Allgefahrendeckung gilt weltweit und rund um die Uhr – beim Training, auf Tour, im Zug, am Zeltplatz und am Trailhead.</p></div></div>
       </div>
 
-      <div class="faq-item reveal" style="--i:3">
+      <div class="faq-item reveal" style="--i:3" data-stichworte="schloss abschließen anschließen keller garage fahrradraum abstellen gesichert auto anhänger wohnwagen nacht diebstahl geklaut gestohlen">
         <button class="faq-q" aria-expanded="false"><span class="nr">04</span>Brauche ich ein bestimmtes Schloss?
-          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
         <div class="faq-a"><div><p>Unterwegs abgestellte Räder müssen mit einem Schloss gesichert sein – eine bestimmte Marke oder Preisklasse ist nicht vorgeschrieben. Die Schlosspflicht entfällt nur in ausschließlich selbst genutzten, verschlossenen Räumen (z.&nbsp;B. deinem eigenen Kellerabteil), im verschlossenen Auto sowie im angehängten, verschlossenen Anhänger oder Wohnwagen. Wichtig: Im gemeinschaftlich genutzten Keller oder Fahrradraum brauchst du weiterhin ein Schloss.</p></div></div>
       </div>
 
-      <div class="faq-item reveal" style="--i:4">
-        <button class="faq-q" aria-expanded="false"><span class="nr">05</span>Was ist mit dem Akku meines E-Bikes?
-          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
-        </button>
-        <div class="faq-a"><div><p>Der Akkuschutz sichert dich in den ersten drei Jahren gegen Leistungsverlust ab. Zusätzlich greift der Elektronikschutz bei Schäden durch Kurzschluss, Induktion, Überspannung oder Feuchtigkeit.</p></div></div>
-      </div>
-
-      <div class="faq-item reveal" style="--i:5">
-        <button class="faq-q" aria-expanded="false"><span class="nr">06</span>Gibt es eine Selbstbeteiligung?
-          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
-        </button>
-        <div class="faq-a"><div><p>Grundsätzlich nein. Du kannst optional eine Selbstbeteiligung vereinbaren, um deinen Beitrag zu senken – beim Schutzbrief (Mobilitätsschutz) wird sie aber in keinem Fall abgezogen.</p></div></div>
-      </div>
-
-      <div class="faq-item reveal" style="--i:6">
-        <button class="faq-q" aria-expanded="false"><span class="nr">07</span>Ich habe schon eine Hausratversicherung – lohnt sich der Wechsel?
-          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
-        </button>
-        <div class="faq-a"><div><p>Oft ja – viele Hausratverträge sichern hochwertige Räder gar nicht oder nur eingeschränkt ab. Hast du bei einem anderen Versicherer eine Hausratversicherung ohne zusätzlichen Schutz für deine Fahrräder oder E-Bikes abgeschlossen und möchtest zu ERGO wechseln, sichert die Differenzdeckung in der Zwischenzeit ab, was dein bestehender Vertrag im Verhältnis zum ERGO-Schutz nicht leistet – maximal ein Jahr lang und ohne Mehrbeitrag. So wechselst du ohne Versicherungslücke.</p></div></div>
-      </div>
-
-      <div class="faq-item reveal" style="--i:7">
-        <button class="faq-q" aria-expanded="false"><span class="nr">08</span>Warum sind Hausrat und Fahrradkasko ein gemeinsamer Vertrag?
-          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
-        </button>
-        <div class="faq-a"><div><p>Weil du damit nur einen Vertrag verwaltest: Wohnung und alle Räder sind zusammen abgesichert – mit einem Ansprechpartner für alles. Dazu kommt der Preis: Das Kombi-Paket kostet meist weniger als eine reine Fahrradversicherung beim Spezial-Versicherer – dort zahlst du oft mehr, und deine Wohnung ist gar nicht mitversichert.</p></div></div>
-      </div>
-
-      <div class="faq-item reveal" style="--i:8">
-        <button class="faq-q" aria-expanded="false"><span class="nr">09</span>Was ist nicht versichert?
-          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
-        </button>
-        <div class="faq-a"><div><p>Nicht versichert sind unter anderem vorsätzlich verursachte Schäden, Schäden durch Verlieren, Stehen- oder Liegenlassen sowie Schäden, für die der Hersteller oder Lieferant haftet (Garantiefälle). Alle Details regeln die Versicherungsbedingungen.</p></div></div>
-      </div>
-
-      <div class="faq-item reveal" style="--i:9">
-        <button class="faq-q" aria-expanded="false"><span class="nr">10</span>Was passiert bei grober Fahrlässigkeit?
-          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
-        </button>
-        <div class="faq-a"><div><p>Gute Nachricht: In der Hausratversicherung Best wird die Entschädigung nicht gekürzt, wenn du einen Schaden grob fahrlässig herbeigeführt hast – auf dieses Kürzungsrecht verzichtet der Versicherer ausdrücklich. Vorsätzlich verursachte Schäden bleiben ausgeschlossen, und deine Mitwirkungspflichten (z.&nbsp;B. Sicherheitsvorschriften wie die Schlosspflicht) gelten weiterhin.</p></div></div>
-      </div>
-
-      <div class="faq-item reveal" style="--i:10">
-        <button class="faq-q" aria-expanded="false"><span class="nr">11</span>Wie läuft der Schadensfall ab?
-          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+      <div class="faq-item reveal" style="--i:4" data-stichworte="schaden schadensfall melden meldung abwicklung ablauf regulierung erstattung auszahlung geld schnell dauer unterlagen rechnung foto kaufbeleg sturz unfall kaputt diebstahl geklaut gestohlen">
+        <button class="faq-q" aria-expanded="false"><span class="nr">05</span>Wie läuft der Schadensfall ab?
+          <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
         <div class="faq-a"><div><p>Du meldest den Schaden direkt bei mir – per WhatsApp, Telefon oder E-Mail. Am besten hast du den Kaufbeleg deines Rads zur Hand; alternativ genügen aussagekräftige Fotos, auf denen Marke und Komponenten erkennbar sind. Rechnungen oder Screenshots der benötigten Ersatzteile schickst du mir einfach per WhatsApp oder E-Mail. Sind die Unterlagen vollständig, sind Schäden bis 5.000&nbsp;€ in der Regel innerhalb weniger Tage reguliert und bezahlt – ohne dass du in Vorkasse gehen musst. Höhere Schäden gehen in eine genauere Prüfung und können etwas länger dauern.</p></div></div>
       </div>
 
-      <div class="faq-item reveal" style="--i:11">
-        <button class="faq-q" aria-expanded="false"><span class="nr">12</span>Ist mein gebrauchtes Rad versicherbar?
-          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+      <div class="faq-item reveal" style="--i:5" data-stichworte="wechsel wechseln kündigen kündigung hausrat bestehende bisherige altvertrag vorversicherung anbieter versicherer differenzdeckung lücke umstieg">
+        <button class="faq-q" aria-expanded="false"><span class="nr">06</span>Ich habe schon eine Hausratversicherung – lohnt sich der Wechsel?
+          <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-a"><div><p>Oft ja – viele Hausratverträge sichern hochwertige Räder gar nicht oder nur eingeschränkt ab. Hast du bei einem anderen Versicherer eine Hausratversicherung ohne zusätzlichen Schutz für deine Fahrräder oder E-Bikes abgeschlossen und möchtest zu ERGO wechseln, sichert die Differenzdeckung in der Zwischenzeit ab, was dein bestehender Vertrag im Verhältnis zum ERGO-Schutz nicht leistet – maximal ein Jahr lang und ohne Mehrbeitrag. So wechselst du ohne Versicherungslücke.</p></div></div>
+      </div>
+
+      <div class="faq-item reveal faq-extra" style="--i:0" data-stichworte="nicht versichert ausschluss ausschlüsse ausgeschlossen vorsatz verlieren liegenlassen stehenlassen garantie">
+        <button class="faq-q" aria-expanded="false"><span class="nr">07</span>Was ist nicht versichert?
+          <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-a"><div><p>Nicht versichert sind unter anderem vorsätzlich verursachte Schäden, Schäden durch Verlieren, Stehen- oder Liegenlassen sowie Schäden, für die der Hersteller oder Lieferant haftet (Garantiefälle). Alle Details regeln die Versicherungsbedingungen.</p></div></div>
+      </div>
+
+      <div class="faq-item reveal faq-extra" style="--i:1" data-stichworte="selbstbeteiligung sb eigenanteil zuzahlung dazuzahlen beitrag senken günstiger">
+        <button class="faq-q" aria-expanded="false"><span class="nr">08</span>Gibt es eine Selbstbeteiligung?
+          <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-a"><div><p>Grundsätzlich nein. Du kannst optional eine Selbstbeteiligung vereinbaren, um deinen Beitrag zu senken – beim Schutzbrief (Mobilitätsschutz) wird sie aber in keinem Fall abgezogen.</p></div></div>
+      </div>
+
+      <div class="faq-item reveal faq-extra" style="--i:2" data-stichworte="grob fahrlässig fahrlässigkeit leichtsinn unachtsam kürzung kürzen">
+        <button class="faq-q" aria-expanded="false"><span class="nr">09</span>Was passiert bei grober Fahrlässigkeit?
+          <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-a"><div><p>Gute Nachricht: In der Hausratversicherung Best wird die Entschädigung nicht gekürzt, wenn du einen Schaden grob fahrlässig herbeigeführt hast – auf dieses Kürzungsrecht verzichtet der Versicherer ausdrücklich. Vorsätzlich verursachte Schäden bleiben ausgeschlossen, und deine Mitwirkungspflichten (z.&nbsp;B. Sicherheitsvorschriften wie die Schlosspflicht) gelten weiterhin.</p></div></div>
+      </div>
+
+      <div class="faq-item reveal faq-extra" style="--i:3" data-stichworte="gebraucht alt älter jahre secondhand kleinanzeigen neuwert zeitwert">
+        <button class="faq-q" aria-expanded="false"><span class="nr">10</span>Ist mein gebrauchtes Rad versicherbar?
+          <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
         <div class="faq-a"><div><p>Ja – wie alt dein Rad ist, spielt keine Rolle. Entschädigt wird zum Neuwert: Bei Totalschaden oder Diebstahl bekommst du den Betrag, den ein gleichwertiges neues Rad heute kostet.</p></div></div>
       </div>
 
-      <div class="faq-item reveal" style="--i:12">
-        <button class="faq-q" aria-expanded="false"><span class="nr">13</span>Ist mein S-Pedelec versicherbar?
-          <span class="plus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+      <div class="faq-item reveal faq-extra" style="--i:4" data-stichworte="akku batterie ebike e-bike pedelec elektronik motor kurzschluss feuchtigkeit wasser überspannung leistungsverlust">
+        <button class="faq-q" aria-expanded="false"><span class="nr">11</span>Was ist mit dem Akku meines E-Bikes?
+          <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
         </button>
-        <div class="faq-a"><div><p>Nein. S-Pedelecs mit Unterstützung bis 45&nbsp;km/h gelten als Kleinkrafträder, sind versicherungspflichtig und deshalb nicht über die Fahrradkasko versicherbar. Versichert sind Pedelecs mit Tretunterstützung bis 25&nbsp;km/h². Für dein S-Pedelec gibt es eigene Policen – sprich mich einfach an.</p></div></div>
+        <div class="faq-a"><div><p>Der Akkuschutz sichert dich in den ersten drei Jahren gegen Leistungsverlust ab. Zusätzlich greift der Elektronikschutz bei Schäden durch Kurzschluss, Induktion, Überspannung oder Feuchtigkeit.</p></div></div>
       </div>
 
+      <div class="faq-item reveal faq-extra" style="--i:5" data-stichworte="hausrat kombi paket vertrag gemeinsam warum wohnung preis kosten günstiger spezialversicherer">
+        <button class="faq-q" aria-expanded="false"><span class="nr">12</span>Warum sind Hausrat und Fahrradkasko ein gemeinsamer Vertrag?
+          <span class="plus" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq-a"><div><p>Weil du damit nur einen Vertrag verwaltest: Wohnung und alle Räder sind zusammen abgesichert – mit einem Ansprechpartner für alles. Dazu kommt der Preis: Das Kombi-Paket kostet meist weniger als eine reine Fahrradversicherung beim Spezial-Versicherer – dort zahlst du oft mehr, und deine Wohnung ist gar nicht mitversichert.</p></div></div>
+      </div>
     </div>
+
+    <div class="faq-fuss">
+      <button type="button" class="btn btn-ghost" id="faq-alle"><span class="btn-label">Alle 12 Fragen anzeigen</span></button>
+      <a class="faq-frag" id="faq-frag" href="https://wa.me/4915224827997?text=Hi%20Ludwig%2C%20ich%20habe%20eine%20Frage%20zur%20Fahrradkasko%3A%20" target="_blank" rel="noopener">Deine Frage ist nicht dabei? Schreib sie mir direkt per WhatsApp.</a>
     </div>
   </div>
 </section>
@@ -1889,8 +1781,39 @@ img.ls-foto,img.berater-foto{object-fit:cover}
     <div class="kontakt-grid">
       <div class="reveal">
         <h2 class="display">Sprich mit jemandem,<br>der <span class="kursiv rot">selbst fährt.</span></h2>
-        <p class="lead" style="margin-top:22px">Ich berate dich persönlich – kostenlos, unverbindlich und auf Augenhöhe. Als Radsportler weiß ich, was ein Rad wert ist. Schreib mir einfach, wie es dir am liebsten ist.</p>
+        <p class="lead" style="margin-top:22px">Ich berate dich persönlich – kostenlos, unverbindlich und auf Augenhöhe. Als Radsportler weiß ich, was ein Rad wert ist. Schreib mir kurz, was du fährst und was dein Rad wert ist – oder ruf einfach an.</p>
 
+        <!-- Drei Kernwege: WhatsApp, E-Mail, Anruf -->
+        <div class="kanal">
+          <a href="https://wa.me/4915224827997?text=Hi%20Ludwig%2C%20ich%20brauche%20ein%20Angebot%20f%C3%BCr%20die%20Fahrradkasko%20f%C3%BCr%20mein%20Rennrad." target="_blank" rel="noopener">
+            <span class="k-icon wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 14.96L2 22l5.2-1.5A9.9 9.9 0 1 0 12.04 2zm0 18.1a8.2 8.2 0 0 1-4.2-1.15l-.3-.18-3.08.89.84-3-.2-.31a8.2 8.2 0 1 1 6.94 3.75zm4.5-6.13c-.25-.12-1.46-.72-1.68-.8-.23-.09-.4-.13-.56.12-.16.25-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.22-1.45-1.37-1.7-.14-.24-.01-.38.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42h-.48c-.16 0-.43.06-.66.31-.22.25-.86.84-.86 2.05 0 1.2.88 2.37 1 2.53.13.17 1.74 2.65 4.2 3.72.59.25 1.05.4 1.4.52.6.19 1.13.16 1.56.1.47-.07 1.46-.6 1.66-1.17.21-.58.21-1.07.15-1.17-.06-.11-.23-.17-.47-.29z"/></svg></span>
+            <span>
+              <h3>WhatsApp</h3>
+              <p>Schnellste Antwort – schreib mir direkt aufs Handy.</p>
+            </span>
+            <span class="pfeil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+          <a href="mailto:ludwig.siebenbuergen@ergo.de?subject=Anfrage%20Fahrradkasko%20(Rennrad)">
+            <span class="k-icon mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
+            <span>
+              <h3>E-Mail</h3>
+              <p>ludwig.siebenbuergen@ergo.de · für alles Schriftliche</p>
+            </span>
+            <span class="pfeil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+          <a href="tel:+4915224827997">
+            <span class="k-icon tel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.13.96.36 1.9.7 2.8a2 2 0 0 1-.45 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.45c.9.34 1.84.57 2.8.7A2 2 0 0 1 22 16.9z"/></svg></span>
+            <span>
+              <h3>Anrufen</h3>
+              <p>0152 / 24827997 · Mo–Fr, ohne Warteschleife</p>
+            </span>
+            <span class="pfeil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </a>
+        </div>
+        <p class="kanal-hinweis">Ich melde mich in der Regel innerhalb eines Werktags. Kostenlos &amp; unverbindlich – <a href="datenschutz.html">Hinweise zum Datenschutz</a>.</p>
+      </div>
+
+      <div class="kontakt-rechts reveal" style="--i:1">
         <div class="berater-card">
           <img class="berater-portraet" src="assets/berater-ludwig-gross.jpg" alt="Ludwig Siebenbürgen mit seinem Cannondale-Rennrad" width="1600" height="1067" loading="lazy">
           <div class="berater-body">
@@ -1911,84 +1834,6 @@ img.ls-foto,img.berater-foto{object-fit:cover}
           </span>
           <span class="gb-text"><strong>Über 120 Google-Bewertungen</strong> · <span class="gb-marke">ERGO-Agentur Hannes Kaselow</span></span>
         </a>
-
-        <div class="kanal">
-          <a href="https://wa.me/4915224827997?text=Hi%20Ludwig%2C%20ich%20brauche%20ein%20Angebot%20f%C3%BCr%20die%20Fahrradkasko%20f%C3%BCr%20mein%20Rennrad." target="_blank" rel="noopener">
-            <span class="k-icon wa"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 14.96L2 22l5.2-1.5A9.9 9.9 0 1 0 12.04 2zm0 18.1a8.2 8.2 0 0 1-4.2-1.15l-.3-.18-3.08.89.84-3-.2-.31a8.2 8.2 0 1 1 6.94 3.75zm4.5-6.13c-.25-.12-1.46-.72-1.68-.8-.23-.09-.4-.13-.56.12-.16.25-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.22-1.45-1.37-1.7-.14-.24-.01-.38.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42h-.48c-.16 0-.43.06-.66.31-.22.25-.86.84-.86 2.05 0 1.2.88 2.37 1 2.53.13.17 1.74 2.65 4.2 3.72.59.25 1.05.4 1.4.52.6.19 1.13.16 1.56.1.47-.07 1.46-.6 1.66-1.17.21-.58.21-1.07.15-1.17-.06-.11-.23-.17-.47-.29z"/></svg></span>
-            <span>
-              <h3>WhatsApp</h3>
-              <p>Schnellste Antwort – schreib mir direkt aufs Handy.</p>
-            </span>
-            <span class="pfeil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </a>
-          <a href="https://calendly.com/rennradkasko" target="_blank" rel="noopener">
-            <span class="k-icon cal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/><path d="M9 15.5l2 2 4-4.5"/></svg></span>
-            <span>
-              <h3>Online-Termin buchen</h3>
-              <p>Wähle direkt einen freien Slot für deine kostenlose Beratung.</p>
-            </span>
-            <span class="pfeil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </a>
-          <a href="mailto:ludwig.siebenbuergen@ergo.de?subject=Anfrage%20Fahrradkasko%20(Rennrad)">
-            <span class="k-icon mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
-            <span>
-              <h3>E-Mail</h3>
-              <p>Für alles, was du lieber schriftlich klärst.</p>
-            </span>
-            <span class="pfeil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </a>
-          <a href="tel:+4915224827997">
-            <span class="k-icon tel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.13.96.36 1.9.7 2.8a2 2 0 0 1-.45 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.45c.9.34 1.84.57 2.8.7A2 2 0 0 1 22 16.9z"/></svg></span>
-            <span>
-              <h3>Anrufen</h3>
-              <p>Mo–Fr direkt bei mir erreichbar – ohne Warteschleife.</p>
-            </span>
-            <span class="pfeil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </a>
-        </div>
-      </div>
-
-      <div class="formular reveal" style="--i:1">
-        <h3>Rückruf &amp; Angebot anfragen</h3>
-        <p>Kurz ausfüllen – ich melde mich in der Regel innerhalb eines Werktags bei dir.</p>
-        <form id="f-form" novalidate>
-          <div class="feld">
-            <label for="f-name">Name</label>
-            <input id="f-name" name="name" type="text" placeholder="Max Mustermann" autocomplete="name">
-          </div>
-          <div class="feld">
-            <label for="f-kontakt">E-Mail oder Telefon</label>
-            <input id="f-kontakt" name="kontakt" type="text" placeholder="max@beispiel.de oder 0151 …" autocomplete="email">
-          </div>
-          <div class="feld">
-            <label for="f-anliegen">Anliegen</label>
-            <select id="f-anliegen" name="anliegen">
-              <option>Angebot für Fahrradkasko-Paket</option>
-              <option>Rückruf gewünscht</option>
-              <option>Beratungstermin vereinbaren</option>
-              <option>Allgemeine Frage</option>
-            </select>
-          </div>
-          <div class="feld">
-            <label for="f-nachricht">Nachricht (optional)</label>
-            <textarea id="f-nachricht" name="nachricht" placeholder="z. B.: Rennrad im Wert von 6.500 €, Wohnung 68 m² in Rostock …"></textarea>
-          </div>
-          <input class="f-hp" name="firma" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <p class="f-hinweis" id="f-hinweis" aria-live="polite" hidden>Bitte sag mir, wie ich dich erreichen kann – E-Mail-Adresse oder Telefonnummer genügt.</p>
-          <p class="f-status" id="f-status" aria-live="polite" hidden></p>
-          <button class="btn btn-primary" id="f-senden" type="submit" hidden><span class="btn-label">Anfrage senden</span></button>
-          <div class="f-wege">
-            <a class="btn btn-primary" id="f-wa" href="https://wa.me/4915224827997" target="_blank" rel="noopener"><span class="btn-label">Per WhatsApp senden</span></a>
-            <a class="btn btn-ghost" id="f-mail" href="mailto:ludwig.siebenbuergen@ergo.de"><span class="btn-label">Per E-Mail senden</span></a>
-          </div>
-          <button class="f-link" id="f-kopieren" type="button">Oder Text kopieren und selbst verschicken</button>
-        </form>
-        <div class="f-danke" id="f-danke" tabindex="-1" hidden>
-          <strong>Danke – deine Anfrage ist angekommen.</strong>
-          <p>Ich melde mich in der Regel innerhalb eines Werktags. Wenn es schnell gehen soll:</p>
-          <a class="btn btn-ghost" href="https://wa.me/4915224827997" target="_blank" rel="noopener"><span class="btn-label">WhatsApp an Ludwig</span></a>
-        </div>
-        <small>Kostenlos &amp; unverbindlich – <a href="datenschutz.html">Hinweise zum Datenschutz</a>.</small>
       </div>
     </div>
   </div>
@@ -2002,7 +1847,7 @@ img.ls-foto,img.berater-foto{object-fit:cover}
     <div class="foot-grid">
       <div class="foot-brand">
         <span class="brand-mark">Rennradkasko</span>
-        <p>Ludwig Siebenbürgen – Juniorpartner der <a href="https://hannes-kaselow.ergo.de" target="_blank" rel="noopener">ERGO-Agentur Hannes Kaselow</a> in Rostock, spezialisiert auf Fahrradversicherungen. Persönliche Beratung zu Fahrradkasko, Hausrat und allem, was dich sonst noch absichert.</p>
+        <p>Ludwig Siebenbürgen – Juniorpartner der <a href="https://hannes-kaselow.ergo.de" target="_blank" rel="noopener">ERGO-Agentur Hannes Kaselow</a> in Rostock, spezialisiert auf Fahrradversicherungen. Persönliche Beratung zu Fahrradkasko, Hausrat und allem, was dich sonst noch absichert. Für Triathleten: <a href="triathlon-zeitfahrrad.html">Zeitfahrrad &amp; Triathlonrad versichern</a>.</p>
         <p style="margin-top:16px;color:#fff">
           Ludwig Siebenbürgen<br>
           Juniorpartner <a href="https://hannes-kaselow.ergo.de" target="_blank" rel="noopener">ERGO-Agentur Hannes Kaselow</a><br>
@@ -2015,11 +1860,11 @@ img.ls-foto,img.berater-foto{object-fit:cover}
       <div>
         <h4>Auf dieser Seite</h4>
         <ul>
+          <li><a href="#warum">Warum Fahrradkasko?</a></li>
           <li><a href="#paket">Angebot &amp; Preis</a></li>
           <li><a href="#leistungen">Leistungen</a></li>
           <li><a href="#schutzbrief">Schutzbrief</a></li>
           <li><a href="#ebike">E-Bike</a></li>
-          <li><a href="#warum">Warum Fahrradkasko?</a></li>
           <li><a href="#faq">FAQ</a></li>
           <li><a href="#kontakt">Kontakt</a></li>
         </ul>
@@ -2061,7 +1906,7 @@ img.ls-foto,img.berater-foto{object-fit:cover}
   <span class="hud-etappe" id="hud-etappe">Start</span>
 </div>
 
-<!-- Schwebender Pfeil nach oben (erscheint ab dem Paket-Angebot) -->
+<!-- Schwebender Pfeil nach oben (erscheint ab dem ersten Abschnitt nach dem Hero) -->
 <a class="top-fab" id="top-fab" href="#top" aria-label="Zurück zum Seitenanfang">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
 </a>
@@ -2089,7 +1934,7 @@ themeToggle.addEventListener('click', () => {
 /* Nav: Hintergrund + Hide-on-Scroll-Down */
 const nav = document.getElementById('nav');
 const topFab = document.getElementById('top-fab');
-const paketSektion = document.getElementById('paket');
+const ersteSektion = document.getElementById('warum'); // erster Abschnitt nach dem Hero
 let lastNavY = 0;
 const onNavScroll = () => {
   const y = window.scrollY;
@@ -2097,9 +1942,9 @@ const onNavScroll = () => {
   if (y > 160 && y > lastNavY + 6) nav.classList.add('nav-hidden');
   else if (y < lastNavY - 6 || y <= 160) nav.classList.remove('nav-hidden');
   lastNavY = y;
-  // Nach-oben-Pfeil ab dem Paket-Angebot einblenden
-  if (topFab && paketSektion){
-    topFab.classList.toggle('sichtbar', y >= paketSektion.offsetTop - window.innerHeight * .6);
+  // Nach-oben-Pfeil ab dem ersten Abschnitt nach dem Hero einblenden
+  if (topFab && ersteSektion){
+    topFab.classList.toggle('sichtbar', y >= ersteSektion.offsetTop - window.innerHeight * .6);
   }
 };
 onNavScroll();
@@ -2228,11 +2073,99 @@ document.querySelectorAll('.faq-item').forEach(item => {
   });
 });
 
+/* FAQ-Suche: Frage eintippen -> passende Antworten einblenden, beste Antwort aufklappen.
+   Treffer über Frage (stark), Stichworte (data-stichworte) und Antworttext (schwach).
+   Keine Antwort gefunden -> Frage vorformuliert per WhatsApp an Ludwig. */
+(() => {
+  const feld = document.getElementById('faq-suche');
+  const liste = document.getElementById('faq-liste');
+  if (!feld || !liste) return;
+  const status = document.getElementById('faq-status');
+  const alleBtn = document.getElementById('faq-alle');
+  const frag = document.getElementById('faq-frag');
+  const chips = [...document.querySelectorAll('.faq-chips button')];
+  const tipps = [...document.querySelectorAll('.faq-tipp')];
+  const WA_BASIS = 'https://wa.me/4915224827997?text=';
+  const norm = t => t.toLowerCase().replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss').replace(/[^a-z0-9]+/g,' ').trim();
+  // Füllwörter und Wörter, die in fast jeder Antwort stehen, zählen nicht
+  const STOPP = new Set(('ich mein meine meinen meinem meiner mir mich du dein deine ist sind bin wird werden war der die das den dem des ein eine einen einem einer ' +
+    'und oder wie was wer wo wann wenn ob bei im in mit auch es zu zum zur fuer habe hab hat haben kann koennen muss man auf von an ab so noch schon denn dann aber mal ' +
+    'bitte gibt gilt da hier sich mehr rad raeder fahrrad fahrraeder versichert versicherung versichern kasko fahrradkasko bike').split(' '));
+  const woerter = t => norm(t).split(' ').filter(w => w.length >= 2 && !STOPP.has(w));
+  const passt = (w, liste) => liste.some(x => x === w || (w.length >= 3 && x.startsWith(w)) || (x.length >= 4 && w.startsWith(x)));
+
+  const eintraege = [...liste.querySelectorAll('.faq-item')].map((el, i) => ({
+    el, i,
+    frage: woerter(el.querySelector('.faq-q').textContent),
+    stich: woerter(el.dataset.stichworte || ''),
+    antwort: woerter(el.querySelector('.faq-a').textContent)
+  }));
+
+  const schliessenAlle = () => liste.querySelectorAll('.faq-item.open').forEach(o => {
+    o.classList.remove('open'); o.querySelector('.faq-q').setAttribute('aria-expanded','false');
+  });
+  const oeffne = el => { schliessenAlle(); el.classList.add('open'); el.querySelector('.faq-q').setAttribute('aria-expanded','true'); };
+
+  function suchen(){
+    const roh = feld.value.trim();
+    const q = woerter(roh);
+    chips.forEach(c => c.setAttribute('aria-pressed', norm(c.dataset.suche) === norm(roh) ? 'true' : 'false'));
+    frag.href = WA_BASIS + encodeURIComponent('Hi Ludwig, ich habe eine Frage zur Fahrradkasko: ' + roh);
+    frag.classList.remove('betont');
+    tipps.forEach(t => { t.hidden = !q.length || !q.some(w => passt(w, woerter(t.dataset.muster))); });
+
+    if (!roh){ // Grundzustand
+      liste.classList.remove('sucht');
+      eintraege.forEach(e => { e.el.hidden = false; e.el.style.order = ''; });
+      status.textContent = '';
+      if (alleBtn && !liste.classList.contains('alle')) alleBtn.hidden = false;
+      return;
+    }
+    liste.classList.add('sucht');
+    if (alleBtn) alleBtn.hidden = true;
+    const bewertet = eintraege.map(e => {
+      let p = 0;
+      q.forEach(w => { if (passt(w, e.frage)) p += 4; if (passt(w, e.stich)) p += 3; if (passt(w, e.antwort)) p += 1; });
+      return { e, p };
+    }).sort((a, b) => b.p - a.p || a.e.i - b.e.i);
+    const best = bewertet[0].p;
+    const tippSichtbar = tipps.some(t => !t.hidden);
+    // nur starke Treffer zeigen; beantwortet ein Hinweis die Frage schon, keine schwachen Textfunde dazu
+    const treffer = (tippSichtbar && best < 3) ? [] : bewertet.filter(x => x.p > 0 && x.p >= best / 2);
+    eintraege.forEach(e => { e.el.hidden = true; e.el.style.order = ''; });
+    treffer.forEach((x, rang) => { x.e.el.hidden = false; x.e.el.style.order = rang; x.e.el.classList.add('in'); });
+
+    if (treffer.length){
+      status.textContent = treffer.length === 1 ? '1 passende Antwort' : treffer.length + ' passende Antworten';
+      // klarer Favorit -> direkt aufklappen
+      const zweiter = treffer[1] ? treffer[1].p : 0;
+      if (!tippSichtbar && (treffer.length === 1 || (best >= 4 && best > zweiter))) oeffne(treffer[0].e.el); else schliessenAlle();
+    } else {
+      schliessenAlle();
+      status.textContent = tippSichtbar ? '' : 'Dazu habe ich keine fertige Antwort – schreib mir deine Frage einfach direkt:';
+      frag.classList.add('betont');
+    }
+  }
+
+  let t;
+  feld.addEventListener('input', () => { clearTimeout(t); t = setTimeout(suchen, 120); });
+  feld.addEventListener('keydown', e => { if (e.key === 'Enter'){ e.preventDefault(); clearTimeout(t); suchen(); feld.blur(); } });
+  chips.forEach(c => c.addEventListener('click', () => {
+    feld.value = c.getAttribute('aria-pressed') === 'true' ? '' : c.dataset.suche;
+    suchen();
+  }));
+  if (alleBtn) alleBtn.addEventListener('click', () => {
+    liste.classList.add('alle'); alleBtn.hidden = true;
+    liste.querySelectorAll('.faq-extra').forEach(el => el.classList.add('in'));
+  });
+})();
+
 /* Beitrags-Schätzer: grobe Jahresspanne aus dem Radwert (Logik analog Fußnote ¹) */
 (() => {
   const slider = document.getElementById('rechner-slider');
   const rad = document.getElementById('rechner-rad');
   const preis = document.getElementById('rechner-preis');
+  const monat = document.getElementById('rechner-monat');
   if (!slider || !rad || !preis) return;
   const fmt = n => n.toLocaleString('de-DE');
   const rund5 = n => Math.round(n / 5) * 5;
@@ -2242,6 +2175,7 @@ document.querySelectorAll('.faq-item').forEach(item => {
     const unten = rund5(80 + wert / 1000 * 15);
     const oben = rund5(120 + wert / 1000 * 25);
     preis.textContent = fmt(unten) + '–' + fmt(oben) + ' €';
+    if (monat) monat.textContent = Math.round(unten / 12) + '–' + Math.round(oben / 12) + ' €'; // Jahresspanne umgerechnet
     slider.style.setProperty('--fill', ((wert - 1000) / 9000 * 100) + '%');
     if (window.Motion && !reduceMotion) window.Motion.animate(preis, {scale:[1.05,1]}, {duration:.35, ease:[.16,1,.3,1]});
   };
@@ -2276,7 +2210,7 @@ document.querySelectorAll('.faq-item').forEach(item => {
   }, {rootMargin:'-30% 0px -60% 0px'});
   const hero = document.querySelector('.hero');
   if (hero) spyEbenen.observe(hero); // im Hero: kein Chip aktiv
-  ['paket','leistungen','schutzbrief','ebike','warum','faq','kontakt'].forEach(id => {
+  ['warum','paket','leistungen','schutzbrief','ebike','faq','kontakt'].forEach(id => {
     const s = document.getElementById(id);
     if (s) spyEbenen.observe(s);
   });
@@ -2296,7 +2230,7 @@ document.querySelectorAll('.mehr-btn').forEach(btn => {
 });
 
 /* Einklappbare Sektionen (Schutzbrief, FAQ): erst per Button/Link aufklappen –
-   das kürzt die Seite und bringt schneller zum Kontaktformular. */
+   das kürzt die Seite und bringt schneller zum Kontakt. */
 (() => {
   const sektionen = {}; // Sektions-ID -> { inhalt, btn }
   document.querySelectorAll('.sektion-toggle').forEach(btn => {
@@ -2325,85 +2259,6 @@ document.querySelectorAll('.mehr-btn').forEach(btn => {
   if (sektionen[ausAnker]) oeffnen(ausAnker);
 })();
 
-/* Formular: Versand per WhatsApp oder E-Mail – ohne Server. Optional Direktversand an einen Formular-Endpunkt. */
-(() => {
-  // Direktversand aktivieren: URL eines Formular-Endpunkts eintragen (EU-Hosting, Auftragsverarbeitungsvertrag,
-  // Nennung in datenschutz.html). Leer = die Buttons "Per WhatsApp / Per E-Mail senden" uebernehmen den Versand.
-  var FORMULAR_ENDPUNKT = '';
-
-  const form = document.getElementById('f-form'); if (!form) return;
-  const $ = (id) => document.getElementById(id);
-  const felder = { name: $('f-name'), kontakt: $('f-kontakt'), anliegen: $('f-anliegen'), nachricht: $('f-nachricht') };
-  const hinweis = $('f-hinweis'), status = $('f-status'), wa = $('f-wa'), mail = $('f-mail'),
-        kopieren = $('f-kopieren'), senden = $('f-senden'), danke = $('f-danke');
-  const WA = '4915224827997', MAIL = 'ludwig.siebenbuergen@ergo.de', TEL = '0152 / 24827997';
-
-  const werte = () => ({ name: felder.name.value.trim(), kontakt: felder.kontakt.value.trim(),
-                         anliegen: felder.anliegen.value, nachricht: felder.nachricht.value.trim() });
-  const textWhatsApp = (w) => `Hi Ludwig, ich interessiere mich für die Fahrradkasko.\n\nAnliegen: ${w.anliegen}\nName: ${w.name || '-'}\nErreichbar unter: ${w.kontakt || '-'}${w.nachricht ? '\n\n' + w.nachricht : ''}`;
-  const textMail = (w) => `Hallo,\n\nich interessiere mich für die Fahrradkasko.\n\nName: ${w.name || '-'}\nErreichbar unter: ${w.kontakt || '-'}\nAnliegen: ${w.anliegen}\n${w.nachricht ? 'Nachricht:\n' + w.nachricht + '\n\n' : ''}Viele Grüße\n${w.name || ''}`;
-
-  /* Die Links tragen immer die aktuellen Eingaben – so funktionieren sie per Tastatur, Mittelklick und ohne Popup-Sperre */
-  function aktualisieren(){
-    const w = werte();
-    wa.href = `https://wa.me/${WA}?text=${encodeURIComponent(textWhatsApp(w))}`;
-    mail.href = `mailto:${MAIL}?subject=${encodeURIComponent('Anfrage Fahrradkasko – ' + (w.name || 'Neue Anfrage'))}&body=${encodeURIComponent(textMail(w))}`;
-  }
-  form.addEventListener('input', aktualisieren);
-  form.addEventListener('change', aktualisieren);
-  aktualisieren();
-
-  const zeigeStatus = (text) => { status.textContent = text || ''; status.hidden = !text; };
-  function gueltig(){
-    if (werte().kontakt){ hinweis.hidden = true; return true; }
-    hinweis.hidden = false; zeigeStatus(''); felder.kontakt.focus(); return false;
-  }
-  [wa, mail].forEach(a => a.addEventListener('click', (e) => { if (!gueltig()) e.preventDefault(); }));
-
-  kopieren.addEventListener('click', async () => {
-    if (!gueltig()) return;
-    const text = textWhatsApp(werte());
-    let ok = false;
-    try { await navigator.clipboard.writeText(text); ok = true; }
-    catch (err) {
-      const t = document.createElement('textarea'); t.value = text; t.setAttribute('readonly', '');
-      t.style.cssText = 'position:absolute;left:-9999px'; document.body.appendChild(t); t.select();
-      try { ok = document.execCommand('copy'); } catch (e2) {}
-      t.remove();
-    }
-    zeigeStatus(ok ? `Kopiert. Schick den Text an ${MAIL} oder an ${TEL}.` : 'Kopieren hat nicht geklappt – nimm WhatsApp oder E-Mail oben.');
-    if (ok && window.gtag) gtag('event', 'kontakt_klick', { method: 'kopieren' });
-  });
-
-  function fertig(){
-    if (window.gtag) gtag('event', 'anfrage_gesendet', { method: 'formular' });
-    form.hidden = true;
-    danke.querySelector('a').href = wa.href;
-    danke.hidden = false;
-    danke.focus();
-  }
-
-  /* Enter-Taste (ohne Endpunkt: nur pruefen und zu den Versandwegen fuehren) bzw. Direktversand */
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    if (!gueltig()) return;
-    if (!FORMULAR_ENDPUNKT){ zeigeStatus('Fast geschafft – wähle unten, ob die Anfrage per WhatsApp oder per E-Mail rausgeht.'); wa.focus(); return; }
-    if (form.querySelector('.f-hp').value){ fertig(); return; }   // Honeypot: Bots sehen die Dankesseite, es wird nichts gesendet
-    const label = senden.querySelector('.btn-label');
-    senden.disabled = true; label.textContent = 'Wird gesendet…';
-    try {
-      const r = await fetch(FORMULAR_ENDPUNKT, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(Object.assign(werte(), { seite: location.href })) });
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      fertig();
-    } catch (err) {
-      senden.disabled = false; label.textContent = 'Anfrage senden';
-      zeigeStatus('Direktversand gerade nicht möglich – nimm einfach WhatsApp oder E-Mail unten, deine Angaben sind schon drin.');
-    }
-  });
-
-  if (FORMULAR_ENDPUNKT){ senden.hidden = false; wa.classList.replace('btn-primary', 'btn-ghost'); }
-})();
 </script>
 <!-- ===================== CONSENT + TRACKING (DSGVO / Consent Mode v2) =====================
      Erledigt: GA4-Mess-ID unten eingetragen; datenschutz.html deckt Analytics + Ads ab.

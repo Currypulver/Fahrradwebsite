@@ -189,15 +189,16 @@ h1.display{font-size:clamp(40px,6.5vw,96px);margin-bottom:clamp(30px,4vw,52px)}
 .legal p{color:var(--ink-2);font-size:15.5px;max-width:70ch;margin-bottom:12px}
 .legal p:last-child{margin-bottom:0}
 .legal p strong{color:var(--ink);font-weight:600}
-.legal a{text-decoration:underline;text-underline-offset:2px;transition:color .2s ease}
+.legal a{text-decoration:underline;text-underline-offset:2px;overflow-wrap:anywhere;transition:color .2s ease}
 .legal a:hover{color:var(--ergo-rot)}
 .legal address{font-style:normal;color:var(--ink-2);font-size:15.5px}
 .legal address strong{color:var(--ink);font-weight:600}
 .legal ul{list-style:none;display:grid;gap:10px;margin:6px 0 12px}
 .legal ul li{
-  display:flex;gap:12px;align-items:flex-start;color:var(--ink-2);font-size:15.5px;max-width:70ch;
+  position:relative;padding-left:19px;color:var(--ink-2);font-size:15.5px;max-width:70ch;
 }
-.legal ul li::before{content:"";width:7px;height:7px;background:var(--ergo-rot);flex:none;margin-top:8px}
+/* Block statt Flex: Text und Link bleiben ein Absatz, lange URLs duerfen umbrechen (sonst zoomt das Handy heraus) */
+.legal ul li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;background:var(--ergo-rot)}
 
 /* ---------- Footer (schlank) ---------- */
 footer{
@@ -306,14 +307,12 @@ footer nav{display:flex;gap:26px}
 
       <section>
         <h2><span class="nr">05</span>Kontaktaufnahme</h2>
-        <h3>E-Mail, Telefon &amp; Kontaktformular</h3>
+        <h3>E-Mail &amp; Telefon</h3>
         <p>
-          Wenn du über das Kontaktformular, per E-Mail oder telefonisch Kontakt aufnimmst, werden deine Angaben
-          (z.&nbsp;B. Name, E-Mail-Adresse oder Telefonnummer sowie der Inhalt deiner Anfrage) ausschließlich zur
-          Bearbeitung deiner Anfrage verarbeitet. Das Kontaktformular auf der Startseite speichert selbst keine
-          Daten auf einem Server: Es bereitet aus deinen Angaben lediglich eine Nachricht vor, die du auf Wunsch per
-          WhatsApp (siehe Abschnitt WhatsApp), über dein eigenes E-Mail-Programm (sogenannter „mailto“-Link) oder durch
-          Kopieren des Textes an mich sendest – der Versand erfolgt also über den von dir gewählten Weg.
+          Wenn du per E-Mail oder telefonisch Kontakt aufnimmst, werden deine Angaben (z.&nbsp;B. Name,
+          E-Mail-Adresse oder Telefonnummer sowie der Inhalt deiner Anfrage) ausschließlich zur Bearbeitung deiner
+          Anfrage verarbeitet. E-Mail-Links auf dieser Website öffnen lediglich dein eigenes E-Mail-Programm
+          (sogenannter „mailto“-Link) – der Versand erfolgt über dein E-Mail-Konto.
         </p>
         <p>
           Rechtsgrundlage ist Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;b DSGVO (Anbahnung bzw. Erfüllung eines Vertrags) bzw.
@@ -397,13 +396,6 @@ footer nav{display:flex;gap:26px}
           ausschließlich die jeweiligen Anbieter verantwortlich. Beim Anklicken eines externen Links
           verlässt du diese Seite.
         </p>
-        <p>
-          Für die Online-Terminbuchung wird auf den externen Dienst <strong>Calendly</strong> (Calendly LLC, USA)
-          verlinkt. Erst wenn du den Buchungslink aktiv anklickst und dort Daten eingibst, verarbeitet Calendly
-          diese nach eigenen Datenschutzbestimmungen:
-          <a href="https://calendly.com/privacy" target="_blank" rel="noopener">calendly.com/privacy</a>.
-          Die Nutzung ist freiwillig – Termine kannst du alternativ per Telefon, E-Mail oder WhatsApp vereinbaren.
-        </p>
       </section>
 
       <section>
@@ -437,7 +429,7 @@ footer nav{display:flex;gap:26px}
       <section>
         <h2><span class="nr">11</span>Aktualität dieser Erklärung</h2>
         <p>
-          Diese Datenschutzerklärung hat den Stand Juli&nbsp;2026. Durch die Weiterentwicklung der Website oder
+          Diese Datenschutzerklärung hat den Stand September&nbsp;2026. Durch die Weiterentwicklung der Website oder
           aufgrund geänderter gesetzlicher bzw. behördlicher Vorgaben kann es notwendig werden, sie anzupassen.
         </p>
       </section>

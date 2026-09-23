@@ -14,7 +14,7 @@
 **Business model:** Provisionsbasierte Versicherungsvermittlung. Der Kaskoschutz wird als Baustein der ERGO Hausratversicherung Best abgeschlossen. Preisspanne beispielhaft je nach Versicherungssumme von Hausrat und Fahrradkasko; Fahrradkasko bis 10.000 € Versicherungssumme (höhere Summen möglich). Bis zu 15 % günstiger, wenn bereits weitere Verträge aus der Sachsparte bestehen. Optionale Selbstbeteiligung zur Beitragssenkung wählbar.
 
 ## Target Audience
-**Target companies:** B2C – Privatpersonen (keine Unternehmen). Fokusregion: Rostock/Mecklenburg-Vorpommern und darüber hinaus (Beratung remote via WhatsApp, E-Mail, Telefon, Online-Termin).
+**Target companies:** B2C – Privatpersonen (keine Unternehmen). Fokusregion: Rostock/Mecklenburg-Vorpommern und darüber hinaus (Beratung remote via WhatsApp, E-Mail, Telefon).
 
 **Decision-makers:** Der Radbesitzer selbst – trifft die Kaufentscheidung allein.
 
@@ -37,6 +37,9 @@
 | Persona | Cares about | Challenge | Value we promise |
 |---------|-------------|-----------|------------------|
 | Ambitionierter Rennradfahrer | Wert & Zustand seines Rads, faire Erstattung, unkomplizierte Abwicklung | Hausratversicherung deckt das teure Rad gar nicht oder nur zum Zeitwert; Angst vor Diebstahl/Sturzschäden | Neuwert-Erstattung, Allgefahrendeckung weltweit, ohne Selbstbeteiligung – und ein Berater, der selbst fährt |
+| Triathlet / Zeitfahrer (seit 09/2026, eigene Landingpage `triathlon-zeitfahrrad.html`) | Mehrere teure Räder (Zeitfahrrad, Rennrad, Winterrad), Trainingslager im Ausland, kauft meist selbst statt zu leasen, hohe Zahlungsbereitschaft | Kaum spezialisierte Anbieter; unklar, was im Wettkampf und in der Wechselzone gilt | Alle Räder in einem günstigen Vertrag (nur das teuerste zählt), weltweit – plus ehrliche Abgrenzung und Beratung zu Unfall & BU |
+
+**Abgrenzung Triathlon (vom Berater bestätigt, 09/2026):** Offizielle Wettkämpfe sind nicht über die Fahrradkasko versichert, sondern über eine Gegenstandsversicherung. Die Kasko verlangt ein Schloss für unterwegs abgestellte Räder; in der Wechselzone ist Anschließen nach Triathlon-/Ironman-Regeln verboten, daher dort kein Diebstahlschutz über die Kasko (Wechselzone wird vom Veranstalter per Video und Zutrittskontrolle gesichert). Stärke der Fahrradkasko für diese Zielgruppe: alle Räder in einem Vertrag, sehr kostengünstig. Cross-Selling: Unfall- und Berufsunfähigkeitsversicherung.
 
 ## Problems & Pain Points
 **Core problem:** Hochwertige Rennräder sind über die normale Hausratversicherung oft gar nicht oder nur eingeschränkt (Zeitwert, Nachtzeitklausel, niedrige Entschädigungsgrenzen) abgesichert. Ein Sturz oder Diebstahl kann schnell mehrere Tausend Euro kosten.
@@ -129,5 +132,5 @@
 
 ## Goals
 **Business goal:** Neue Kaskoverträge (Fahrradkasko über ERGO Hausrat Best) über qualifizierte, beratungsgeführte Leads gewinnen.
-**Conversion action:** WhatsApp-Nachricht als primärer, niedrigschwelliger Erstkontakt („Schnellste Antwort – schreib mir direkt aufs Handy"). Sekundär: Rückruf-/Angebotsformular, Online-Termin, E-Mail, Anruf.
-**Current metrics:** Nicht dokumentiert (n/a – bei Bedarf ergänzen: WhatsApp-Klicks, Formular-Absendungen, Terminbuchungen).
+**Conversion action:** WhatsApp-Nachricht als primärer, niedrigschwelliger Erstkontakt („Schnellste Antwort – schreib mir direkt aufs Handy"). Sekundär: E-Mail oder Anruf. Seit 09/2026 bewusst nur diese drei Kontaktwege – Formular und Online-Terminbuchung (Calendly) wurden entfernt.
+**Current metrics:** Nicht dokumentiert (n/a – messbar über das GA4-Event `kontakt_klick` mit method = whatsapp / email / telefon).

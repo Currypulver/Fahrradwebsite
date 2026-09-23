@@ -20,11 +20,13 @@ https://rennradkasko.de erreichbar.
 ## Aufbau
 
 - `index.html` – die komplette Startseite (HTML, CSS und JS in einer Datei)
+- `triathlon-zeitfahrrad.html` – Landingpage für Triathleten und Zeitfahrer (eigenständig, gleiche Tokens wie die Startseite)
 - `impressum.html`, `datenschutz.html`, `erstinformation.html` – Rechtsseiten
 - `dokumente/` – Versicherungsbedingungen und Produkt-Infoblatt (PDF)
 - `assets/motion.js` – Framer Motion als Vanilla-JS-Bundle (eingecheckt, wird von `index.html` geladen)
 - `assets/fonts/` + `assets/fonts.css` – lokal gehostete Schriften (Archivo, IBM Plex Mono, Instrument Sans)
 - `assets/favicon*` / `assets/og-image.jpg` – Icons und Social-Media-Vorschaubild
+- `assets/ludwig-hero-*` – Hauptbild im Hero (Foto: All Out Visuals – Nennung im Bild Pflicht; WebP + JPEG, Zuschnitt 2:3 für Desktop, 4:5 fürs Handy)
 - `src/motion-entry.js` – Einstiegsdatei für das Motion-Bundle
 
 ## Framer Motion

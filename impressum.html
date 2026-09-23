@@ -185,15 +185,16 @@ h1.display{font-size:clamp(46px,8vw,110px);margin-bottom:clamp(30px,4vw,52px)}
 .legal p{color:var(--ink-2);font-size:15.5px;max-width:70ch;margin-bottom:12px}
 .legal p:last-child{margin-bottom:0}
 .legal p strong{color:var(--ink);font-weight:600}
-.legal a{text-decoration:underline;text-underline-offset:2px;transition:color .2s ease}
+.legal a{text-decoration:underline;text-underline-offset:2px;overflow-wrap:anywhere;transition:color .2s ease}
 .legal a:hover{color:var(--ergo-rot)}
 .legal address{font-style:normal;color:var(--ink-2);font-size:15.5px}
 .legal address strong{color:var(--ink);font-weight:600}
 .legal ul{list-style:none;display:grid;gap:10px;margin:6px 0 12px}
 .legal ul li{
-  display:flex;gap:12px;align-items:flex-start;color:var(--ink-2);font-size:15.5px;max-width:70ch;
+  position:relative;padding-left:19px;color:var(--ink-2);font-size:15.5px;max-width:70ch;
 }
-.legal ul li::before{content:"";width:7px;height:7px;background:var(--ergo-rot);flex:none;margin-top:8px}
+/* Block statt Flex: Text und Link bleiben ein Absatz, lange URLs duerfen umbrechen (sonst zoomt das Handy heraus) */
+.legal ul li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;background:var(--ergo-rot)}
 
 /* Anbieter-Karte im Stil der Berater-Karte */
 .anbieter-card{
