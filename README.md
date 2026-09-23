@@ -26,6 +26,7 @@ https://rennradkasko.de erreichbar.
 - `assets/motion.js` – Framer Motion als Vanilla-JS-Bundle (eingecheckt, wird von `index.html` geladen)
 - `assets/fonts/` + `assets/fonts.css` – lokal gehostete Schriften (Archivo, IBM Plex Mono, Instrument Sans)
 - `assets/favicon*` / `assets/og-image.jpg` – Icons und Social-Media-Vorschaubild
+- `assets/ludwig-rennen-*` – Hauptbild im Hero (WebP + JPEG, Zuschnitt 2:3 für Desktop, 4:5 fürs Handy)
 - `src/motion-entry.js` – Einstiegsdatei für das Motion-Bundle
 
 ## Framer Motion

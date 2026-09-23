@@ -14,7 +14,7 @@
 **Business model:** Provisionsbasierte Versicherungsvermittlung. Der Kaskoschutz wird als Baustein der ERGO Hausratversicherung Best abgeschlossen. Preisspanne beispielhaft je nach Versicherungssumme von Hausrat und Fahrradkasko; Fahrradkasko bis 10.000 € Versicherungssumme (höhere Summen möglich). Bis zu 15 % günstiger, wenn bereits weitere Verträge aus der Sachsparte bestehen. Optionale Selbstbeteiligung zur Beitragssenkung wählbar.
 
 ## Target Audience
-**Target companies:** B2C – Privatpersonen (keine Unternehmen). Fokusregion: Rostock/Mecklenburg-Vorpommern und darüber hinaus (Beratung remote via WhatsApp, E-Mail, Telefon, Online-Termin).
+**Target companies:** B2C – Privatpersonen (keine Unternehmen). Fokusregion: Rostock/Mecklenburg-Vorpommern und darüber hinaus (Beratung remote via WhatsApp, E-Mail, Telefon).
 
 **Decision-makers:** Der Radbesitzer selbst – trifft die Kaufentscheidung allein.
 
@@ -132,5 +132,5 @@
 
 ## Goals
 **Business goal:** Neue Kaskoverträge (Fahrradkasko über ERGO Hausrat Best) über qualifizierte, beratungsgeführte Leads gewinnen.
-**Conversion action:** WhatsApp-Nachricht als primärer, niedrigschwelliger Erstkontakt („Schnellste Antwort – schreib mir direkt aufs Handy"). Sekundär: Rückruf-/Angebotsformular, Online-Termin, E-Mail, Anruf.
-**Current metrics:** Nicht dokumentiert (n/a – bei Bedarf ergänzen: WhatsApp-Klicks, Formular-Absendungen, Terminbuchungen).
+**Conversion action:** WhatsApp-Nachricht als primärer, niedrigschwelliger Erstkontakt („Schnellste Antwort – schreib mir direkt aufs Handy"). Sekundär: E-Mail oder Anruf. Seit 09/2026 bewusst nur diese drei Kontaktwege – Formular und Online-Terminbuchung (Calendly) wurden entfernt.
+**Current metrics:** Nicht dokumentiert (n/a – messbar über das GA4-Event `kontakt_klick` mit method = whatsapp / email / telefon).
