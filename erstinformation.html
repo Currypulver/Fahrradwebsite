@@ -8,14 +8,14 @@
 <script>
 (function(){
   try{
-    // Standard ist der Dunkelmodus – hell nur, wenn ausdrücklich gewählt
+    // Gespeicherte Wahl gewinnt, sonst folgt die Seite der Handy-/Systemeinstellung
     var stored = localStorage.getItem('theme');
-    var dark = stored !== 'light';
+    var dark = stored ? stored === 'dark' : !(window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches);
     document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
     var m = document.getElementById('meta-theme-color');
     if (m) m.setAttribute('content', dark ? '#0B0A0F' : '#F4F2ED');
   } catch(e){
-    document.documentElement.setAttribute('data-theme','dark');
+    document.documentElement.setAttribute('data-theme', (window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark');
   }
 })();
 </script>
@@ -139,7 +139,7 @@ body::after{
   display:grid;place-items:center;
   transition:border-color .2s ease,background-color .2s ease,color .2s ease;
 }
-.theme-toggle:hover{border-color:var(--ink)}
+@media(hover:hover){.theme-toggle:hover{border-color:var(--ink)}}
 .theme-toggle svg{width:20px;height:20px}
 .theme-toggle .i-sun{display:block}
 .theme-toggle .i-moon{display:none}
@@ -158,8 +158,10 @@ body::after{
   content:"";position:absolute;inset:0;background:var(--ink);
   transform:scaleY(0);transform-origin:bottom;transition:transform .35s var(--ease);
 }
-.btn:hover,.btn:focus-visible{color:var(--bg);border-color:var(--ink)}
-.btn:hover::before,.btn:focus-visible::before{transform:scaleY(1)}
+.btn:focus-visible{color:var(--bg);border-color:var(--ink)}
+@media(hover:hover){.btn:hover{color:var(--bg);border-color:var(--ink)}}
+.btn:focus-visible::before{transform:scaleY(1)}
+@media(hover:hover){.btn:hover::before{transform:scaleY(1)}}
 .btn span{position:relative;z-index:1}
 .btn svg{width:16px;height:16px;flex:none;position:relative;z-index:1}
 @media(max-width:480px){
@@ -186,7 +188,7 @@ h1.display{font-size:clamp(36px,6vw,88px);margin-bottom:clamp(30px,4vw,52px)}
 .legal p:last-child{margin-bottom:0}
 .legal p strong{color:var(--ink);font-weight:600}
 .legal a{text-decoration:underline;text-underline-offset:2px;overflow-wrap:anywhere;transition:color .2s ease}
-.legal a:hover{color:var(--ergo-rot)}
+@media(hover:hover){.legal a:hover{color:var(--ergo-rot)}}
 .legal address{font-style:normal;color:var(--ink-2);font-size:15.5px}
 .legal address strong{color:var(--ink);font-weight:600}
 .legal ul{list-style:none;display:grid;gap:10px;margin:6px 0 12px}
@@ -205,7 +207,7 @@ footer{
 }
 .foot-zeile{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 footer a{color:var(--kreide);text-decoration:none;transition:color .15s ease}
-footer a:hover{color:var(--ergo-rot)}
+@media(hover:hover){footer a:hover{color:var(--ergo-rot)}}
 footer nav{display:flex;gap:26px;flex-wrap:wrap}
 
 @media(prefers-reduced-motion:reduce){
@@ -213,6 +215,12 @@ footer nav{display:flex;gap:26px;flex-wrap:wrap}
   html{scroll-behavior:auto}
 }
 :focus-visible{outline:3px solid var(--ergo-rot);outline-offset:3px;border-radius:4px}
+/* Touch: kein grauer Android-Tipp-Schatten; beim Antippen nur rote Rückmeldung statt Weiß-Füllung */
+html{-webkit-tap-highlight-color:transparent}
+@media(hover:none){
+  .btn-ghost:active,.btn:active{border-color:var(--ergo-rot)}
+  .ebenen-track a:active{border-color:var(--ergo-rot);color:var(--ink)}
+}
 
 /* ---------- Druckansicht: nur der Inhalt, dunkle Deko aus ---------- */
 @media print{
@@ -355,19 +363,27 @@ footer nav{display:flex;gap:26px;flex-wrap:wrap}
 /* Farbschema (Hell-/Dunkelmodus) */
 const htmlEl = document.documentElement;
 const themeToggle = document.getElementById('theme-toggle');
+const themeToggles = document.querySelectorAll('#theme-toggle, [data-theme-toggle]');
 const metaThemeColor = document.getElementById('meta-theme-color');
 const THEME_COLORS = { light:'#F4F2ED', dark:'#0B0A0F' };
 function applyTheme(theme){
   htmlEl.setAttribute('data-theme', theme);
   if (metaThemeColor) metaThemeColor.setAttribute('content', THEME_COLORS[theme]);
-  themeToggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+  themeToggles.forEach(t => t.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false'));
 }
 applyTheme(htmlEl.getAttribute('data-theme') === 'light' ? 'light' : 'dark');
-themeToggle.addEventListener('click', () => {
+themeToggles.forEach(t => t.addEventListener('click', () => {
   const next = htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-  localStorage.setItem('theme', next);
+  try { localStorage.setItem('theme', next); } catch(e){}
   applyTheme(next);
-});
+}));
+// Ohne eigene Wahl der Systemeinstellung folgen (z. B. wenn das Handy abends auf Dunkel wechselt)
+try {
+  matchMedia('(prefers-color-scheme: light)').addEventListener('change', e => {
+    let gewaehlt = null; try { gewaehlt = localStorage.getItem('theme'); } catch(err){}
+    if (!gewaehlt) applyTheme(e.matches ? 'light' : 'dark');
+  });
+} catch(e){}
 </script>
 </body>
 </html>
