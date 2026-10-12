@@ -373,6 +373,13 @@ h2.display{font-size:clamp(40px,6vw,84px)}
   color:var(--ink);margin-bottom:18px;max-width:36ch;
 }
 .hero-claim b{color:var(--ergo-rot);font-weight:700}
+/* Hausrat-Kombi direkt unter dem Claim: der Paket-Gedanke als Vorteil, der Einwand gleich darunter */
+.hero-kombi{
+  border-left:2px solid var(--ergo-rot);padding:2px 0 2px 16px;margin-bottom:26px;max-width:46ch;
+  font-size:15px;line-height:1.5;color:var(--ink-2);
+}
+.hero-kombi p + p{margin-top:8px}
+.hero-kombi strong{color:var(--ink);font-weight:600}
 .hero-cta{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:28px}
 .google-bewertungen.hero-proof{margin:0 0 40px;width:fit-content;max-width:100%}
 
@@ -462,9 +469,10 @@ h2.display{font-size:clamp(40px,6vw,84px)}
 @media(max-width:920px){
   .hero{min-height:auto}
   .hero h1{font-size:clamp(56px,11vw,110px)}
-  /* Mobil: erst Claim und Buttons, dann das Foto, dann Lead, Bewertungen und Kennzahlen */
+  /* Mobil: erst Claim und Buttons, dann Hausrat-Kombi und Foto, dann Lead, Bewertungen und Kennzahlen */
   .hero-grid{display:flex;flex-direction:column;align-items:flex-start}
   .hero-text,.hero-links{display:contents}
+  .hero-kombi{order:1;margin-bottom:0} /* erst die Buttons im ersten Blick, die Kombi direkt darunter */
   .hero-foto{order:1;align-self:center;max-width:540px;margin-bottom:30px}
   .hero-foto img{aspect-ratio:4/5}
   .hero-links .lead,.google-bewertungen.hero-proof,.telemetrie{order:2}
@@ -942,7 +950,7 @@ footer a{color:var(--kreide-2);text-decoration:none;transition:color .15s ease}
 }
 .hud .hud-etappe{color:var(--kreide)}
 .hud::before{content:"";width:7px;height:7px;background:var(--ergo-rot);align-self:center;flex:none}
-@media(max-width:1439px){.hud{display:none}} /* erst ab 1440px ist links genug Rand neben dem Inhalt */
+@media(max-width:1599px){.hud{display:none}} /* erst ab 1600px ist links genug Rand – darunter verdeckt das Etikett Text am linken Inhaltsrand */
 [data-theme="light"] .fahrt-linie{background:rgba(11,10,15,.10)}
 
 /* ---------- Scroll-Reveal ---------- */
@@ -982,6 +990,8 @@ footer a{color:var(--kreide-2);text-decoration:none;transition:color .15s ease}
 .top-fab svg{width:20px;height:20px}
 [data-theme="light"] .top-fab{background:rgba(255,255,255,.85);color:var(--tusche);border-color:rgba(11,10,15,.25)}
 @media(hover:hover){[data-theme="light"] .top-fab:hover{border-color:var(--ergo-rot);background:rgba(238,1,56,.14);color:var(--ergo-rot)}}
+/* Handy/Tablet: Pfeil weg – er lag über dem Rechner-Regler und den Kontakt-Pfeilen; die Ebenen-Leiste oben übernimmt die Navigation */
+@media(max-width:960px){.top-fab{display:none}}
 
 /* ---------- Bergetappe im Hintergrund (Parallax, nur leicht sichtbar) ---------- */
 .berg-parallax{
@@ -1321,6 +1331,11 @@ html{-webkit-tap-highlight-color:transparent}
       </h1>
       <div class="hero-links">
         <p class="hero-claim">Beraten von <b>Ludwig</b> – Radsportler, kein Callcenter. Ein direkter Draht, keine Warteschleife.</p>
+        <!-- Kombi früh zeigen: Preisbeispiel = Rechner-Startwert (6.000 €), bei Formeländerung mitziehen -->
+        <div class="hero-kombi">
+          <p><strong>Rennrad + Hausrat in einem Vertrag</strong> – bei 6.000&nbsp;€ Radwert ca.&nbsp;14–23&nbsp;€ im&nbsp;Monat¹</p>
+          <p><strong>Schon Hausrat woanders?</strong> Die Differenzdeckung schließt beim Wechsel die Lücke – bis zu 1&nbsp;Jahr ohne Mehrbeitrag.</p>
+        </div>
         <div class="hero-cta">
           <a class="btn btn-primary magnetic" href="#kontakt"><span class="btn-label">Kostenlose Beratung</span></a>
           <a class="btn btn-ghost magnetic" href="#rechner"><span class="btn-label">Beitrag berechnen</span></a>
@@ -2479,8 +2494,8 @@ document.querySelectorAll('.mehr-btn').forEach(btn => {
 </script>
 <!-- ===================== CONSENT + TRACKING (DSGVO / Consent Mode v2) =====================
      Erledigt: GA4-Mess-ID unten eingetragen; datenschutz.html deckt Analytics + Ads ab.
-     Offen:    Google-Ads-Conversion-ID bei ADS_ID eintragen und in bindConversionClicks()
-               die auskommentierte Conversion-Zeile mit dem Conversion-Label aktivieren.
+     Offen:    ADS_ID (AW-...) und ADS_LABEL aus Google Ads unten eintragen – sobald beide
+               gesetzt sind, zaehlt jeder Kontakt-Klick automatisch als Ads-Conversion.
      Kein Tracking-Script laedt, bevor der Besucher aktiv zustimmt.
 ============================================================================================ -->
 <style>
@@ -2515,6 +2530,7 @@ document.querySelectorAll('.mehr-btn').forEach(btn => {
   var KEY='cb-consent-v1';
   var GA4_ID='G-V3BQ7S3CNE';      // GA4 Mess-ID (Datenstream rennradkasko.de)
   var ADS_ID='';                  // <- Google Ads Conversion-ID (AW-...) eintragen, sobald vorhanden
+  var ADS_LABEL='';               // <- Conversion-Label (Teil nach dem "/" in send_to) eintragen
 
   window.dataLayer=window.dataLayer||[];
   function gtag(){dataLayer.push(arguments);}
@@ -2553,8 +2569,7 @@ document.querySelectorAll('.mehr-btn').forEach(btn => {
       else if(h.indexOf('mailto:')===0)method='email';
       if(method){
         gtag('event','kontakt_klick',{method:method});
-        /* Nach Anlage der Ads-Conversion: Label unten eintragen und Zeile aktivieren
-        gtag('event','conversion',{send_to:ADS_ID+'/CONVERSION_LABEL'}); */
+        if(ADS_ID&&ADS_LABEL){ gtag('event','conversion',{send_to:ADS_ID+'/'+ADS_LABEL}); }
       }
     },true);
   }

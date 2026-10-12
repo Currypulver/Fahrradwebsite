@@ -1144,8 +1144,8 @@ document.querySelectorAll('.faq-item').forEach(item => {
 </script>
 <!-- ===================== CONSENT + TRACKING (DSGVO / Consent Mode v2) =====================
      Erledigt: GA4-Mess-ID unten eingetragen; datenschutz.html deckt Analytics + Ads ab.
-     Offen:    Google-Ads-Conversion-ID bei ADS_ID eintragen und in bindConversionClicks()
-               die auskommentierte Conversion-Zeile mit dem Conversion-Label aktivieren.
+     Offen:    ADS_ID (AW-...) und ADS_LABEL aus Google Ads unten eintragen – sobald beide
+               gesetzt sind, zaehlt jeder Kontakt-Klick automatisch als Ads-Conversion.
      Kein Tracking-Script laedt, bevor der Besucher aktiv zustimmt.
 ============================================================================================ -->
 <style>
@@ -1180,6 +1180,7 @@ document.querySelectorAll('.faq-item').forEach(item => {
   var KEY='cb-consent-v1';
   var GA4_ID='G-V3BQ7S3CNE';      // GA4 Mess-ID (Datenstream rennradkasko.de)
   var ADS_ID='';                  // <- Google Ads Conversion-ID (AW-...) eintragen, sobald vorhanden
+  var ADS_LABEL='';               // <- Conversion-Label (Teil nach dem "/" in send_to) eintragen
 
   window.dataLayer=window.dataLayer||[];
   function gtag(){dataLayer.push(arguments);}
@@ -1218,8 +1219,7 @@ document.querySelectorAll('.faq-item').forEach(item => {
       else if(h.indexOf('mailto:')===0)method='email';
       if(method){
         gtag('event','kontakt_klick',{method:method});
-        /* Nach Anlage der Ads-Conversion: Label unten eintragen und Zeile aktivieren
-        gtag('event','conversion',{send_to:ADS_ID+'/CONVERSION_LABEL'}); */
+        if(ADS_ID&&ADS_LABEL){ gtag('event','conversion',{send_to:ADS_ID+'/'+ADS_LABEL}); }
       }
     },true);
   }
