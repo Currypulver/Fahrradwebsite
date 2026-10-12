@@ -373,6 +373,13 @@ h2.display{font-size:clamp(40px,6vw,84px)}
   color:var(--ink);margin-bottom:18px;max-width:36ch;
 }
 .hero-claim b{color:var(--ergo-rot);font-weight:700}
+/* Hausrat-Kombi direkt unter dem Claim: der Paket-Gedanke als Vorteil, der Einwand gleich darunter */
+.hero-kombi{
+  border-left:2px solid var(--ergo-rot);padding:2px 0 2px 16px;margin-bottom:26px;max-width:46ch;
+  font-size:15px;line-height:1.5;color:var(--ink-2);
+}
+.hero-kombi p + p{margin-top:8px}
+.hero-kombi strong{color:var(--ink);font-weight:600}
 .hero-cta{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:28px}
 .google-bewertungen.hero-proof{margin:0 0 40px;width:fit-content;max-width:100%}
 
@@ -462,9 +469,10 @@ h2.display{font-size:clamp(40px,6vw,84px)}
 @media(max-width:920px){
   .hero{min-height:auto}
   .hero h1{font-size:clamp(56px,11vw,110px)}
-  /* Mobil: erst Claim und Buttons, dann das Foto, dann Lead, Bewertungen und Kennzahlen */
+  /* Mobil: erst Claim und Buttons, dann Hausrat-Kombi und Foto, dann Lead, Bewertungen und Kennzahlen */
   .hero-grid{display:flex;flex-direction:column;align-items:flex-start}
   .hero-text,.hero-links{display:contents}
+  .hero-kombi{order:1;margin-bottom:0} /* erst die Buttons im ersten Blick, die Kombi direkt darunter */
   .hero-foto{order:1;align-self:center;max-width:540px;margin-bottom:30px}
   .hero-foto img{aspect-ratio:4/5}
   .hero-links .lead,.google-bewertungen.hero-proof,.telemetrie{order:2}
@@ -942,7 +950,7 @@ footer a{color:var(--kreide-2);text-decoration:none;transition:color .15s ease}
 }
 .hud .hud-etappe{color:var(--kreide)}
 .hud::before{content:"";width:7px;height:7px;background:var(--ergo-rot);align-self:center;flex:none}
-@media(max-width:1439px){.hud{display:none}} /* erst ab 1440px ist links genug Rand neben dem Inhalt */
+@media(max-width:1599px){.hud{display:none}} /* erst ab 1600px ist links genug Rand – darunter verdeckt das Etikett Text am linken Inhaltsrand */
 [data-theme="light"] .fahrt-linie{background:rgba(11,10,15,.10)}
 
 /* ---------- Scroll-Reveal ---------- */
@@ -982,6 +990,8 @@ footer a{color:var(--kreide-2);text-decoration:none;transition:color .15s ease}
 .top-fab svg{width:20px;height:20px}
 [data-theme="light"] .top-fab{background:rgba(255,255,255,.85);color:var(--tusche);border-color:rgba(11,10,15,.25)}
 @media(hover:hover){[data-theme="light"] .top-fab:hover{border-color:var(--ergo-rot);background:rgba(238,1,56,.14);color:var(--ergo-rot)}}
+/* Handy/Tablet: Pfeil weg – er lag über dem Rechner-Regler und den Kontakt-Pfeilen; die Ebenen-Leiste oben übernimmt die Navigation */
+@media(max-width:960px){.top-fab{display:none}}
 
 /* ---------- Bergetappe im Hintergrund (Parallax, nur leicht sichtbar) ---------- */
 .berg-parallax{
@@ -1064,6 +1074,8 @@ footer a{color:var(--kreide-2);text-decoration:none;transition:color .15s ease}
 .rechner-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:24px}
 @media(max-width:920px){.rechner-grid{grid-template-columns:1fr}}
 .rechner-hinweis{margin-top:14px;font-size:12px;color:var(--ink-2);opacity:.85;line-height:1.55}
+.rechner-cta-hinweis{margin-top:14px;font-size:13.5px;color:var(--ink-2);line-height:1.55}
+.rechner-cta-hinweis a{color:var(--ink)}
 
 
 /* ---------- Echte Fotos ---------- */
@@ -1321,6 +1333,11 @@ html{-webkit-tap-highlight-color:transparent}
       </h1>
       <div class="hero-links">
         <p class="hero-claim">Beraten von <b>Ludwig</b> – Radsportler, kein Callcenter. Ein direkter Draht, keine Warteschleife.</p>
+        <!-- Kombi früh zeigen: Preisbeispiel = Rechner-Startwert (6.000 €), bei Formeländerung mitziehen -->
+        <div class="hero-kombi">
+          <p><strong>Rennrad + Hausrat in einem Vertrag</strong> – bei 6.000&nbsp;€ Radwert ca.&nbsp;14–23&nbsp;€ im&nbsp;Monat¹</p>
+          <p><strong>Schon Hausrat woanders?</strong> Die Differenzdeckung schließt beim Wechsel die Lücke – bis zu 1&nbsp;Jahr ohne Mehrbeitrag.</p>
+        </div>
         <div class="hero-cta">
           <a class="btn btn-primary magnetic" href="#kontakt"><span class="btn-label">Kostenlose Beratung</span></a>
           <a class="btn btn-ghost magnetic" href="#rechner"><span class="btn-label">Beitrag berechnen</span></a>
@@ -1403,9 +1420,11 @@ html{-webkit-tap-highlight-color:transparent}
           <p class="rechner-hinweis">Unverbindliche Orientierung (Beispiel: Wohnfläche 50–75&nbsp;m²) – der genaue Beitrag hängt von Wohnfläche, Wohnort und optionaler Selbstbeteiligung ab. Dein persönliches Angebot gibt's kostenlos.</p>
         </div>
         <div class="rechner-cta">
-          <a class="btn btn-primary" href="#kontakt"><span class="btn-label">Angebot anfragen</span></a>
+          <!-- href wird vom Rechner-Skript mit dem eingestellten Radwert neu gesetzt; hier der Stand für 6.000 € -->
+          <a class="btn btn-primary" id="rechner-anfrage" href="https://wa.me/4915224827997?text=Hi%20Ludwig%2C%20ich%20m%C3%B6chte%20ein%20Angebot%20f%C3%BCr%20die%20Fahrradkasko.%0AMein%20teuerstes%20Rad%3A%20ca.%206.000%20%E2%82%AC%0ARechner%3A%20ca.%20170%E2%80%93270%20%E2%82%AC%20im%20Jahr%0APLZ%3A%20%0AWohnfl%C3%A4che%3A%20ca.%20%20m%C2%B2" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2a9.9 9.9 0 0 0-8.5 14.96L2 22l5.2-1.5A9.9 9.9 0 1 0 12.04 2zm0 18.1a8.2 8.2 0 0 1-4.2-1.15l-.3-.18-3.08.89.84-3-.2-.31a8.2 8.2 0 1 1 6.94 3.75zm4.5-6.13c-.25-.12-1.46-.72-1.68-.8-.23-.09-.4-.13-.56.12-.16.25-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.22-1.45-1.37-1.7-.14-.24-.01-.38.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42h-.48c-.16 0-.43.06-.66.31-.22.25-.86.84-.86 2.05 0 1.2.88 2.37 1 2.53.13.17 1.74 2.65 4.2 3.72.59.25 1.05.4 1.4.52.6.19 1.13.16 1.56.1.47-.07 1.46-.6 1.66-1.17.21-.58.21-1.07.15-1.17-.06-.11-.23-.17-.47-.29z"/></svg><span class="btn-label">Dieses Angebot anfragen</span></a>
           <a class="btn btn-ghost" href="#paket"><span class="btn-label">Was ist drin?</span></a>
         </div>
+        <p class="rechner-cta-hinweis">Öffnet WhatsApp mit deinem Radwert – du ergänzt nur noch PLZ und Wohnfläche. Lieber <a href="#kontakt">per E-Mail oder Anruf</a>?</p>
       </div>
     </div>
   </div>
@@ -2303,6 +2322,7 @@ document.querySelectorAll('.faq-item').forEach(item => {
   const preis = document.getElementById('rechner-preis');
   const monat = document.getElementById('rechner-monat');
   const grenze = document.getElementById('rechner-grenze');
+  const anfrage = document.getElementById('rechner-anfrage');
   if (!slider || !eingabe || !preis) return;
   const MIN = 500, MAX = 15000;
   const fmt = n => n.toLocaleString('de-DE');
@@ -2313,6 +2333,14 @@ document.querySelectorAll('.faq-item').forEach(item => {
     const oben = rund5(120 + wert / 1000 * 25);
     preis.textContent = fmt(unten) + '–' + fmt(oben) + ' €';
     if (monat) monat.textContent = Math.round(unten / 12) + '–' + Math.round(oben / 12) + ' €'; // Jahresspanne umgerechnet
+    // „Dieses Angebot anfragen“: Radwert und Spanne gleich in die WhatsApp-Nachricht, PLZ und m² ergänzt der Besucher
+    if (anfrage){
+      const zeilen = ['Hi Ludwig, ich möchte ein Angebot für die Fahrradkasko.'];
+      zeilen.push('Mein teuerstes Rad: ca. ' + fmt(Math.max(wertRoh, MIN)) + ' €');
+      if (wertRoh <= MAX) zeilen.push('Rechner: ca. ' + fmt(unten) + '–' + fmt(oben) + ' € im Jahr'); // darüber gilt die Spanne nicht
+      zeilen.push('PLZ: ', 'Wohnfläche: ca.  m²');
+      anfrage.href = 'https://wa.me/4915224827997?text=' + encodeURIComponent(zeilen.join('\n'));
+    }
     if (quelle !== 'slider') slider.value = wert;
     slider.style.setProperty('--fill', ((slider.value - MIN) / (MAX - MIN) * 100) + '%');
     if (grenze){
@@ -2479,8 +2507,8 @@ document.querySelectorAll('.mehr-btn').forEach(btn => {
 </script>
 <!-- ===================== CONSENT + TRACKING (DSGVO / Consent Mode v2) =====================
      Erledigt: GA4-Mess-ID unten eingetragen; datenschutz.html deckt Analytics + Ads ab.
-     Offen:    Google-Ads-Conversion-ID bei ADS_ID eintragen und in bindConversionClicks()
-               die auskommentierte Conversion-Zeile mit dem Conversion-Label aktivieren.
+     Offen:    ADS_ID (AW-...) und ADS_LABEL aus Google Ads unten eintragen – sobald beide
+               gesetzt sind, zaehlt jeder Kontakt-Klick automatisch als Ads-Conversion.
      Kein Tracking-Script laedt, bevor der Besucher aktiv zustimmt.
 ============================================================================================ -->
 <style>
@@ -2515,6 +2543,7 @@ document.querySelectorAll('.mehr-btn').forEach(btn => {
   var KEY='cb-consent-v1';
   var GA4_ID='G-V3BQ7S3CNE';      // GA4 Mess-ID (Datenstream rennradkasko.de)
   var ADS_ID='';                  // <- Google Ads Conversion-ID (AW-...) eintragen, sobald vorhanden
+  var ADS_LABEL='';               // <- Conversion-Label (Teil nach dem "/" in send_to) eintragen
 
   window.dataLayer=window.dataLayer||[];
   function gtag(){dataLayer.push(arguments);}
@@ -2553,8 +2582,7 @@ document.querySelectorAll('.mehr-btn').forEach(btn => {
       else if(h.indexOf('mailto:')===0)method='email';
       if(method){
         gtag('event','kontakt_klick',{method:method});
-        /* Nach Anlage der Ads-Conversion: Label unten eintragen und Zeile aktivieren
-        gtag('event','conversion',{send_to:ADS_ID+'/CONVERSION_LABEL'}); */
+        if(ADS_ID&&ADS_LABEL){ gtag('event','conversion',{send_to:ADS_ID+'/'+ADS_LABEL}); }
       }
     },true);
   }
